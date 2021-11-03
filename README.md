@@ -4,5 +4,5 @@
 #### In this project i use:
 + JavaScript
 + ReactJS
-+ MongoDB (in feature)
++ MongoDB (in future)
 + SCSS
