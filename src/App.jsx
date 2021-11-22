@@ -3,6 +3,7 @@ import List from "./components/List";
 import AddList from "./components/AddList";
 import DB from "./assets/db.json";
 import Tasks from "./Tasks";
+import './assets/scripts/script'
 
 function App() {
   const [lists, setLists] = useState(
