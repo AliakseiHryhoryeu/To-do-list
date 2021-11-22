@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node intex.js"
+    "start": "node intex.js",
+    "dev": "nodemon intex.js"
+
   },
   "author": "",
   "license": "ISC",
