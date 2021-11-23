@@ -6,8 +6,9 @@ const { check, validationResult } = require("express-validator")
 const router = new Router()
 
 router.post('/registration',
-    [check(email, "Uncorrect email").isEmail(),
-    check(password, 'Password must be longer than 3 and shorter than 12').isLength({ min: 3, max: 12 })
+    [
+        check('email', "Uncorrect email").isEmail(),
+        check('password', 'Password must be longer than 3 and shorter than 12').isLength({ min: 3, max: 12 })
     ],
     async (req, res) => {
         try {
@@ -15,13 +16,17 @@ router.post('/registration',
             if (!errors.isEmpty()) {
                 return res.status(400).json({ message: "Uncorrect request", errors })
             }
-            const { email, password } = req.body()
-            const candidate = await User.findOne({ email })
-            if (candidate) {
+            const { email, password, username } = req.body
+            const candidateEmail = await User.findOne({ email })
+            if (candidateEmail) {
                 return res.status(400).json({ message: `User with email ${email} alredy exsist` })
             }
+            const candidateUsername = await User.findOne({ username })
+            if (candidateUsername) {
+                return res.status(400).json({ message: `User with username ${username} alredy exsist` })
+            }
             const hashPassword = await bcrypt.hash(password, 6)
-            const user = new User({ email, password: hashPassword })
+            const user = new User({ email, password: hashPassword, username })
             await user.save()
             return res.json({ message: "User was created" })
 
@@ -33,4 +38,14 @@ router.post('/registration',
         }
     })
 
-    module.exports = router
+    router.post('/login',
+    async (req, res) => {
+        try {
+            const{username,password} = req.body
+        } catch (e) {
+            console.log(e)
+            res.send({ message: "Server error" })
+        }
+    })
+
+module.exports = router
