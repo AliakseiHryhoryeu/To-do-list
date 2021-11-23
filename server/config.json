@@ -1,0 +1,4 @@
+{
+    "serverPort" : 5000,
+    "dbUrl": "mongodb+srv://tempmongodbtodolist:TestMongoDbPass123@cluster0.utqhl.mongodb.net/toDoAppDB?retryWrites=true&w=majority"
+  }
