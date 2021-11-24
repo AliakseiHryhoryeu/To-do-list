@@ -9,7 +9,6 @@
 + MongoDB
 + SCSS
 
-____
 ## Now i designing in figma
 https://www.figma.com/file/n5p6P6gIghvaMJvw2hVIZz/Untitled?node-id=0%3A1
 
