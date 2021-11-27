@@ -9,8 +9,8 @@
     "classnames": "2.3.1",
     "mongodb": "4.1.4",
     "node-sass": "6.0.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "react-redux": "7.2.6",
     "react-scripts": "4.0.3",
     "redux": "4.1.2",
@@ -19,10 +19,8 @@
     "web-vitals": "1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "webpack-dev-server",
+    "start": "webpack"
   },
   "eslintConfig": {
     "extends": [
@@ -43,7 +41,14 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "7.16.0",
+    "@babel/preset-env": "7.16.4",
+    "@babel/preset-react": "7.16.0",
+    "babel-loader": "8.2.3",
+    "css-loader": "6.5.1",
+    "style-loader": "3.3.1",
     "webpack": "5.64.4",
-    "webpack-cli": "4.9.1"
+    "webpack-cli": "4.9.1",
+    "webpack-dev-server": "4.6.0"
   }
 }
