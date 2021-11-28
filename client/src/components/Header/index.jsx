@@ -1,42 +1,48 @@
-import React, { Fragment } from 'react'
-
+import React, { useState } from 'react'
+import classNames from 'classnames';
 import './Header.scss';
 
 import mainLogo from '../../assets/img/favicon.svg'
 import userIcon from '../../assets/img/userIcon.png'
 
-const Header = ({ color, onClick, className }) => (
 
-  <Fragment>
+
+const Header = ({ }) => {
+  const [isActive, setActive] = useState(false)
+  const toggleClassActive = () => {
+    setActive(!isActive)
+    console.log(isActive)
+  }
+  return (
     <header className="header">
       <div className="header__body">
-        <div className="header__burger">
+        <div className={classNames("header__burger", { 'active': isActive })} onClick={toggleClassActive}>
           <span></span>
         </div>
         <a className="header__link">
           <img className="header__mainLogo" src={mainLogo} alt="mainLogo" />
           To do list
         </a>
-        <nav className="header__nav">
+
+
+        <nav className={classNames("header__nav", { 'active': isActive })}>
           <ul className="header__nav__list">
+            <li className="header__nav__item">
+              <a href="#" className="header__nav__link">Username</a>
+              <img src={userIcon} alt="userIcon" />
+            </li>
             <li className="nav__item">
               <a href="/reg" className="header__nav__link">Registration</a>
             </li>
             <li className="header__nav__item">
               <a href="/auth" className="header__nav__link">Sign in</a>
             </li>
-            <li className="header__nav__item">
-              <a href="#" className="header__nav__link">Username</a>
-              <img src={userIcon} alt="userIcon" />
-            </li>
           </ul>
         </nav>
 
       </div>
     </header>
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ullam soluta officiis non! Quae quia magnam, beatae cupiditate exercitationem ad sapiente sit pariatur aut nulla minima facere, quaerat unde repudiandae harum aperiam ratione, fugit enim sunt deleniti tempora? Iure quam ad quis optio quaerat reprehenderit dicta laborum recusandae minima laboriosam atque quia nostrum fugit illo aliquid voluptas molestiae minus quidem nesciunt, tempora sed mollitia architecto tenetur? Laudantium, cum quidem! Eaque, doloribus suscipit similique odit ad, reiciendis ea tempore iste, esse maiores temporibus ipsa necessitatibus qui hic voluptatibus veritatis ipsam cumque fugiat recusandae sequi consequuntur aliquam! Perferendis, pariatur illum, aliquid maxime facere sit temporibus at ducimus quis necessitatibus ipsa. Officiis fuga in excepturi dolorem autem voluptate. Quaerat cum necessitatibus error, reiciendis nisi odio nulla optio accusantium ad vitae animi tenetur in labore modi incidunt consectetur fugiat inventore assumenda! Nesciunt quod commodi quae vero. Temporibus et laboriosam ipsum mollitia debitis sequi at corporis, dolorum iure incidunt iste quo est minima impedit repellendus sunt illum. Fugiat quam aspernatur totam vel aliquid officiis dignissimos dolore mollitia molestias ratione. Debitis modi ullam nesciunt molestiae fugit aut, harum corrupti tempore ut distinctio. Dolorum minima, maiores laborum veritatis est blanditiis eos ab, sunt voluptatibus placeat illum inventore sint natus repellendus molestiae fugiat vel fugit, nisi eius. Odio molestiae sit vitae nemo maiores praesentium alias ex esse facere culpa sequi atque quaerat enim, voluptatum facilis deleniti aut minus exercitationem deserunt rem? Et aut vel, nemo, numquam totam exercitationem itaque suscipit autem ipsum illo enim voluptatum natus quisquam eius ab unde excepturi, ad a placeat! Alias, nihil voluptatem. Vel deleniti neque minus iure sint enim eveniet assumenda nulla facere, fugiat unde, culpa dolore veritatis similique ducimus incidunt nam ad. Aperiam fuga optio repellat quidem atque veritatis natus autem hic, recusandae laudantium porro, animi veniam totam temporibus iure vitae nihil debitis, dolor quia quisquam aliquid amet eos magni! Doloremque laborum omnis dolorum cum vero incidunt autem dolores, dolor repellat nobis ex eaque voluptatum cupiditate porro soluta, quisquam optio amet! Inventore corrupti molestiae nihil consequatur earum? Corrupti alias aliquam ipsa nostrum, tenetur dolore laboriosam quod libero veritatis consequatur officia esse? Quaerat, sit! Facilis assumenda ratione et, numquam soluta nemo quibusdam modi consequuntur, eius facere aut eos repellat odit ex delectus! Totam iste maxime fugiat, repellat consequatur quas repellendus adipisci animi neque veniam, vero obcaecati, facilis odio vel nam. Hic inventore error optio laudantium aut sint soluta asperiores fugiat perspiciatis, eius quia, esse recusandae sapiente fugit est? Provident nulla saepe sit quasi dignissimos. Doloremque at mollitia, cumque numquam eum quod libero iure quae obcaecati nulla vero ipsam cum facilis quia molestias nisi unde saepe eaque incidunt architecto voluptates maxime. Quasi cupiditate, aspernatur odio quisquam laborum fuga adipisci, soluta repudiandae deserunt fugit error dolores tempora vero inventore non. Ratione, vitae voluptatum unde veritatis alias porro deserunt ipsam repellat non amet a fugiat animi placeat eaque rerum praesentium ipsum cupiditate officiis nostrum beatae sit. Animi at id earum vitae asperiores ab culpa vel expedita dolor quibusdam sequi facere incidunt dolorum soluta, dolore quae tempore suscipit repudiandae? Necessitatibus nobis dolorem quibusdam rerum exercitationem corrupti in deleniti voluptatibus qui vel itaque eum eius sunt libero at ab accusamus adipisci cum dolore, error minima assumenda natus? Aperiam distinctio voluptates aut consectetur odit consequatur aspernatur eum quam totam asperiores recusandae quos ipsum perferendis, voluptate laudantium amet dolorum, suscipit beatae fugit animi praesentium! Ex omnis exercitationem harum odit labore officiis, dolorum mollitia sit magni aliquam quo perferendis sint! Eius, aut ut laudantium voluptatem optio rerum consequuntur! Quas libero, nisi excepturi optio officiis alias nemo voluptas culpa qui vel ducimus iure dolores consequuntur temporibus consequatur blanditiis cum hic. Neque pariatur ipsam sapiente non perspiciatis dolores, molestias eveniet voluptate distinctio ducimus iure earum dolorem soluta reiciendis, alias doloribus! In provident aliquid alias enim, amet fuga natus magni perspiciatis ad quaerat nobis impedit laborum dolorum laudantium ab voluptas sed quod. Maiores reiciendis quidem aut dolorum doloremque est quo fuga dolores corrupti mollitia assumenda sapiente dolorem consectetur doloribus officia veniam nobis, quaerat repellat tempore omnis illo ad similique eius perspiciatis? Deleniti, voluptas quam ratione possimus odio ducimus distinctio enim minus at ab tenetur explicabo officiis laborum harum placeat dolor sunt nihil animi. Nam unde dignissimos aperiam officia? Blanditiis reprehenderit numquam itaque quasi voluptatum velit? Sapiente explicabo blanditiis excepturi quos alias culpa perspiciatis accusamus in eligendi facere id nemo iste, placeat, nulla nobis iure optio dicta doloremque ipsam earum provident ex. Numquam maiores, assumenda laudantium minus at explicabo quo, qui quas consectetur ex odit hic deserunt. Alias pariatur iure voluptates deserunt quibusdam quasi at doloremque modi, culpa, deleniti corporis? Quas error expedita deserunt? Dignissimos, cum voluptas consequuntur obcaecati, maiores sapiente velit possimus iure vel natus rem aperiam corporis quibusdam voluptatem numquam tenetur similique, aliquid tempora! Incidunt odit beatae a at ut, blanditiis eius laboriosam ullam fugit voluptates saepe, cum deserunt provident quos nesciunt ipsum tempore alias libero voluptatum perspiciatis optio aut quae recusandae? Illo assumenda molestias dolores asperiores distinctio explicabo quam! Accusamus commodi itaque sunt eos nostrum aspernatur rem placeat ipsum, a rerum. Nesciunt ratione mollitia possimus ut eligendi inventore nostrum harum. Error quasi architecto, vitae provident odio illum placeat delectus impedit aut fuga, eligendi ducimus dolores quibusdam accusamus assumenda officia necessitatibus beatae magni eos laborum dignissimos recusandae. Vero, exercitationem! Iste qui odio reprehenderit ex ipsum consequatur laudantium veniam harum ratione, expedita magni non deleniti accusantium sit inventore tempore, exercitationem hic officia ab ea sint architecto. Ut aliquam, sed fugit doloribus dignissimos laboriosam laborum repellendus reiciendis ipsa aperiam recusandae? Eos omnis odit velit ipsum alias et sunt! Quis beatae omnis qui nemo excepturi, nisi animi adipisci corporis ipsa veritatis ea amet non minima harum temporibus esse maxime! Dolorum quibusdam, sint expedita illo numquam officia eos reiciendis molestias consequuntur nisi quod rerum, tenetur, fugiat vitae possimus aliquam nobis. Illo, at odio eius non, hic eos libero ipsam, vel animi nisi repudiandae perferendis. Ipsam laboriosam soluta qui, unde vero doloribus amet fuga tempora explicabo omnis illo fugit fugiat sequi eos quod sit atque sed repudiandae animi corporis ad voluptatem. Aperiam, odit corporis unde a eius exercitationem quam.</p>
-  </Fragment>
 
-);
-
+  );
+};
 export default Header
