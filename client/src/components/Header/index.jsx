@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import mainLogo from '../../assets/img/favicon'
-import userIcon from '../../assets/img/userIcon'
+import React from 'react'
+import mainLogo from '../../assets/img/favicon.svg'
+import userIcon from '../../assets/img/userIcon.png'
 
 const Header = ({ color, onClick, className }) => (
 
