@@ -1,9 +1,9 @@
 import React from 'react'
-import './page404.scss'
+import './Content404.scss'
 
-export default function Page404() {
+export default function Content404() {
     return (
-        <div className="page404">
+        <div className="Content404">
             <span>404</span> page not found
         </div>
     )
