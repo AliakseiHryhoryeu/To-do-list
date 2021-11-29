@@ -4,6 +4,7 @@ import './Header.scss';
 
 import mainLogo from '../../assets/img/favicon.svg'
 import userIcon from '../../assets/img/userIcon.png'
+import { Fragment } from 'react';
 
 
 
@@ -14,33 +15,35 @@ const Header = ({ }) => {
     console.log(isActive)
   }
   return (
-    <header className="header">
-      <div className="header__body">
-        <div className={classNames("header__burger", { 'active': isActive })} onClick={toggleClassActive}>
-          <span></span>
+    <header className="header__margin-bottom">
+      <header className="header">
+        <div className="header__container">
+        
+          <div className={classNames("header__burger", { 'active': isActive })} onClick={toggleClassActive}>
+            <span></span>
+          </div>
+          <a className="header__link">
+            <img className="header__mainLogo" src={mainLogo} alt="mainLogo" />
+            To do list
+          </a>
+
+          <nav className={classNames("header__nav", { 'active': isActive })}>
+            <ul className="header__nav__list">
+              <li className="header__nav__item">
+                <a href="#" className="header__nav__link">Username</a>
+                <img src={userIcon} alt="userIcon" />
+              </li>
+              <li className="nav__item">
+                <a href="/reg" className="header__nav__link">Registration</a>
+              </li>
+              <li className="header__nav__item">
+                <a href="/auth" className="header__nav__link">Sign in</a>
+              </li>
+            </ul>
+          </nav>
+
         </div>
-        <a className="header__link">
-          <img className="header__mainLogo" src={mainLogo} alt="mainLogo" />
-          To do list
-        </a>
-
-
-        <nav className={classNames("header__nav", { 'active': isActive })}>
-          <ul className="header__nav__list">
-            <li className="header__nav__item">
-              <a href="#" className="header__nav__link">Username</a>
-              <img src={userIcon} alt="userIcon" />
-            </li>
-            <li className="nav__item">
-              <a href="/reg" className="header__nav__link">Registration</a>
-            </li>
-            <li className="header__nav__item">
-              <a href="/auth" className="header__nav__link">Sign in</a>
-            </li>
-          </ul>
-        </nav>
-
-      </div>
+      </header>
     </header>
 
   );
