@@ -112,14 +112,25 @@
 }
 @media (min-width: 769px) {
     .header {
+        &::before{
+            
+        }
         &__burger {
             display: none;
         }
         justify-content: space-between;
         &__nav {
             display: block;
+            position: absolute;
+            margin-top: 0px;
+            overflow: visible;
+            top: auto;
+            width: auto;
+            left: auto;
+            right: 0;
             &__list {
                 display: flex;
+                flex-direction: row;
                 align-items: center;
                 li {
                     list-style: none;
