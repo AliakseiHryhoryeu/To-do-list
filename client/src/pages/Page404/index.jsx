@@ -1,15 +1,12 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 import Header from '../../components/Header'
 
-export default function Page404() {
+export default function Page404({name}) {
     return (
-        <Fragment >
-            <div className="Page404">
-                <Header />
-                page 404
-            </div>
-        </Fragment>
-
+        <div className="Page404">
+            <Header />
+            page 404 {name}
+        </div>
     )
 }

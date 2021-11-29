@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path='/' element={<Landing />} />
-        <Route path='*' element={<Page404 />} />
+        <Route path='*' element={<Page404  name="teeeest" />} />
       </Routes>
     </div>
   );
