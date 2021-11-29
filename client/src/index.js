@@ -1,16 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-/* import store from './reducers'
- */
-import './index.scss';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-ReactDOM.render(
-/*   <Provider store={store}>
+import { BrowserRouter } from "react-router-dom"
+
+import './index.scss'
+
+import App from './App'
+
+ReactDOM.render((
+  <BrowserRouter>
     <App />
-  </Provider>,
- */  
-<App />,
-  document.getElementById('root')
+  </BrowserRouter>
+), document.getElementById('root')
 );
-
