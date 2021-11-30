@@ -1,4 +1,6 @@
 .footer {
+    display: flex;
+    flex-direction: column;
     background-color: #101011;
     color: #ffffff;
     width: 100%;
@@ -19,7 +21,6 @@
         padding-bottom: 12px;
     }
 
-
     &__link{
         color: rgba(100%, 100%, 100%, 1);
         text-decoration: none;
@@ -30,5 +31,18 @@
         align-items: center;
         color: rgba(100%, 100%, 100%, 0.6);
         padding-bottom: 15px;
+    }
+}
+
+@media (min-width: 500px) {
+    .footer{
+        &__contacts{
+            flex-direction: row;
+            justify-content:space-evenly;
+            align-items: center;
+            width: 100%;
+            max-width: 1000px;
+            align-self: center;
+        }
     }
 }
