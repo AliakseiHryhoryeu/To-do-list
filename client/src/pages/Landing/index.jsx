@@ -57,7 +57,7 @@ export default function Landing() {
                         </div>
                         <Link className="about__button" to="/registration">Get started</Link>
 
-
+                    
                     </div>
                 </section>
             </div>
