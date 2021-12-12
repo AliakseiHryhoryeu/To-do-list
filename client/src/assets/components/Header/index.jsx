@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import classNames from 'classnames';
 import './Header.scss';
 
-import mainLogo from '../../assets/img/favicon.svg'
-import userIcon from '../../assets/img/userIcon.png'
+import mainLogo from '@img/favicon.svg'
+import userIcon from '@img/userIcon.png'
 import { Fragment } from 'react';
 
 

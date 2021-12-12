@@ -1,11 +1,11 @@
 import React from 'react'
 
-import Header from '../../components/Header'
-import Slider from '../../components/Slider'
-import Footer from '../../components/Footer'
+import Header from '@components/Header'
+import Slider from '@components/Slider'
+import Footer from '@components/Footer'
 import { Link } from "react-router-dom"
 
-import checkedImg from '../../assets/img/checked_1.svg';
+import checkedImg from '@img/checked_1.svg';
 
 import './Landing.scss'
 
