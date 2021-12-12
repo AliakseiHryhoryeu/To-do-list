@@ -16,7 +16,7 @@ function App() {
       <h1>teeest</h1>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path='*' element={<Page404 name="teeeest" />} />
+        <Route path='*' element={<Page404 name="test props" />} />
       </Routes>
     </div>
 
