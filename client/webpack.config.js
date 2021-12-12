@@ -37,30 +37,21 @@ const babelOptions = (preset) => {
   return options
 }
 
-const jsxLoader = (param) => {
-  const loaders = [{
-    loader: 'babel-loader',
-    options: babelOptions(param)
-  }]
-  if (isDev) {
-    loaders.push('eslint-loader')
-  }
-  return loaders
-}
-
 
 module.exports = {
   context: path.resolve(__dirname, "src"),
   mode: "development",
   entry: ['@babel/polyfill', './index.js'],
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "[name].[hash].js"
+    path: path.resolve(__dirname, "build"),
+    filename: "[name].[fullhash].js"
   },
   resolve: {
     extensions: ['.js', '.jsx', '.png'],
     alias: {
-      '@styles': path.resolve(__dirname, "src/assets/styles"),
+      '@components': path.resolve(__dirname, "src/assets/components"),
+      '@pages': path.resolve(__dirname, "src/assets/pages"),
+      '@reducers': path.resolve(__dirname, "src/assets/reducers"),
       '@img': path.resolve(__dirname, "src/assets/img"),
       '@': path.resolve(__dirname, "src")
     }
@@ -81,7 +72,7 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].[hash].css'
+      filename: '[name].[fullhash].css'
     })
   ],
   module: {
@@ -91,13 +82,16 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-          options: babelOptions()
+          options: babelOptions('@babel/preset-react')
         }
       },
       {
         test: /\.jsx$/,
         exclude: /node_modules/,
-        use: jsxLoader('@babel/preset-react'),
+        use: [{
+          loader: 'babel-loader',
+          options: babelOptions('@babel/preset-react')
+        }]
       },
       {
         test: /\.(sa|sc|c)ss$/,
