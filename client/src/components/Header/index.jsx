@@ -15,7 +15,7 @@ const Header = ({ }) => {
     console.log(isActive)
   }
   return (
-    <header className="header__margin-bottom">
+    <header className="header__wrapper">
       <header className="header">
         <div className="header__container">
         
