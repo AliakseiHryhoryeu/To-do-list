@@ -49,10 +49,12 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.png'],
     alias: {
-      '@components': path.resolve(__dirname, "src/assets/components"),
-      '@pages': path.resolve(__dirname, "src/assets/pages"),
-      '@reducers': path.resolve(__dirname, "src/assets/reducers"),
+      '@components': path.resolve(__dirname, "src/components"),
+      '@pages': path.resolve(__dirname, "src/pages"),
+      '@reducers': path.resolve(__dirname, "src/reducers"),
+      '@fonts': path.resolve(__dirname, "src/assets/fonts"),
       '@img': path.resolve(__dirname, "src/assets/img"),
+      '@styles': path.resolve(__dirname, "src/assets/styles"),
       '@': path.resolve(__dirname, "src")
     }
   },
