@@ -29,16 +29,17 @@ const Header = ({ }) => {
 
           <nav className={classNames("header__nav", { 'active': isActive })}>
             <ul className="header__nav__list">
-              <li className="header__nav__item">
-                <Link to="/" className="header__nav__link">Username</Link>
-                <img src={userIcon} alt="userIcon" />
-              </li>
-              <li className="nav__item">
+            <li className="nav__item">
                 <Link to="/registration" className="header__nav__link">Registration</Link>
               </li>
               <li className="header__nav__item">
                 <Link to="/authorization" className="header__nav__link">Sign in</Link>
               </li>
+              <li className="header__nav__item">
+                <Link to="/" className="header__nav__link">Username</Link>
+                <img src={userIcon} alt="userIcon" />
+              </li>
+
             </ul>
           </nav>
 

@@ -1,3 +1,5 @@
+@import "@styles/openSans.scss";  
+
 .header {
     position: fixed;
     top: 0;
@@ -6,7 +8,7 @@
     width: 100%;
     padding: 0px 10px;
     height: 50px;
-    &__wrapper{
+    &__wrapper {
         content: "";
         height: 50px;
     }
@@ -33,6 +35,8 @@
         align-items: center;
         padding-left: 20px;
         padding-right: 20px;
+        text-decoration: none;
+        color: #2e2c2c;
         cursor: pointer;
         height: 100%;
         z-index: 4;
@@ -58,7 +62,10 @@
         display: block;
         transition: all 0.3s ease 0s;
         overflow: auto;
-
+        &__link {
+            text-decoration: none;
+            color: #2e2c2c;
+        }
         &.active {
             top: 0;
         }
