@@ -32,9 +32,7 @@ export default function Landing() {
                         <div className="home__container">
                             <Link className="home__button" to="/registration">Get started</Link>
                             <a className="home__button" href="">Lets see how it work</a>
-
                         </div>
-
                     </div>
 
                 </section>
@@ -64,7 +62,6 @@ export default function Landing() {
                         </div>
                         <Link className="about__button" to="/registration">Get started</Link>
 
-                    
                     </div>
                 </section>
             </div>
