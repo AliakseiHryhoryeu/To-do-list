@@ -17,7 +17,7 @@ export default function Landing() {
                 <section className="home">
                     <div className="home__wrapper">
                         <div className="home__title">
-                            Manage your task
+                            Manage your tasks
                         </div>
                         <div className="home__subtitle">
                             To do list enable you to organize and prioritize your projects in a fun, flexible, and rewarding way. Let's started.
