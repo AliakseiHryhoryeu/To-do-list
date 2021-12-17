@@ -9,7 +9,14 @@ import checkedImg from '@img/checked_1.svg';
 
 import './Landing.scss'
 
+import img1 from '@img/slider-1.png';
+import img2 from '@img/slider-2.png';
+import img3 from '@img/slider-3.png';
+
 export default function Landing() {
+
+    const sliderDB = [img1, img2, img3]
+
     return (
         <div className="Landing">
             <Header />
@@ -53,7 +60,7 @@ export default function Landing() {
                             </ul>
                         </div>
                         <div className="about__slider">
-                            <Slider />
+                            <Slider slides={sliderDB} />
                         </div>
                         <Link className="about__button" to="/registration">Get started</Link>
 
