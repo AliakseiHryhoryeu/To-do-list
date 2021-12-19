@@ -1,35 +1,30 @@
 :root {
     --header-height: 3rem;
 
-    /* Colors start */
-    --hue: 152;
 
-    --header-color:hsl(var(--hue),98%,95%);
+    /* Background colors */
+    --header-color:hsl(192,98%,95%);
+    --landing-section-color:hsl(223,95%,96%);
+    --auth-menu-color:hsl(190,68%,96%);
+    --auth-color:hsl(184,60%,97%);
+    --settings-color:hsl(184,98%,100%);
+    --tasklist-color:hsl(192,100%,97%);
+    --menulist-color:hsl(184,100%,97%);
 
+    --text-color-black: hsl(192, 4%, 15%);
+    --text-color-grey: hsl(192, 4%, 15%);
+    --text-color-light: hsl(192, 0%, 67%);
 
-    --first-color: hsl(var(--hue), 24%, 32%);
-    --first-color-alt: hsl(var(--hue), 24%, 28%);
-    --first-color-light: hsl(var(--hue), 24%, 66%);
-    --first-color-lighten: hsl(var(--hue), 24%, 92%);
-
-
-    --title-color: hsl(var(--hue), 4%, 15%);
-
-    --text-color: hsl(var(--hue), 4%, 35%);
-    --text-color-light: hsl(var(--hue), 4%, 55%);
-
-    --body-color: hsl(var(--hue), 0%, 100%);
-    --container-color: #fff;
-    /* Colors end */
-
+    /* buttons colors */
+--btn-blue-color:hsl(234,92%,33%,70%);
     /*Fonts and typography start*/
-    --body-font: "Poppins", sans-serif;
+    --body-font: 'Montserrat', -apple-system, system-ui, sans-serif;
 
     --big-font-size: 2rem;
     --h1-font-size: 1.5rem;
     --h2-font-size: 1.25rem;
     --h3-font-size: 1rem;
-    --normal-font-size: 1rem;
+    --normal-font-size: 0.938rem;
     --small-font-size: 0.813rem;
     --smaller-font-size: 0.75rem;
 
