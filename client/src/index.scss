@@ -1,11 +1,12 @@
 @import '@styles/Montserrat.scss';
+@import '@styles/variables.scss';
 
 * {
   margin: 0;
   padding: 0;
   list-style: none;
   outline: none;
-  font-family: 'Montserrat', -apple-system, system-ui, sans-serif;
+  font-family: var(--body-font);
   font-weight: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
