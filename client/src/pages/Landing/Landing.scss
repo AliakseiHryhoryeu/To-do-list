@@ -1,4 +1,4 @@
-@import url('@styles/variables.scss');
+@import '@styles/variables.scss';
 
 .home {
     background: #e5f3f6;
@@ -32,7 +32,7 @@
     &__button {
         height: 50px;
         width: 100%;
-        background: rgba(7, 23, 159, 0.7);
+        background: var(--btn-blue-color);
         margin-bottom: 25px;
         border-radius: 15px;
         display: flex;
