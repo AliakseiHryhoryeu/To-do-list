@@ -1,0 +1,21 @@
+@import '@styles/variables.scss';
+
+.registration{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    &__container{
+        background: var(--auth-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;      
+        height: 100%; 
+        flex-grow: 3;
+    }
+    &__form{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+}
