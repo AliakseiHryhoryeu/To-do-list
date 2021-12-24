@@ -7,6 +7,10 @@ import Footer from "@components/Footer";
 import Landing from "@pages/Landing";
 import Page404 from "@pages/Page404";
 
+import Registration from "@pages/Registration";
+import SignIn from "@pages/SignIn";
+import RestorePassword from "@pages/RestorePassword";
+
 
 function App() {
   return (
@@ -14,6 +18,10 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/registration" element={<Registration />} />
+        <Route path="/auth" element={<SignIn />} />
+        <Route path="/restorepass" element={<RestorePassword />} />
+
         <Route path='*' element={<Page404 name="test props" />} />
       </Routes>
     </div>
