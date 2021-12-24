@@ -1,24 +1,23 @@
 :root {
     --header-height: 3rem;
 
-
     /* Background colors */
-    --header-color:hsl(192,98%,95%);
-    --landing-section-color:hsl(223,95%,96%);
-    --auth-menu-color:hsl(190,68%,96%);
-    --auth-color:hsl(184,60%,97%);
-    --settings-color:hsl(184,98%,100%);
-    --tasklist-color:hsl(192,100%,97%);
-    --menulist-color:hsl(184,100%,97%);
+    --header-color: hsl(192, 98%, 95%);
+    --landing-section-color: hsl(223, 95%, 96%);
+    --auth-menu-color: hsl(190, 68%, 96%);
+    --auth-color: hsl(184, 60%, 97%);
+    --settings-color: hsl(184, 98%, 100%);
+    --tasklist-color: hsl(192, 100%, 97%);
+    --menulist-color: hsl(184, 100%, 97%);
 
     --text-color-black: hsl(192, 4%, 15%);
     --text-color-grey: hsl(192, 4%, 15%);
     --text-color-light: hsl(192, 0%, 67%);
 
     /* buttons colors */
---btn-blue-color:hsl(234,92%,33%,70%);
+    --btn-blue-color: hsl(234, 92%, 33%, 70%);
     /*Fonts and typography start*/
-    --body-font: 'Montserrat', -apple-system, system-ui, sans-serif;
+    --body-font: "Montserrat", -apple-system, system-ui, sans-serif;
 
     --big-font-size: 2rem;
     --h1-font-size: 1.5rem;
@@ -49,5 +48,4 @@
     --mb-1-5: 1.5rem;
     --mb-2: 2rem;
     --mb-2-5: 2.5rem;
-
 }
