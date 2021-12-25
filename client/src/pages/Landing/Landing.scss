@@ -87,3 +87,19 @@
         font-size: var(--btn-font-size);
     }
 }
+
+
+@media (min-width:768px) {
+    .home{
+        &__container{
+            flex-direction: row;
+        }
+        &__button{
+            margin:0 var(--mside-1);
+        }
+        &__subtitle{
+            max-width: 44rem;
+            text-align: center;
+        }
+    }
+}
