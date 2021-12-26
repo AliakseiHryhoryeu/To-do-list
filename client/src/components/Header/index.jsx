@@ -34,7 +34,7 @@ const Header = ({ }) => {
                 <Link to="/registration" className="header__nav__link">Registration</Link>
               </li>
               <li className="header__nav__item">
-                <Link to="/authorization" className="header__nav__link">Sign in</Link>
+                <Link to="/auth" className="header__nav__link">Sign in</Link>
               </li>
               <li className="header__nav__item">
                 <Link to="/" className="header__nav__link">Username</Link>

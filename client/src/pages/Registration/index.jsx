@@ -12,13 +12,13 @@ export default function Registration() {
                 <div className="registration__form">
                     <div className="registration__title">Registration</div>
 
-                    <input type="text" placeholder='Email Adress...' />
-                    <input type="text" placeholder='User name...' />
-                    <input type="text" placeholder='Password...' />
-                    <input type="text" placeholder='Repeat your password...' />
-
-                    <a href="" className="registration__button">Register</a>
-                    <a href="" className="registration__signIn">Alredy have account? Sign in</a>
+                    <input className="registration__input" type="text" placeholder='User name...' />
+                    <input className="registration__input" type="text" placeholder='Email Adress...' />
+                    <input className="registration__input" type="text" placeholder='Password...' />
+                    <input className="registration__input" type="text" placeholder='Repeat your password...' />
+                    
+                    <a href="" className="registration__button-reg">Register</a>
+                    <a href="" className="registration__button-signIn">Alredy have account? Sign in</a>
                 </div>
             </div>
         </div>
