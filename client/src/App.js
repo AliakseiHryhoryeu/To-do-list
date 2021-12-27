@@ -10,6 +10,7 @@ import Page404 from "@pages/Page404";
 import Registration from "@pages/Registration";
 import SignIn from "@pages/SignIn";
 import RestorePassword from "@pages/RestorePassword";
+import Main from "@pages/Main";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/registration" element={<Registration />} />
         <Route path="/auth" element={<SignIn />} />
         <Route path="/restorepass" element={<RestorePassword />} />
+        <Route path="/main" element={<Main />} />
 
         <Route path='*' element={<Page404 name="test props" />} />
       </Routes>
