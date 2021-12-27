@@ -16,7 +16,7 @@ export default function SignIn() {
                     <input className="signIn__input" type="text" placeholder='User name...' />
                     <input className="signIn__input" type="text" placeholder='Password...' />
 
-                    <Link to="/auth" className="signIn__button btn-signIn">Sign In</Link>
+                    <Link to="/main" className="signIn__button btn-signIn">Sign In</Link>
                     <Link to="/registration" className="signIn__button btn-reg">Dont have account? Register</Link>
                     <Link to="/restorepass" className="signIn__button btn-restorepass">Forgot your password?</Link>
                 </div>
