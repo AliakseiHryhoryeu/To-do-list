@@ -14,7 +14,8 @@ export default function Registration() {
         initialValues: {
           username: '',
           email: '',
-          password: ''
+          password: '',
+          repeatPassword: ''
         },
         validationSchema: registerSchema,
         onSubmit: (values) => {
@@ -33,11 +34,26 @@ export default function Registration() {
                         type="text" placeholder='User name...' 
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.name}
+                        value={formik.values.username}
                     />
-                    <input className="registration__input" type="text" placeholder='Email Adress...' />
-                    <input className="registration__input" type="password" placeholder='Password...' />
-                    <input className="registration__input" type="password" placeholder='Repeat your password...' />
+                    <input className="registration__input" 
+                    type="text" placeholder='Email Adress...' 
+                    onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.email}
+                    />
+                    <input className="registration__input" 
+                    type="password" placeholder='Password...' 
+                    onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.password}
+                    />
+                    <input className="registration__input" 
+                    type="password" placeholder='Repeat your password...' 
+                    onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.repeatPassword}
+                    />
                     
                     <button href="" type="submit" className="registration__button-reg">Register</button>
                     <Link to="/auth" className="registration__button-signIn">Alredy have account? Sign in</Link>
