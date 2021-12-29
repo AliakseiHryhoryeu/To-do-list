@@ -47,16 +47,21 @@ module.exports = {
     filename: "[name].[fullhash].js"
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.png'],
+    extensions: ['.js', '.jsx', '.scss'],
     alias: {
+      '@': path.resolve(__dirname, "src"),
+
       '@components': path.resolve(__dirname, "src/components"),
+
+      '@store': path.resolve(__dirname, "src/store"),
+      '@actions': path.resolve(__dirname, "src/store/actions"),
+      '@reducers': path.resolve(__dirname, "src/store/reducers"),
+
       '@pages': path.resolve(__dirname, "src/pages"),
-      '@reducers': path.resolve(__dirname, "src/reducers"),
       '@fonts': path.resolve(__dirname, "src/assets/fonts"),
       '@img': path.resolve(__dirname, "src/assets/img"),
       '@styles': path.resolve(__dirname, "src/assets/styles"),
-      '@db': path.resolve(__dirname, "src/assets/db"),
-      '@': path.resolve(__dirname, "src")
+      '@db': path.resolve(__dirname, "src/assets/db")
     }
   },
   optimization: optimization(),
