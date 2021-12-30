@@ -32,8 +32,6 @@ router.post('/registration',
             await user.save()
             return res.json({ message: "User was created" })
 
-
-
         } catch (e) {
             console.log(e)
             res.send({ message: "Server error" })
