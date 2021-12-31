@@ -16,12 +16,11 @@ export default function Registration() {
             username: '',
             email: '',
             password: '',
-            repeatPassword: ''
+            repeatPassword: '',
         },
         validationSchema: registerSchema,
         onSubmit: (values) => {
-            console.log(values)
-            registration(values);
+            registration(values.username, values.email, values.password);
         },
     });
     return (
@@ -68,7 +67,7 @@ export default function Registration() {
                         value={formik.values.repeatPassword}
                     />
 
-                    <button type="submit" className="registration__button-reg submit" >Register</button>
+                    <button type="submit" className="registration__button-reg" >Register</button>
                     <Link to="/auth" className="registration__button-signIn">Alredy have account? Sign in</Link>
                 </form>
             </div>
