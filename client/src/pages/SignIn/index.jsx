@@ -1,28 +1,56 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import {login} from "@actions/authActions";
+import { signIn } from "@actions/authActions";
+import { useFormik } from 'formik';
+import { signInSchema } from './validation';
 
 import Header from '@components/Header'
 
 import './SignIn.scss'
 
 export default function SignIn() {
-    const dispatch = useDispatch()
 
+    const formik = useFormik({
+        initialValues: {
+            username: '',
+            password: '',
+        },
+        validationSchema: signInSchema,
+        onSubmit: (values) => {
+            console.log(values)
+            signIn(values);
+        },
+    });
     return (
         <div className='signIn'>
             <Header />
             <div className="signIn__container">
-                <div className="signIn__form">
+                <form className="signIn__form" onSubmit={formik.handleSubmit} noValidate>
                     <div className="signIn__title">Sign In</div>
 
-                    <input className="signIn__input" type="text" placeholder='User name...' />
-                    <input className="signIn__input" type="text" placeholder='Password...' />
+                    <input className="signIn__input" 
+                        placeholder='Username...'
+                        name="username"
+                        type="text"
 
-                    <Link to="/main" className="signIn__button btn-signIn" >Sign In</Link>
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.username}
+                    />
+                    <input className="signIn__input" 
+                        placeholder='Password...'
+                        name="password"
+                        type="password"
+
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.password}
+                    />
+
+                    <button type="submit" className="signIn__button btn-signIn submit" >Sign In</button>
                     <Link to="/registration" className="signIn__button btn-reg">Dont have account? Register</Link>
                     <Link to="/restorepass" className="signIn__button btn-restorepass">Forgot your password?</Link>
-                </div>
+                </form>
             </div>
         </div>
     )

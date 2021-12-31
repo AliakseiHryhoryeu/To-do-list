@@ -3,9 +3,10 @@ import {setUser} from "@reducers/userReducer";
 
 import config from '@/config.json'
 
-export const registration = async (email, password) => {
+export const registration = async (username,email, password) => {
     try {
         const response = await axios.post(config.proxy + `api/auth/registration`, {
+            username,
             email,
             password
         })
@@ -15,13 +16,15 @@ export const registration = async (email, password) => {
     }
 }
 
-export const login =  (email, password) => {
+export const signIn =  (email, password) => {
     return async dispatch => {
         try {
             const response = await axios.post(config.proxy + `api/auth/login`, {
                 email,
                 password
             })
+            alert(response.data.message)
+
             dispatch(setUser(response.data.user))
             localStorage.setItem('token', response.data.token)
         } catch (e) {
