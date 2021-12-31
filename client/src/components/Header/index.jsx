@@ -36,10 +36,12 @@ const Header = ({ }) => {
                 <Link to="/auth" className="header__nav__link">Sign in</Link>
               </li>
               <li className="header__nav__item">
+                <Link to="/" className="header__nav__link">Logout</Link>
+              </li>
+              <li className="header__nav__item">
                 <Link to="/" className="header__nav__link">Username</Link>
                 <img src={userIcon} alt="userIcon" />
               </li>
-
             </ul>
           </nav>
 
