@@ -4,6 +4,7 @@ import {
     LOGOUT,
   } from '@store/types';
 
+  
 const defaultState = {
     curentUser:{},
     isAuth: false

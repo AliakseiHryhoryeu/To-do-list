@@ -1,19 +1,46 @@
 import axios from 'axios'
+import {setUser} from "@reducers/userReducer";
+
 import config from '@/config.json'
 
-export const registration = async (username, email, password) => {
-
+export const registration = async (email, password) => {
     try {
-        const response = await axios.post(config.proxy + `auth/registration`, {
-            username,
+        const response = await axios.post(config.proxy + `api/auth/registration`, {
             email,
             password
         })
         alert(response.data.message)
-    }
-    catch (e) {
+    } catch (e) {
         alert(e.response.data.message)
     }
+}
 
+export const login =  (email, password) => {
+    return async dispatch => {
+        try {
+            const response = await axios.post(config.proxy + `api/auth/login`, {
+                email,
+                password
+            })
+            dispatch(setUser(response.data.user))
+            localStorage.setItem('token', response.data.token)
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+    }
+}
 
+export const auth =  () => {
+    return async dispatch => {
+        try {
+            const response = await axios.get(config.proxy + `api/auth/auth`,
+                {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
+            )
+            dispatch(setUser(response.data.user))
+            localStorage.setItem('token', response.data.token)
+        } catch (e) {
+            alert(e.response.data.message)
+            localStorage.removeItem('token')
+        }
+    }
 }
