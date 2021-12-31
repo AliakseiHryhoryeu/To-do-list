@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { signIn } from "@actions/authActions";
 import { useFormik } from 'formik';
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { signInSchema } from './validation';
 
 import Header from '@components/Header'
@@ -19,7 +19,6 @@ export default function SignIn() {
         },
         validationSchema: signInSchema,
         onSubmit: (values) => {
-            console.log(values)
             dispatch(signIn(values.username, values.password));
         },
     });
@@ -30,7 +29,7 @@ export default function SignIn() {
                 <form className="signIn__form" onSubmit={formik.handleSubmit} noValidate>
                     <div className="signIn__title">Sign In</div>
 
-                    <input className="signIn__input" 
+                    <input className="signIn__input"
                         placeholder='Username...'
                         name="username"
                         type="text"
@@ -39,7 +38,7 @@ export default function SignIn() {
                         onBlur={formik.handleBlur}
                         value={formik.values.username}
                     />
-                    <input className="signIn__input" 
+                    <input className="signIn__input"
                         placeholder='Password...'
                         name="password"
                         type="password"

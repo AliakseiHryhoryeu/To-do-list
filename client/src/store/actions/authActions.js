@@ -23,7 +23,7 @@ export const signIn =  (username, password) => {
                 username,
                 password
             })
-            alert(response.data.message)
+            console.log(response.data)
 
             dispatch(setUser(response.data.user))
             localStorage.setItem('token', response.data.token)
