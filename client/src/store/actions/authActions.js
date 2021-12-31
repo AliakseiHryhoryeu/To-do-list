@@ -1,9 +1,10 @@
 import axios from 'axios'
+import config from '@/config.json'
 
 export const registration = async (username, email, password) => {
 
     try {
-        const response = await axios.post(`https://localhost:3000/api/auth/registration`, {
+        const response = await axios.post(config.proxy + `auth/registration`, {
             username,
             email,
             password
