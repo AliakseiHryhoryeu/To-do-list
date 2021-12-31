@@ -16,11 +16,11 @@ export const registration = async (username,email, password) => {
     }
 }
 
-export const signIn =  (email, password) => {
+export const signIn =  (username, password) => {
     return async dispatch => {
         try {
             const response = await axios.post(config.proxy + `api/auth/login`, {
-                email,
+                username,
                 password
             })
             alert(response.data.message)

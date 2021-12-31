@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { signIn } from "@actions/authActions";
 import { useFormik } from 'formik';
+import {useDispatch} from "react-redux";
 import { signInSchema } from './validation';
 
 import Header from '@components/Header'
@@ -9,6 +10,7 @@ import Header from '@components/Header'
 import './SignIn.scss'
 
 export default function SignIn() {
+    const dispatch = useDispatch()
 
     const formik = useFormik({
         initialValues: {
@@ -18,7 +20,7 @@ export default function SignIn() {
         validationSchema: signInSchema,
         onSubmit: (values) => {
             console.log(values)
-            signIn(values);
+            dispatch(signIn(values.username, values.password));
         },
     });
     return (
