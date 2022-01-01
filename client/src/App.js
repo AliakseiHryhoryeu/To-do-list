@@ -1,5 +1,8 @@
-import React, { useState, Component } from "react";
+import React, { useState, Component, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom"
+
+import { useDispatch, useSelector } from "react-redux";
+import { auth } from "@actions/authActions";
 
 import Header from "@components/Header";
 import Footer from "@components/Footer";
@@ -14,6 +17,13 @@ import Main from "@pages/Main";
 
 
 function App() {
+  const isAuth = useSelector(state => state.user.isAuth)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(auth())
+  }, [])
+
   return (
 
     <div className="App">
