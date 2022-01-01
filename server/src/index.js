@@ -15,7 +15,10 @@ app.use("/", mainRouter)
 
 const start = async () => {
     try {
-        await mongoose.connect(config.dbUrl)
+        await mongoose.connect(config.dbUrl),{
+            useNewUrlParser:true,
+            useUnifiedTopology:true
+        }
 
         app.listen(PORT, () => {
             console.log('Server started on port ', PORT)
