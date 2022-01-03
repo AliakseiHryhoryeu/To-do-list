@@ -1,0 +1,115 @@
+.settings {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    overflow: hidden;
+    background: var(--settings-bg-shadow-color);
+    &__close {
+        cursor: pointer;
+        opacity: 0.2;
+        align-self: end;
+        padding: var(--mb-1);
+        min-width: var(--mb-1-5);
+        min-height: var(--mb-1-5);
+    }
+    &__wrapper {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        flex-direction: column;
+        align-self: start;
+        overflow: auto;
+
+        width: 100%;
+        height: 100%;
+        background: var(--settings-bg-color);
+    }
+    &__block {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        max-width: 500px;
+    }
+    &__title {
+        text-align: center;
+        padding-bottom: var(--mb-2);
+        font-weight: 600;
+        font-size: var(--h1-font-size);
+    }
+    &__input {
+        width: 80vw;
+        height: 2rem;
+        max-width: 450px;
+        padding: 0 var(--mb-0-5);
+        margin-bottom: var(--mb-0-5);
+        background: var(--auth-color);
+        border: 1px solid var(--text-color-grey);
+        border-radius: 2px;
+    }
+    &__button {
+        height: var(--btn-height);
+        width: 100%;
+        max-width: 468px;
+        margin: var(--mb-0-5) 0;
+        border-radius: var(--btn-border-radius);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: var(--btn-font-size);
+        box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
+        color: var(--text-color-light);
+        background: var(--btn-blue-color);
+    }
+    &__usericon {
+        &__wrapper {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            flex-direction: row;
+            max-width: 500px;
+
+            &-text {
+                display: flex;
+                justify-content: center;
+                align-content: center;
+                flex-direction: column;
+                max-width: 100px;
+            }
+            &-imageContainer {
+                display: flex;
+                justify-content: start;
+                align-content: center;
+                flex-direction: row;
+                flex-wrap: wrap;
+
+                img {
+                    margin: var(--mb-0-5) var(--mb-0-5);
+                }
+            }
+        }
+        &-img{
+            border: solid var(--settings-bg-color) 3px;
+        }
+        &-active {
+            border: solid var(--settings-border-img-color) 3px;
+        }
+    }
+}
+
+@media (min-width: 760px) {
+    .settings {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &__wrapper {
+            border-radius: 20px;
+            max-height: 600px;
+            max-width: 600px;
+            box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+    }
+}

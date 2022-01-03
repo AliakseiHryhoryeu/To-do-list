@@ -14,12 +14,16 @@
     --text-color-grey: hsl(192, 4%, 15%);
     --text-color-light: hsl(192, 0%, 97%);
 
+    --settings-bg-color: hsl(184, 100%, 97%);
+    --settings-bg-shadow-color: hsl(192, 3%, 7%, 70%);
+    --settings-border-img-color:hsl(192, 2%, 36%, 70%);
+
     /* buttons settings */
     --btn-blue-color: hsl(234, 92%, 33%, 70%);
     --btn-gray-color: hsl(240, 15%, 89%, 70%);
     --btn-height: 3rem;
-    --btn-border-radius:1rem;
-    --btn-font-size:1.1rem;
+    --btn-border-radius: 1rem;
+    --btn-font-size: 1.1rem;
     /*Fonts and typography start*/
     --body-font: "Montserrat", -apple-system, system-ui, sans-serif;
 

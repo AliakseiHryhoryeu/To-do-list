@@ -30,7 +30,7 @@ export default function Landing() {
                     </div>
                     <div className="home__container">
                         <Link className="home__button" to="/registration">Get started</Link>
-                        <a className="home__button" href="">Lets see how it work</a>
+                        <Link className="home__button" to="/main">Lets see how it work</Link>
                     </div>
                 </div>
 

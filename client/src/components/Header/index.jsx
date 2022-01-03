@@ -55,6 +55,15 @@ const Header = ({ }) => {
                 <Link to="/" className="header__nav__link">Username</Link>
                 <img src={userIcon} alt="userIcon" />
               </li>}
+              
+              <li className="header__nav__item">
+                <a href="/" className="header__nav__link" >Settings</a>
+              </li>
+              <li className="header__nav__item" onClick={() => dispatch(logout())}>
+                <Link to="/" className="header__nav__link" >Logout</Link>
+              </li>
+
+
             </ul>
           </nav>
 
