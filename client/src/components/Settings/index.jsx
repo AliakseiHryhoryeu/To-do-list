@@ -12,6 +12,9 @@ import closebtn from '@img/remove.svg'
 
 export default function Settings() {
 
+    function CloseSettings(){
+        
+    }
 
     return (
         //need use redux for change visibly settings

@@ -1,4 +1,3 @@
-
 import {
     SET_USER,
     LOGOUT,
