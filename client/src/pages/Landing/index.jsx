@@ -1,17 +1,16 @@
 import React from 'react'
+import { Link } from "react-router-dom"
 
 import Header from '@components/Header'
 import Slider from '@components/Slider'
 import Footer from '@components/Footer'
-import { Link } from "react-router-dom"
 
 import checkedImg from '@img/checked_1.svg';
-
-import './Landing.scss'
-
 import img1 from '@img/slider-1.png';
 import img2 from '@img/slider-2.png';
 import img3 from '@img/slider-3.png';
+
+import './Landing.scss'
 
 export default function Landing() {
 
@@ -29,7 +28,7 @@ export default function Landing() {
                         To do list enable you to organize and prioritize your projects in a fun, flexible, and rewarding way. Let's started.
                     </div>
                     <div className="home__container">
-                        <Link className="home__button" to="/registration">Get started</Link>
+                        <Link className="home__button" to="/hiodsgijdjisd">Get started</Link>
                         <Link className="home__button" to="/main">Lets see how it work</Link>
                     </div>
                 </div>

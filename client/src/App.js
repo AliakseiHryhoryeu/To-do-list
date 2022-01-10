@@ -34,7 +34,7 @@ function App() {
         <Route path="/restorepass" element={<RestorePassword />} />
         <Route path="/main" element={<Main />} />
 
-        <Route path='*' element={<Page404 name="test props" />} />
+        <Route path='*' element={<Page404 />} />
       </Routes>
     </div>
 
