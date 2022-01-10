@@ -2,11 +2,18 @@ import React from 'react'
 
 import Header from '@components/Header'
 
-export default function Page404({name}) {
+import './Page404.scss'
+
+export default function Page404() {
     return (
-        <div className="Page404">
+        <div className="page404">
             <Header />
-            page 404 {name}
+            <div className="page404__main">
+                <div className="page404__text">
+                    <span>404</span>
+                    page not found
+                </div>
+            </div>
         </div>
     )
 }
