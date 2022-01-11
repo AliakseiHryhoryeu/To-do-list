@@ -58,12 +58,11 @@
         background-color: var(--header-color);
         border-radius: 0px 10px 10px 0px;
         display: block;
-        transition: all 0.3s ease 0s;
         overflow: auto;
         &__link {
             color: #2e2c2c;
         }
-        &.active {
+        &.header__nav-active {
             top: 0;
         }
         &__list {
@@ -71,6 +70,51 @@
             flex-direction: column;
             padding-right: 10px;
             padding-top: 10px;
+        }
+        &__username {
+            justify-self: center;
+            align-self: end;
+            display: flex;
+            justify-content: end;
+            align-items: end;
+            flex-direction: column;
+            width: 85%;
+            border-radius: 5px;
+            padding: var(--mb-0-5) var(--mb-0-5);
+            background: var(--header-bg-username-color);
+            cursor: pointer;
+
+            &__container {
+                display: flex;
+                flex-direction: row;
+                justify-content: end;
+                align-items: center;
+                :nth-child(1) {
+                    margin-right: var(--mb-0-5);
+                }
+            }
+            &__item {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: start;
+                margin: var(--mb-0-2) 0;
+                img {
+                    max-width: 30px;
+                    max-height: 30px;
+                }
+            }
+            &__content {
+                display: none;
+                &-active {
+                    animation: scale-display-settings 0.3s;
+                    display: block;
+                }
+                align-self: start;
+                :nth-child(1) {
+                    margin-right: var(--mb-0-5);
+                }
+            }
         }
     }
     &__burger {
@@ -105,7 +149,7 @@
         &:before {
             top: 0;
         }
-        &.active {
+        &.header__burger-active {
             &:before {
                 transform: rotate(45deg);
                 top: 12px;
@@ -118,6 +162,19 @@
                 transform: scale(0);
             }
         }
+    }
+}
+@keyframes scale-display-settings {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+        -webkit-transform: scale(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        -webkit-transform: scale(1);
     }
 }
 @media (min-width: 760px) {
