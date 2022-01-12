@@ -50,7 +50,7 @@
     }
     &__nav {
         position: fixed;
-        top: -100%;
+        top: -300%;
         left: 0;
         width: 60%;
         height: 100%;
@@ -59,25 +59,28 @@
         border-radius: 0px 10px 10px 0px;
         display: block;
         overflow: auto;
+        &-active {
+            top: 0;
+        }
         &__link {
             color: #2e2c2c;
-            &-white{
+            &-white {
                 text-decoration: none;
                 font-weight: 400;
                 font-size: 18px;
-    
+
                 color: var(--text-color-light);
             }
         }
-        &.header__nav-active {
-            top: 0;
-        }
+
         &__list {
             display: flex;
             flex-direction: column;
             padding-right: 10px;
             padding-top: 10px;
-
+            &-tasks {
+                margin-bottom: 50px;
+            }
         }
         &__username {
             justify-self: center;
@@ -211,16 +214,19 @@
                     list-style: none;
                     margin-left: 20px;
                 }
-                &-isAuth{
+                &-isAuth {
                     flex-direction: column;
                     justify-content: end;
                     align-items: end;
+                }
+                &-tasks {
+                    display: none;
                 }
             }
             &__link {
                 text-decoration: none;
                 padding-right: 7px;
-                &-white{
+                &-white {
                     color: var(--text-color-black);
                 }
             }
@@ -229,7 +235,7 @@
                 justify-content: center;
                 align-items: center;
             }
-            &__username{
+            &__username {
                 justify-self: center;
                 align-self: end;
                 display: flex;
@@ -241,10 +247,10 @@
 
                 padding: var(--mb-0-5) var(--mb-0-5);
                 background: none;
-                &__container{
+                &__container {
                     margin-bottom: var(--mb-1);
                 }
-                &__content{
+                &__content {
                     padding: var(--mb-1);
                     border-radius: 8px;
                     box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25);
