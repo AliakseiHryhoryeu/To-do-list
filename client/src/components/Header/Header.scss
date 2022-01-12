@@ -61,6 +61,13 @@
         overflow: auto;
         &__link {
             color: #2e2c2c;
+            &-white{
+                text-decoration: none;
+                font-weight: 400;
+                font-size: 18px;
+    
+                color: var(--text-color-light);
+            }
         }
         &.header__nav-active {
             top: 0;
@@ -70,6 +77,7 @@
             flex-direction: column;
             padding-right: 10px;
             padding-top: 10px;
+
         }
         &__username {
             justify-self: center;
@@ -80,6 +88,7 @@
             flex-direction: column;
             width: 85%;
             border-radius: 5px;
+            margin-left: var(--mb-1);
             padding: var(--mb-0-5) var(--mb-0-5);
             background: var(--header-bg-username-color);
             cursor: pointer;
@@ -89,6 +98,7 @@
                 flex-direction: row;
                 justify-content: end;
                 align-items: center;
+                width: 100%;
                 :nth-child(1) {
                     margin-right: var(--mb-0-5);
                 }
@@ -201,15 +211,46 @@
                     list-style: none;
                     margin-left: 20px;
                 }
+                &-isAuth{
+                    flex-direction: column;
+                    justify-content: end;
+                    align-items: end;
+                }
             }
             &__link {
                 text-decoration: none;
                 padding-right: 7px;
+                &-white{
+                    color: var(--text-color-black);
+                }
             }
             &__item {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+            }
+            &__username{
+                justify-self: center;
+                align-self: end;
+                display: flex;
+                justify-content: end;
+                align-items: end;
+                flex-direction: column;
+                width: auto;
+                margin-left: 0;
+
+                padding: var(--mb-0-5) var(--mb-0-5);
+                background: none;
+                &__container{
+                    margin-bottom: var(--mb-1);
+                }
+                &__content{
+                    padding: var(--mb-1);
+                    border-radius: 8px;
+                    box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25);
+                    background: #fff;
+                    min-width: 200px;
+                }
             }
         }
     }

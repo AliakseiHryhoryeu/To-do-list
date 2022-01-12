@@ -56,23 +56,22 @@ const Header = ({ }) => {
           </nav>}
 
           {isAuth && <nav className={classNames("header__nav", { 'header__nav-active': isActiveHeaderBurger })}>
-            <ul className="header__nav__list">
-              <li className="header__nav__item header__nav__username">
+            <ul className="header__nav__list-isAuth">
+              <li className="header__nav__item header__nav__username" >
 
                 <div className="header__nav__username__container" onClick={toggleClassActiveUsername}>
-                  <div className="header__nav__link">Username</div>
+                  <div className="header__nav__link-white">Username</div>
                   <img src={userIcon} alt="userIcon" />
                 </div>
-
 
                 <div className={classNames("header__nav__username__content", { 'header__nav__username__content-active': isActiveUsername })}>
                   <div className="header__nav__username__item">
                     <img src={settingsIcon} alt="settingsIcon" />
-                    <a href="/" className="header__nav__link" >Settings</a>
+                    <a href="/" className="header__nav__link-white" >Settings</a>
                   </div>
                   <div className="header__nav__username__item" onClick={() => dispatch(logout())}>
                     <img src={exitIcon} alt="exitIcon" />
-                    <Link to="/" className="header__nav__link" >Logout</Link>
+                    <Link to="/" className="header__nav__link-white" >Logout</Link>
                   </div>
                 </div>
               </li>
