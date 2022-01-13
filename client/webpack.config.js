@@ -44,7 +44,8 @@ module.exports = {
   entry: ['@babel/polyfill', './index.js'],
   output: {
     path: path.resolve(__dirname, "build"),
-    filename: "[name].[fullhash].js"
+    filename: "[name].[fullhash].js",
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.js', '.jsx', '.scss'],
@@ -67,7 +68,8 @@ module.exports = {
   optimization: optimization(),
   devServer: {
     port: 4000,
-    hot: isDev
+    hot: isDev,
+    historyApiFallback: true
   },
   devtool: isProd ? false : 'source-map',
   plugins: [

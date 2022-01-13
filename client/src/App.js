@@ -4,9 +4,6 @@ import { Routes, Route, Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "@actions/authActions";
 
-import Header from "@components/Header";
-import Footer from "@components/Footer";
-
 import Landing from "@pages/Landing";
 import Page404 from "@pages/Page404";
 
@@ -29,9 +26,11 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/registration" element={<Registration />} />
+
         <Route path="/auth" element={<SignIn />} />
+        <Route path="/registration" element={<Registration />} />
         <Route path="/restorepass" element={<RestorePassword />} />
+        
         <Route path="/main" element={<Main />} />
 
         <Route path='*' element={<Page404 />} />

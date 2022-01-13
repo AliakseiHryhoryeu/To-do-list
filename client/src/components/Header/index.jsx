@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { auth } from "@actions/authActions";
 import { logout } from "@reducers/userReducer";
 
+import Settings from "@components/Settings";
 import List from "@components/List";
 import AddList from "@components/AddList";
 
@@ -16,7 +17,6 @@ import exitIcon from '@img/exitIcon.svg'
 
 import DB from "@db/db.json";
 
-
 import './Header.scss';
 
 const Header = ({ }) => {
@@ -26,7 +26,6 @@ const Header = ({ }) => {
   useEffect(() => {
     dispatch(auth())
   }, [])
-
 
   // responsive at mobile devices
   const [isActiveHeaderBurger, setActiveHeaderBurger] = useState(false)

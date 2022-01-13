@@ -4,7 +4,6 @@ import Header from '@components/Header'
 import List from "@components/List";
 import AddList from "@components/AddList";
 import Tasks from "@components/Tasks";
-import Settings from "@components/Settings";
 
 import DB from "@db/db.json";
 
@@ -29,7 +28,6 @@ export default function Main() {
     return (
         <div className='main'>
             <Header />
-            {/* <Settings /> */}
             <div className="main__wrapper">
                 <div className="main__menu">
                     <div className="main__menu__wrapper">

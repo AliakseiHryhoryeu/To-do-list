@@ -1,16 +1,32 @@
-import React from 'react'
-import { Link } from "react-router-dom"
-
-import { registration } from "@actions/authActions";
+import React, {useEffect} from 'react'
+import { Link, useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
 
 import { useFormik } from 'formik';
 import { registerSchema } from './validation';
+
+import { registration } from "@actions/authActions";
+import { auth } from "@actions/authActions";
 
 import Header from '@components/Header'
 
 import './Registration.scss'
 
 export default function Registration() {
+
+    const isAuth = useSelector(state => state.user.isAuth)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+      dispatch(auth())
+    }, [])
+    
+    if (isAuth === true) {
+        navigate('/main',{replace: true})
+    }
+
+
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -20,7 +36,7 @@ export default function Registration() {
         },
         validationSchema: registerSchema,
         onSubmit: (values) => {
-            registration(values.username, values.email, values.password);
+            registration(values.username, values.email, values.password)
         },
     });
     return (

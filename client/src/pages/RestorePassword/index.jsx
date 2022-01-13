@@ -1,10 +1,27 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux";
+
+import { auth } from "@actions/authActions";
 
 import Header from '@components/Header'
 
 import './RestorePassword.scss'
 
 export default function RestorePassword() {
+
+    const isAuth = useSelector(state => state.user.isAuth)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        dispatch(auth())
+    }, [])
+
+    if (isAuth === true) {
+        navigate('/main', { replace: true })
+    }
+
     return (
         <div className="restorepass" >
             <Header />
@@ -15,7 +32,7 @@ export default function RestorePassword() {
                     <input className="restorepass__input" type="text" placeholder='Email Adress...' />
 
                     <a href="" className="restorepass__button-reg">Restore Password</a>
-                    <a href="" className="restorepass__button-signIn">Alredy have account? Sign in</a>
+                    <Link to="/auth" className="restorepass__button-signIn">Alredy have account? Sign in</Link>
                 </div>
             </div>
         </div>
