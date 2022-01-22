@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
+import {getState} from "redux";
 import classNames from 'classnames';
 
 import { auth } from "@actions/authActions";
@@ -27,6 +28,8 @@ const Header = ({ }) => {
     dispatch(auth())
   }, [])
 
+  console.log(getState)
+
   // responsive at mobile devices
   const [isActiveHeaderBurger, setActiveHeaderBurger] = useState(false)
   const [isActiveUsername, setActiveUsername] = useState(false)
@@ -40,17 +43,17 @@ const Header = ({ }) => {
   //lists
   const [lists, setLists] = useState(
     DB.lists.map((item) => {
-        item.color = DB.colors.filter(
-            (color) => color.id === item.colorId
-        )[0].name;
-        return item;
+      item.color = DB.colors.filter(
+        (color) => color.id === item.colorId
+      )[0].name;
+      return item;
     })
-);
+  );
 
-const onAddList = (obj) => {
+  const onAddList = (obj) => {
     const newList = [...lists, obj];
     setLists(newList);
-};
+  };
 
   return (
     <header className="header__wrapper">
