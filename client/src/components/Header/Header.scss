@@ -68,7 +68,9 @@
                 text-decoration: none;
                 font-weight: 400;
                 font-size: 18px;
-
+                background: transparent;
+                border: none;
+                cursor: pointer;
                 color: var(--text-color-light);
             }
         }

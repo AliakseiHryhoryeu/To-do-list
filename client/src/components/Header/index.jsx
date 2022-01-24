@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
-import {getState} from "redux";
 import classNames from 'classnames';
 
 import { auth } from "@actions/authActions";
+import { showSettings, hideSettings } from '@actions/settingsActions'
 import { logout } from "@reducers/userReducer";
 
 import Settings from "@components/Settings";
@@ -22,13 +23,12 @@ import './Header.scss';
 
 const Header = ({ }) => {
   const isAuth = useSelector(state => state.user.isAuth)
+  const settingsVisible = useSelector(state => state.settings.settingsVisible)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(auth())
   }, [])
-
-  console.log(getState)
 
   // responsive at mobile devices
   const [isActiveHeaderBurger, setActiveHeaderBurger] = useState(false)
@@ -57,6 +57,7 @@ const Header = ({ }) => {
 
   return (
     <header className="header__wrapper">
+      {isAuth && settingsVisible && <Settings />}
       <header className="header">
         <div className="header__container">
 
@@ -91,7 +92,7 @@ const Header = ({ }) => {
                 <div className={classNames("header__nav__username__content", { 'header__nav__username__content-active': isActiveUsername })}>
                   <div className="header__nav__username__item">
                     <img src={settingsIcon} alt="settingsIcon" />
-                    <a href="/" className="header__nav__link-white" >Settings</a>
+                    <button className="header__nav__link-white" onClick={() => dispatch(showSettings())} >Settings</button>
                   </div>
                   <div className="header__nav__username__item" onClick={() => dispatch(logout())}>
                     <img src={exitIcon} alt="exitIcon" />
@@ -119,17 +120,19 @@ const Header = ({ }) => {
                 isRemovable
               />
               <AddList onAdd={onAddList} colors={DB.colors} />
-
-
             </ul>
-
           </nav>}
-
-
         </div>
       </header>
     </header>
 
-  );
-};
-export default Header
+  )
+}
+
+const mapStateToProps = state => ({
+  settings: state.settings.settingsVisible
+})
+
+const mapDispatchToProps = { showSettings, hideSettings }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

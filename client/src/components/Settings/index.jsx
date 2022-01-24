@@ -1,4 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
+import { useDispatch } from "react-redux";
+import { connect } from 'react-redux';
+
+import { showSettings, hideSettings } from '@actions/settingsActions'
 
 import './Settings.scss'
 
@@ -10,20 +15,18 @@ import img5 from '@img/userIcon_5.png'
 
 import closebtn from '@img/remove.svg'
 
-export default function Settings() {
 
-    function CloseSettings(){
-        
-    }
+function Settings() {
+
+    const dispatch = useDispatch();
 
     return (
-        //need use redux for change visibly settings
         <div className="settings" >
             <div className="settings__wrapper">
                 <img src={closebtn}
                     alt="Remove icon"
                     className="settings__close"
-                    onClick={(e) => { e.target.style.display = 'none' }}
+                    onClick={() => { dispatch(hideSettings()) }}
                 />
 
                 <div className="settings__block settings__password">
@@ -111,3 +114,13 @@ export default function Settings() {
         </div>
     )
 }
+
+
+const mapStateToProps = state => ({
+    settings: state.settings.settingsVisible
+})
+
+const mapDispatchToProps = { hideSettings }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings)
+

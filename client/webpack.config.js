@@ -54,9 +54,9 @@ module.exports = {
 
       '@components': path.resolve(__dirname, "src/components"),
 
-      '@store': path.resolve(__dirname, "src/store"),
-      '@actions': path.resolve(__dirname, "src/store/actions"),
-      '@reducers': path.resolve(__dirname, "src/store/reducers"),
+      '@redux': path.resolve(__dirname, "src/redux"),
+      '@actions': path.resolve(__dirname, "src/redux/actions"),
+      '@reducers': path.resolve(__dirname, "src/redux/reducers"),
 
       '@pages': path.resolve(__dirname, "src/pages"),
       '@fonts': path.resolve(__dirname, "src/assets/fonts"),

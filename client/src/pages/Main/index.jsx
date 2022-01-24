@@ -43,7 +43,6 @@ export default function Main() {
                         <List
                             items={lists}
                             onRemove={(list) => {
-                                console.log(list);
                             }}
                             isRemovable
                         />
