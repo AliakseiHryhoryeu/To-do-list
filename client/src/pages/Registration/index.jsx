@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from 'formik';
 import { registerSchema } from './validation';
 
-import { registration } from "@actions/authActions";
-import { auth } from "@actions/authActions";
+import { auth, registration } from "@actions/userActions";
 
 import Header from '@components/Header'
 

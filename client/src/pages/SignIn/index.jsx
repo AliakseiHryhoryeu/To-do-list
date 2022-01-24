@@ -1,12 +1,11 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 
 import { useFormik } from 'formik';
 import { signInSchema } from './validation';
 
-import { signIn } from "@actions/authActions";
-import { auth } from "@actions/authActions";
+import { auth, signIn } from "@actions/userActions";
 
 import Header from '@components/Header'
 
@@ -18,11 +17,11 @@ export default function SignIn() {
     const navigate = useNavigate()
 
     useEffect(() => {
-      dispatch(auth())
+        dispatch(auth())
     }, [])
-  
+
     if (isAuth === true) {
-        navigate('/main',{replace: true})
+        navigate('/main', { replace: true })
     }
 
 
@@ -34,7 +33,7 @@ export default function SignIn() {
         validationSchema: signInSchema,
         onSubmit: (values) => {
             dispatch(signIn(values.username, values.password))
-            navigate('/main',{replace: true})
+            navigate('/main', { replace: true })
         },
     });
     return (

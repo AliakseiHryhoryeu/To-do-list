@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 
-import { auth } from "@actions/authActions";
+import { auth } from "@actions/userActions";
 
 import Header from '@components/Header'
 

@@ -1,14 +1,14 @@
-import { SET_USER, LOGOUT, SETTINGS_SHOW, SETTINGS_HIDE } from '@redux/types';
+import { SET_USER, LOGOUT, SETTINGS_SHOW, SETTINGS_HIDE, ALERT_SHOW, ALERT_HIDE } from '@redux/types';
 
 
 const defaultState = {
     curentUser: {},
     isAuth: false,
     settingsVisible: false,
-    alertVisible: false
+    alert:null
 }
 
-export default function userReducer(state = defaultState, action) {
+export function userReducer(state = defaultState, action) {
     switch (action.type) {
         case SET_USER:
             return {
@@ -32,6 +32,16 @@ export default function userReducer(state = defaultState, action) {
             return {
                 ...state,
                 settingsVisible: false
+            }
+        case ALERT_SHOW:
+            return {
+                ...state,
+                alert: action.payload
+            }
+        case ALERT_HIDE:
+            return {
+                ...state,
+                alert: null
             }
         default:
             return state

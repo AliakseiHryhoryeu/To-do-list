@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { setUser } from "@reducers/userReducer";
-import { SET_USER, LOGOUT, SETTINGS_SHOW, SETTINGS_HIDE } from '@redux/types';
+import { SET_USER, LOGOUT, SETTINGS_SHOW, SETTINGS_HIDE, ALERT_SHOW, ALERT_HIDE } from '@redux/types';
 
 
 import config from '@/config.json'
@@ -69,5 +68,24 @@ export function showSettings() {
 export function hideSettings() {
     return {
         type: SETTINGS_HIDE
+    }
+}
+
+export function showAlert(text) {
+
+    return dispatch => {
+        dispatch({
+            type: ALERT_SHOW,
+            payload: text
+        })
+        setTimeout(() => {
+            dispatch(hideAlert())
+        }, 15000)
+    }
+}
+
+export function hideAlert() {
+    return {
+        type: ALERT_HIDE
     }
 }

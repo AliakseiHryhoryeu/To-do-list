@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from "react-redux";
 import { connect } from 'react-redux';
 
-import { showSettings, hideSettings } from '@actions/settingsActions'
+import { showSettings, hideSettings } from '@actions/userActions'
 
 import './Settings.scss'
 

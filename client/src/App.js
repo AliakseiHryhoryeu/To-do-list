@@ -2,7 +2,7 @@ import React, { useState, Component, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom"
 
 import { useDispatch, useSelector } from "react-redux";
-import { auth } from "@actions/authActions";
+import { auth } from "@actions/userActions";
 
 import Landing from "@pages/Landing";
 import Page404 from "@pages/Page404";
