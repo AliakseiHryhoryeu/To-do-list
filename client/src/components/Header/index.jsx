@@ -21,18 +21,17 @@ import DB from "@db/db.json";
 
 import './Header.scss';
 
-const Header = ({ }) => {
-  const isAuth = useSelector(state => state.user.isAuth)
-  const username = useSelector(state => state.user.curentUser)
-  const settingsVisible = useSelector(state => state.user.settingsVisible)
-  const alert = useSelector(state => state.user.alert)
-  const dispatch = useDispatch()
+const Header = (props) => {
 
   useEffect(() => {
     dispatch(auth()),
     dispatch(showAlert('dsogasuhsagiasgg'))
 
   }, [])
+
+  const isAuth = useSelector(state => state.user.isAuth)
+  const dispatch = useDispatch()
+
 
   // responsive at mobile devices
   const [isActiveHeaderBurger, setActiveHeaderBurger] = useState(false)
@@ -63,14 +62,13 @@ const Header = ({ }) => {
     <Fragment >
 
       <header className="header__wrapper">
-        {isAuth && settingsVisible && <Settings />}
         <header className="header">
           <div className="header__container">
 
             <div className={classNames("header__burger", { 'header__burger-active': isActiveHeaderBurger })} onClick={toggleClassActiveHeaderBurger}>
               <span></span>
             </div>
-            <Link to="/" className="header__link">
+            <Link to="/main" className="header__link">
               <img className="header__mainLogo" src={mainLogo} alt="mainLogo" />
               To do list
             </Link>
@@ -91,7 +89,7 @@ const Header = ({ }) => {
                 <li className="header__nav__item header__nav__username" >
 
                   <div className="header__nav__username__container" onClick={toggleClassActiveUsername}>
-                    <div className="header__nav__link-white">Username</div>
+                    <div className="header__nav__link-white">{props.username}</div>
                     <img src={userIcon} alt="userIcon" />
                   </div>
 
@@ -131,7 +129,7 @@ const Header = ({ }) => {
           </div>
         </header>
       </header>
-      {alert && <Alert text={alert} />}
+      {isAuth && props.settings && <Settings />}
 
     </Fragment>
 
@@ -139,11 +137,15 @@ const Header = ({ }) => {
 }
 
 const mapStateToProps = state => ({
-  user: state.user.settingsVisible,
-  user: state.user.alert
+  username: state.user.currentUser.username,
+  settings: state.user.settingsVisible,
+  alert:    state.user.alert
 
 })
 
 const mapDispatchToProps = { showSettings, hideSettings }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header)
+
+
+//       {props.alert && <Alert text={props.alert} />}

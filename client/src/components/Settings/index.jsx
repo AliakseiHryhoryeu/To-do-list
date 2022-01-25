@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from "react-redux";
 import { connect } from 'react-redux';
 
-import { showSettings, hideSettings } from '@actions/userActions'
+import { hideSettings } from '@actions/userActions'
 
 import './Settings.scss'
 
@@ -92,10 +92,7 @@ function Settings() {
                 <div className="settings__block settings__usericon">
                     <h3 className="settings__title">Change icon</h3>
                     <div className="settings__usericon__wrapper">
-                        <div className="settings__usericon__wrapper-text">
-                            <button type="button" className="settings__subbutton" >Point your icon</button>
-                            <h3 className="settings__subtitle">Or select image:</h3>
-                        </div>
+
                         <div className="settings__usericon__wrapper-imageContainer">
                             <img className="settings__usericon-img settings__usericon-active" src={img1} alt="img1" />
                             <img className="settings__usericon-img" src={img2} alt="img2" />
@@ -116,11 +113,8 @@ function Settings() {
 }
 
 
-const mapStateToProps = state => ({
-    settings: state.settings.settingsVisible
-})
 
 const mapDispatchToProps = { hideSettings }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Settings)
+export default connect(null, mapDispatchToProps)(Settings)
 

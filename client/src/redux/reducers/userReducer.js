@@ -1,11 +1,23 @@
 import { SET_USER, LOGOUT, SETTINGS_SHOW, SETTINGS_HIDE, ALERT_SHOW, ALERT_HIDE } from '@redux/types';
 
+import img1 from '@img/userIcon_1.png'
+import img2 from '@img/userIcon_2.png'
+import img3 from '@img/userIcon_3.png'
+import img4 from '@img/userIcon_4.png'
+import img5 from '@img/userIcon_5.png'
+
+const allUserIcons = [img1, img2, img3, img4, img5]
 
 const defaultState = {
-    curentUser: {},
+    currentUser: {
+        id:'',
+        username:'',
+        userIcon:''
+    },
     isAuth: false,
     settingsVisible: false,
-    alert:null
+    alert:null,
+    
 }
 
 export function userReducer(state = defaultState, action) {
@@ -13,7 +25,7 @@ export function userReducer(state = defaultState, action) {
         case SET_USER:
             return {
                 ...state,
-                currentUser: action.payload,
+                currentUser:  action.payload,
                 isAuth: true
             }
         case LOGOUT:
