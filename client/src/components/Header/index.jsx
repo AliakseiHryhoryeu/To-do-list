@@ -58,6 +58,8 @@ const Header = (props) => {
     setLists(newList);
   };
 
+
+
   return (
     <Fragment >
 
@@ -90,7 +92,7 @@ const Header = (props) => {
 
                   <div className="header__nav__username__container" onClick={toggleClassActiveUsername}>
                     <div className="header__nav__link-white">{props.username}</div>
-                    <img src={userIcon} alt="userIcon" />
+                    <img className="header__nav__link-usericon" src={ props.image } alt="userIcon" />
                   </div>
 
                   <div className={classNames("header__nav__username__content", { 'header__nav__username__content-active': isActiveUsername })}>
@@ -139,7 +141,8 @@ const Header = (props) => {
 const mapStateToProps = state => ({
   username: state.user.currentUser.username,
   settings: state.user.settingsVisible,
-  alert:    state.user.alert
+  alert:    state.user.alert,
+  image: state.user.currentUser.userIcon
 
 })
 

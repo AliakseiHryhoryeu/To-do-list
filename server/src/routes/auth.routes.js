@@ -59,8 +59,8 @@ router.post('/login',
                 token,
                 user: {
                     id: user.id,
-                    email: user.email,
-                    username: user.username
+                    username: user.username,
+                    userIcon: user.userIcon
                 }
             })
 
@@ -79,8 +79,8 @@ router.get('/auth', authMiddleware,
                 token,
                 user: {
                     id: user.id,
-                    email: user.email,
-                    avatar: user.avatar
+                    username: user.username,
+                    userIcon: user.userIcon
                 }
             })
         } catch (e) {

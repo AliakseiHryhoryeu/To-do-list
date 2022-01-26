@@ -73,6 +73,10 @@
                 cursor: pointer;
                 color: var(--text-color-light);
             }
+            &-usericon{
+                max-width: 34px;
+                max-height: 34px;
+            }
         }
 
         &__list {

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { SET_USER, LOGOUT, SETTINGS_SHOW, SETTINGS_HIDE, ALERT_SHOW, ALERT_HIDE } from '@redux/types';
+import { SET_USER, LOGOUT, SETTINGS_SHOW, SETTINGS_HIDE, SET_ACTIVE_USERICON, ALERT_SHOW, ALERT_HIDE } from '@redux/types';
 
 
 import config from '@/config.json'
@@ -62,6 +62,13 @@ export function logout() {
 export function showSettings() {
     return {
         type: SETTINGS_SHOW
+    }
+}
+
+export function setActiveUserIcon(iconId) {
+    return {
+        type: SET_ACTIVE_USERICON,
+        payload: iconId
     }
 }
 

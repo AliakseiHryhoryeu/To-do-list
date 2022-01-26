@@ -14,9 +14,12 @@ import img4 from '@img/userIcon_4.png'
 import img5 from '@img/userIcon_5.png'
 
 import closebtn from '@img/remove.svg'
+import UserIcons from './UserIcons/';
+
+const allUserIcons = [img1, img2, img3, img4, img5]
 
 
-function Settings() {
+function Settings(props) {
 
     const dispatch = useDispatch();
 
@@ -92,17 +95,15 @@ function Settings() {
                 <div className="settings__block settings__usericon">
                     <h3 className="settings__title">Change icon</h3>
                     <div className="settings__usericon__wrapper">
-
                         <div className="settings__usericon__wrapper-imageContainer">
-                            <img className="settings__usericon-img settings__usericon-active" src={img1} alt="img1" />
+                            {/* <img className="settings__usericon-img settings__usericon-active" src={img1} alt="img1" />
                             <img className="settings__usericon-img" src={img2} alt="img2" />
                             <img className="settings__usericon-img" src={img3} alt="img3" />
                             <img className="settings__usericon-img" src={img4} alt="img4" />
-                            <img className="settings__usericon-img" src={img5} alt="img5" />
-
+                            <img className="settings__usericon-img" src={img5} alt="img5" /> */}
+                            <UserIcons />
                         </div>
                     </div>
-
                     <button type="submit" className="settings__button btn-settings__username submit" >Change icon</button>
 
                 </div>
@@ -112,9 +113,13 @@ function Settings() {
     )
 }
 
+const mapStateToProps = state => ({
+    currentUserIcon: state.user.currentUser.userIcon,
+    allUserIcons: state.user.allUserIcons
 
+})
 
 const mapDispatchToProps = { hideSettings }
 
-export default connect(null, mapDispatchToProps)(Settings)
+export default connect(mapStateToProps, mapDispatchToProps)(Settings)
 

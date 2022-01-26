@@ -91,6 +91,7 @@
             }
         }
         &-img{
+            cursor: pointer;
             border: solid var(--settings-bg-color) 3px;
         }
         &-active {
