@@ -1,15 +1,22 @@
-import { SET_LISTS, SET_LIST, ADD_LIST, EDIT_LIST, DELETE_LIST } from '@redux/types';
+import { GET_LISTS, SET_LIST, ADD_LIST, EDIT_LIST, DELETE_LIST } from '@redux/types';
 
 
 const defaultState = {
     allLists: {},
-    curentList: {}
+    curentList: {
+        id: '',
+        name: '',
+        description: '',
+        colorId:'',
+        tasksId:''
+
+    }
 
 }
 
 export function listsReducer(state = defaultState, action) {
     switch (action.type) {
-        case SET_LISTS:
+        case GET_LISTS:
             return {
                 ...state,
                 allLists: action.payload
@@ -28,12 +35,11 @@ export function listsReducer(state = defaultState, action) {
             return {
                 ...state
 
-
+                
             }
         case DELETE_LIST:
             return {
                 ...state
-
 
             }
         default:

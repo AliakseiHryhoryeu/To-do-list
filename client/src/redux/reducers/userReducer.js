@@ -10,7 +10,8 @@ const defaultState = {
     currentUser: {
         id: '',
         username: '',
-        userIcon: img1
+        userIcon: img1,
+        colors:[]
     },
     isAuth: false,
     settingsVisible: false,
