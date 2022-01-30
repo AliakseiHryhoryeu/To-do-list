@@ -31,6 +31,18 @@
     --btn-height: 3rem;
     --btn-border-radius: 1rem;
     --btn-font-size: 1.1rem;
+
+    /* Badge colors */
+
+    --badge-color-grey: hsl(192, 10%, 81%, 100%);
+    --badge-color-lime: hsl(129, 49%, 81%, 100%);
+    --badge-color-purple: hsl(281, 89%, 65%, 100%);
+    --badge-color-black: hsl(258, 100%, 5%, 100%);
+    --badge-color-red: hsl(0, 100%, 70%, 100%);
+    --badge-color-green: hsl(153, 47%, 49%, 100%);
+    --badge-color-blue: hsl(198, 79%, 66%, 100%);
+    --badge-color-pink: hsl(345, 100%, 87%, 100%);
+
     /*Fonts and typography start*/
     --body-font: "Montserrat", -apple-system, system-ui, sans-serif;
 

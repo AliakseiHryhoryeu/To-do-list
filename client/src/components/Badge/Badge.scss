@@ -5,35 +5,35 @@
     border-radius: 30px;
   
     &--grey {
-      background-color: #c9d1d3;
+      background-color: var(--badge-color-grey);
     }
   
     &--lime {
-      background-color: #b6e6bd;
+      background-color: var(--badge-color-lime);
     }
   
     &--purple {
-      background-color: #c355f5;
+      background-color: var(--badge-color-purple);
     }
   
     &--black {
-      background-color: #08001a;
+      background-color: var(--badge-color-black);
     }
   
     &--red {
-      background-color: #ff6464;
+      background-color: var(--badge-color-red);
     }
   
     &--green {
-      background-color: #42b883;
+      background-color: var(--badge-color-green);
     }
   
     &--blue {
-      background-color: #64c4ed;
+      background-color: var(--badge-color-blue);
     }
   
     &--pink {
-      background-color: #ffbbcc;
+      background-color: var(--badge-color-pink);
     }
   }
   
