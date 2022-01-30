@@ -11,7 +11,7 @@ router.post('/addList', async (req, res) => {
         if (!errors.isEmpty()) {
             return res.status(400).json({ message: "Uncorrect request", errors })
         }
-        const { name, userId, colorId } = req.body
+        const { username, description, color } = req.body
 
 
         const user = await User.findOne({ username })

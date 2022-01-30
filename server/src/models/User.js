@@ -10,5 +10,5 @@ const User = new Schema({
 })
 
 
-
-module.exports = model('User', User)
+// 'users' - collection name, User - Schema (variable)
+module.exports = model('users', User)

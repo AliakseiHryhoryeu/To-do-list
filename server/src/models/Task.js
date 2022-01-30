@@ -8,4 +8,4 @@ const Task = new Schema({
 })
 
 
-module.exports = model('Task', Task)
+module.exports = model('task', Task)

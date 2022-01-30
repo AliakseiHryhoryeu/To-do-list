@@ -70,23 +70,23 @@ router.post('/login',
         }
     })
 
-router.get('/auth', authMiddleware,    async (req, res) => {
-        try {
-            const user = await User.findOne({ _id: req.user.id })
-            const token = jwt.sign({ id: user.id }, config.secretKey, { expiresIn: "48h" })
-            return res.json({
-                token,
-                user: {
-                    id: user.id,
-                    username: user.username,
-                    userIcon: user.userIcon
-                }
-            })
-        } catch (e) {
-            console.log(e)
-            res.send({ message: "Server error" })
-        }
-    })
+router.get('/auth', authMiddleware, async (req, res) => {
+    try {
+        const user = await User.findOne({ _id: req.user.id })
+        const token = jwt.sign({ id: user.id }, config.secretKey, { expiresIn: "48h" })
+        return res.json({
+            token,
+            user: {
+                id: user.id,
+                username: user.username,
+                userIcon: user.userIcon
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        res.send({ message: "Server error" })
+    }
+})
 
 
 module.exports = router
