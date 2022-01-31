@@ -1,11 +1,11 @@
 const { Schema, model } = require("mongoose")
 
 const List = new Schema({
-    name: { type: String, required: true },    
-    description: { type: String, default: '',required: true },
-    userId: { type: String, required: true },
+    title: { type: String, required: true },
+    description: { type: String, default: '', required: false },
     color: { type: String, required: true },
-    taskId: { type: Array, required: false }
+    userId: { type: String, required: true },
+    tasksId: { type: Array, required: false }
 })
 
 module.exports = model('lists', List)

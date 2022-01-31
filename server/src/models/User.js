@@ -6,7 +6,7 @@ const User = new Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     userIcon: { type: String, default: "/41da9d31d5dbcef0e231.png", required: true },
-    ListId: { type: Array, required: false }
+    listId: { type: Array, required: false }
 })
 
 

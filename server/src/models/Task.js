@@ -2,9 +2,10 @@ const { Schema, model } = require("mongoose")
 
 
 const Task = new Schema({
-    ListId: { type: String, required: true },
     text: { type: String, required: true },
-    completed: { type: Array, required: true, default: false },
+    completed: { type: Boolean, required: false, default: false },
+    listId: { type: String, required: true }
+
 })
 
 
