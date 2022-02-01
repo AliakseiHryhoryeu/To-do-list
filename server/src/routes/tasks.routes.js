@@ -112,15 +112,19 @@ router.put('/deleteTask',
 
             const task = await Task.findOne({ id: id })
             const listId = task.listId
-            const list = await List.findOne({ listId })
-            list.updateOne(
-                { },
-                { $pull: { 'tasksId': id } }
+            const list = await List.findOneAndUpdate(
+                { listId },
+                { $pull: { tasksId: { $in: [id] } } }
             )
-            list.save()
+
+
+            await task.save()
+            await list.save()
+            const response = await List.findOne({listId})
             return res.json({
-                list
+                response
             })
+
         } catch (e) {
             console.log(e)
             res.send({ message: "Server error" })
