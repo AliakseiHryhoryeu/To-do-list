@@ -7,7 +7,7 @@ const router = new Router()
 
 
 
-// Get Tasks
+// Get Tasks router
 router.get('/getTasks',
     [
         check('id', "Uncorrect list id").isLength({ min: 1 }),
@@ -32,7 +32,7 @@ router.get('/getTasks',
     })
 
 
-// Add Task
+// Add Task router
 router.post('/addTask',
     [
         check('listId', "Uncorrect listId").isLength({ min: 1 }),
@@ -67,7 +67,7 @@ router.post('/addTask',
 
 
 
-//Edit task
+//Edit task router
 router.put('/editTask',
     [
         check('id', "Uncorrect taskId").isLength({ min: 1 }),
