@@ -1,39 +1,79 @@
 import axios from 'axios'
-import { GET_TASKS, SET_TASKS, ADD_TASK, EDIT_TASK, DELETE_TASK } from '@redux/types';
+import { GET_LISTS, SET_LIST, ADD_LIST, EDIT_LIST, DELETE_LIST } from '@redux/types';
+
 
 import config from '@/config.json'
 
 
-export function setLists(tasks) {
-    return {
-        type: GET_TASKS,
-        payload: user
+export function getLists(userId) {
+    return async dispatch => {
+        try {
+            const response = await axios.get(config.proxy + `api/lists/getLists`, {
+                userId
+            })
+            console.log(response.data.lists)
+            dispatch({type:GET_LISTS, payload:response.data.lists })
+        } catch (e) {
+            console.log(e)
+        }
     }
 }
-export function setTasks(listId) {
+
+export function getList(listId) {
+    return async dispatch => {
+        try {
+            const response = await axios.get(config.proxy + `api/lists/getLists`, {
+                listId
+            })
+            console.log(response.data.lists)
+            dispatch({type:GET_LISTS, payload:response.data.lists })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export function addList(listId) {
+    return async dispatch => {
+        try {
+            const response = await axios.post(config.proxy + `api/lists/getLists`, {
+                username,
+                title,
+                color
+            })
+            console.log(response.data.lists)
+            dispatch({type:ADD_LIST, payload:response.data.lists })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+
+export function setList(listId) {
     return {
-        type: SET_TASKS,
+        type: SET_LIST,
         payload: listId
     }
 }
 
-export function addTask(task) {
+// export function addList(list) {
+//     return {
+//         type: ADD_LIST,
+//         payload: list
+//     }
+// }
+
+export function editList(list) {
     return {
-        type: ADD_TASK,
-        payload: task
+        type: EDIT_LIST,
+        payload: list
     }
 }
 
-export function editTask(task) {
+export function deleteList(list) {
     return {
-        type: EDIT_TASK,
-        payload: task
-    }
-}
-
-export function deleteTask(task) {
-    return {
-        type: DELETE_TASK,
-        payload: task
+        type: DELETE_LIST,
+        payload: list
     }
 }

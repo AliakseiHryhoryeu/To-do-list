@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import classNames from 'classnames';
 
-import { auth, logout, showSettings, hideSettings } from '@actions/userActions'
-import { showAlert } from '../../redux/actions/userActions';
+import { auth, logout, showSettings, hideSettings, showAlert } from '@actions/userActions'
+import { getLists } from '@actions/listsActions';
 
 import Settings from "@components/Settings";
 import List from "@components/List";
@@ -25,13 +25,12 @@ const Header = (props) => {
 
   useEffect(() => {
     dispatch(auth()),
-    dispatch(showAlert('dsogasuhsagiasgg'))
+      dispatch(showAlert('dsogasuhsagiasgg'))
 
   }, [])
 
   const isAuth = useSelector(state => state.user.isAuth)
   const dispatch = useDispatch()
-
 
   // responsive at mobile devices
   const [isActiveHeaderBurger, setActiveHeaderBurger] = useState(false)
@@ -66,7 +65,6 @@ const Header = (props) => {
       <header className="header__wrapper">
         <header className="header">
           <div className="header__container">
-
             <div className={classNames("header__burger", { 'header__burger-active': isActiveHeaderBurger })} onClick={toggleClassActiveHeaderBurger}>
               <span></span>
             </div>
@@ -74,7 +72,6 @@ const Header = (props) => {
               <img className="header__mainLogo" src={mainLogo} alt="mainLogo" />
               To do list
             </Link>
-
             {!isAuth && <nav className={classNames("header__nav", { 'header__nav-active': isActiveHeaderBurger })}>
               <ul className="header__nav__list">
                 <li className="nav__item">
@@ -92,7 +89,7 @@ const Header = (props) => {
 
                   <div className="header__nav__username__container" onClick={toggleClassActiveUsername}>
                     <div className="header__nav__link-white">{props.username}</div>
-                    <img className="header__nav__link-usericon" src={ props.image } alt="userIcon" />
+                    <img className="header__nav__link-usericon" src={props.image} alt="userIcon" />
                   </div>
 
                   <div className={classNames("header__nav__username__content", { 'header__nav__username__content-active': isActiveUsername })}>
@@ -141,7 +138,7 @@ const Header = (props) => {
 const mapStateToProps = state => ({
   username: state.user.currentUser.username,
   settings: state.user.settingsVisible,
-  alert:    state.user.alert,
+  alert: state.user.alert,
   image: state.user.currentUser.userIcon
 
 })

@@ -28,6 +28,7 @@ export default function Main() {
     return (
         <div className='main'>
             <Header />
+            
             <div className="main__wrapper">
                 <div className="main__menu">
                     <div className="main__menu__wrapper">

@@ -11,17 +11,17 @@ const router = new Router()
 //Get lists router
 router.get('/getLists', async function (req, res) {
     try {
-        const { id } = req.body
+        const { userId } = req.body
 
-        const user = await User.findOne({ id })
+        const user = await User.findOne({ id:userId })
         if (!user) {
             return res.status(404).json({ message: "User not found" })
         }
         const userLists = user.listId
-        const list = await List.find({ userLists })
+        const lists = await List.find({ userLists })
 
         return res.json({
-            list
+            lists
         })
 
     } catch (e) {
@@ -33,8 +33,8 @@ router.get('/getLists', async function (req, res) {
 //Get List router
 router.get('/getList', async function (req, res) {
     try {
-        const { id } = req.body
-        const list = await User.findOne({ id })
+        const { listId } = req.body
+        const list = await User.findOne({ listId })
         if (!user) {
             return res.status(404).json({ message: "List not found" })
         }
@@ -79,7 +79,7 @@ router.post('/addList',
 //Edit list router
 router.put('/editList',
     [
-        check('id', "Uncorrect taskId").isLength({ min: 1 }),
+        check('listId', "Uncorrect taskId").isLength({ min: 1 }),
         check('title', "Uncorrect text").isLength({ min: 1 }),
         check('description', "Uncorrect text").isLength({ min: 1 }),
         check('color', "Uncorrect text").isLength({ min: 1 }),
@@ -90,9 +90,9 @@ router.put('/editList',
             if (!errors.isEmpty()) {
                 return res.status(400).json({ message: "Uncorrect request", errors })
             }
-            const { id, title, description, color } = req.body
+            const { listId, title, description, color } = req.body
 
-            const list = await List.findOne({ id: id })
+            const list = await List.findOne({ id: listId })
             list.text = text
             list.completed = completed
             await task.save()
@@ -112,7 +112,7 @@ router.put('/editList',
 //Delete List router
 router.put('/deleteList',
     [
-        check('id', "Uncorrect listId").isLength({ min: 1 }),
+        check('listId', "Uncorrect listId").isLength({ min: 1 }),
     ],
     async (req, res) => {
         try {
@@ -120,9 +120,9 @@ router.put('/deleteList',
             if (!errors.isEmpty()) {
                 return res.status(400).json({ message: "Uncorrect request", errors })
             }
-            const { id } = req.body
+            const { listId } = req.body
 
-            const list = await List.findOne({ id: id })
+            const list = await List.findOne({ id: listId })
             const tasks = list.tasksId
             for (let i = 0; i < tasks.length; i++) {
                 let task = tasks[i]

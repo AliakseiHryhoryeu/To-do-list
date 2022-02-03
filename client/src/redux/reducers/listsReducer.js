@@ -3,14 +3,8 @@ import { GET_LISTS, SET_LIST, ADD_LIST, EDIT_LIST, DELETE_LIST } from '@redux/ty
 
 const defaultState = {
     allLists: {},
-    curentList: {
-        id: '',
-        name: '',
-        description: '',
-        colorId:'',
-        tasksId:''
-
-    }
+    curentList: {},
+    showAll:true
 
 }
 

@@ -1,41 +1,39 @@
 import axios from 'axios'
-import { GET_LISTS, SET_LIST, ADD_LIST, EDIT_LIST, DELETE_LIST } from '@redux/types';
-
+import { GET_TASKS, SET_TASKS, ADD_TASK, EDIT_TASK, DELETE_TASK } from '@redux/types';
 
 import config from '@/config.json'
 
 
-
-export function getLists(lists) {
+export function setLists(tasks) {
     return {
-        type: GET_LISTS,
+        type: GET_TASKS,
         payload: user
     }
 }
-export function setList(listId) {
+export function setTasks(listId) {
     return {
-        type: SET_LIST,
+        type: SET_TASKS,
         payload: listId
     }
 }
 
-export function addList(list) {
+export function addTask(task) {
     return {
-        type: ADD_LIST,
-        payload: list
+        type: ADD_TASK,
+        payload: task
     }
 }
 
-export function editList(list) {
+export function editTask(task) {
     return {
-        type: EDIT_LIST,
-        payload: list
+        type: EDIT_TASK,
+        payload: task
     }
 }
 
-export function deleteList(list) {
+export function deleteTask(task) {
     return {
-        type: DELETE_LIST,
-        payload: list
+        type: DELETE_TASK,
+        payload: task
     }
 }
