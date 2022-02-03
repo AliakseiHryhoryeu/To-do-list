@@ -6,16 +6,15 @@ const Task = require("../models/Task")
 const router = new Router()
 
 
-
 // Get Tasks router
 router.get('/getTasks',
     [
-        check('id', "Uncorrect list id").isLength({ min: 1 }),
+        check('listId', "Uncorrect list id").isLength({ min: 1 }),
     ],
     async function (req, res) {
         try {
-            const { id } = req.body
-            const list = await List.findOne({ id: id })
+            const { listId } = req.body
+            const list = await List.findOne({ id: listId })
             if (!list) {
                 return res.status(404).json({ message: "List not found" })
             }
@@ -100,7 +99,7 @@ router.put('/editTask',
 //Delete task
 router.put('/deleteTask',
     [
-        check('id', "Uncorrect taskId").isLength({ min: 1 }),
+        check('taskId', "Uncorrect taskId").isLength({ min: 1 }),
     ],
     async (req, res) => {
         try {
@@ -108,15 +107,14 @@ router.put('/deleteTask',
             if (!errors.isEmpty()) {
                 return res.status(400).json({ message: "Uncorrect request", errors })
             }
-            const { id } = req.body
+            const { taskId } = req.body
 
-            const task = await Task.findOne({ id: id })
+            const task = await Task.findOne({ id: taskId })
             const listId = task.listId
             const list = await List.findOneAndUpdate(
                 { listId },
-                { $pull: { tasksId: { $in: [id] } } }
+                { $pull: { tasksId: { $in: [taskId] } } }
             )
-
 
             await task.save()
             await list.save()

@@ -51,7 +51,7 @@ router.get('/getList', async function (req, res) {
 // Add list router
 router.post('/addList',
     [
-        check('username', "Uncorrect username").isLength({ min: 1 }),
+        check('userId', "Uncorrect userId").isLength({ min: 1 }),
         check('title', "Uncorrect title").isLength({ min: 1 }),
         check('color', "Uncorrect color").isLength({ min: 1 }),
     ],
@@ -61,9 +61,9 @@ router.post('/addList',
             if (!errors.isEmpty()) {
                 return res.status(400).json({ message: "Uncorrect request", errors })
             }
-            const { username, title, color } = req.body
+            const { userId, title, color } = req.body
 
-            const user = await User.findOne({ username })
+            const user = await User.findOne({ id:userId })
             const list = new List({ title: title, userId: user.id, color: color })
             user.listId.push(list.id)
             await list.save()
@@ -93,11 +93,13 @@ router.put('/editList',
             const { listId, title, description, color } = req.body
 
             const list = await List.findOne({ id: listId })
-            list.text = text
-            list.completed = completed
-            await task.save()
+            list.title = title
+            list.description = description
+            list.color = color
+            await list.save()
             return res.json({
                 list: {
+                    id: list.id,
                     title: title,
                     description: description,
                     color: color
