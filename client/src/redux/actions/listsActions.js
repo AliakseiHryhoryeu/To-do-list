@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_LISTS, SET_LIST, ADD_LIST, EDIT_LIST, DELETE_LIST } from '@redux/types';
+import { GET_LISTS, GET_LIST, SET_LIST, ADD_LIST, EDIT_LIST, DELETE_LIST } from '@redux/types';
 
 
 import config from '@/config.json'
@@ -26,7 +26,7 @@ export function getList(listId) {
                 listId
             })
             console.log(response.data.lists)
-            dispatch({type:GET_LISTS, payload:response.data.lists })
+            dispatch({type:GET_LIST, payload:response.data.lists })
         } catch (e) {
             console.log(e)
         }
