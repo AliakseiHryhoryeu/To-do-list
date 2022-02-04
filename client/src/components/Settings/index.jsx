@@ -62,12 +62,12 @@ function Settings(props) {
                     <input className="settings__input settings__email"
                         placeholder='New email...'
                         name="password"
-                        type="password"
+                        type="text"
                     />
                     <input className="settings__input settings__email"
                         placeholder='Repeat new email...'
                         name="password"
-                        type="password"
+                        type="text"
                     />
                     <button type="submit" className="settings__button btn-settings__password submit" >Change email</button>
 
@@ -82,12 +82,12 @@ function Settings(props) {
                     <input className="settings__input settings__username"
                         placeholder='New username...'
                         name="password"
-                        type="password"
+                        type="text"
                     />
                     <input className="settings__input settings__username"
                         placeholder='Repeat new username...'
                         name="password"
-                        type="password"
+                        type="text"
                     />
                     <button type="submit" className="settings__button btn-settings__username submit" >Change username</button>
 
@@ -96,11 +96,6 @@ function Settings(props) {
                     <h3 className="settings__title">Change icon</h3>
                     <div className="settings__usericon__wrapper">
                         <div className="settings__usericon__wrapper-imageContainer">
-                            {/* <img className="settings__usericon-img settings__usericon-active" src={img1} alt="img1" />
-                            <img className="settings__usericon-img" src={img2} alt="img2" />
-                            <img className="settings__usericon-img" src={img3} alt="img3" />
-                            <img className="settings__usericon-img" src={img4} alt="img4" />
-                            <img className="settings__usericon-img" src={img5} alt="img5" /> */}
                             <UserIcons />
                         </div>
                     </div>
