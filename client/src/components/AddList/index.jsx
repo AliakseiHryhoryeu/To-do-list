@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import classNames from 'classnames';
 
 import List from '@components/List';
 import Badge from '@components/Badge';
@@ -6,7 +7,7 @@ import Badge from '@components/Badge';
 import './AddList.scss';
 import closeSvg from '@img/close.svg';
 
-const AddList = ({ colors, onAdd }) => {
+const AddList = ({ colors }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [selectedColor, setSelectedColor] = useState(colors[0].id);
   const [inputValue, setInputValue] = useState('');
@@ -18,7 +19,6 @@ const AddList = ({ colors, onAdd }) => {
     }
     const color = colors.filter(color => color.id === selectedColor)[0].name;
     onAdd({ id: Math.random(), name: inputValue, color: color });
-    setVisiblePopup(false);
     setInputValue('')
     setSelectedColor(colors[0].id)
   }
@@ -26,18 +26,19 @@ const AddList = ({ colors, onAdd }) => {
 
   return (
     <div className="add-list">
-      <List
-        onClick={() => setVisiblePopup(!visiblePopup)}
-        items={[
-          {
-            icon: <svg width="16" height="12" viewBox="0 0 12 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="listIconPlus">
-              <path d="M8 1V15" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M1 8H15" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-Lnejoin="round" />
-            </svg>,
-            name: 'Add List'
-          }
-        ]}
-      />
+
+      <ul onClick={() => { setVisiblePopup(!visiblePopup) }} className="main__list">
+        <li >
+          <i><svg width="16" height="12" viewBox="0 0 12 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="listIconPlus">
+            <path d="M8 1V15" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M1 8H15" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-Lnejoin="round" />
+          </svg>
+          </i>
+          <span>Add List</span>
+        </li>
+      </ul>
+
+
 
       {visiblePopup && <div className="add-list__popup">
         <img onClick={() => setVisiblePopup(false)} src={closeSvg} alt="Close button" className="add-list__popup-close-btn"></img>
@@ -47,8 +48,6 @@ const AddList = ({ colors, onAdd }) => {
             <Badge onClick={() => setSelectedColor(color.id)} key={color.id} color={color.name} className={selectedColor === color.id && 'active'} />
           ))}
         </div>
-
-
         <button onClick={addList} className="button">Add New List</button>
       </div>
 

@@ -1,10 +1,10 @@
-import { GET_LISTS, SET_LIST, ADD_LIST, EDIT_LIST, DELETE_LIST } from '@redux/types';
+import { GET_LISTS, SET_LIST, SHOW_ALL_LISTS, ADD_LIST, EDIT_LIST, DELETE_LIST } from '@redux/types';
 
 
 const defaultState = {
     allLists: {},
     curentList: {},
-    showAll:true
+    showAll: true
 
 }
 
@@ -18,7 +18,15 @@ export function listsReducer(state = defaultState, action) {
         case SET_LIST:
             return {
                 ...state,
+                showAll: false,
                 currentList: {}
+            }
+        case SHOW_ALL_LISTS:
+            return {
+                ...state,
+                showAll: true,
+                curentList: {}
+
             }
         case ADD_LIST:
             return {
@@ -29,7 +37,7 @@ export function listsReducer(state = defaultState, action) {
             return {
                 ...state
 
-                
+
             }
         case DELETE_LIST:
             return {

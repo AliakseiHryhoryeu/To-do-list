@@ -5,8 +5,8 @@ import './Tasks.scss';
 
 export default function Tasks() {
     return (
-        <div class="tasks">
-            <h2 class="tasks__title">
+        <div className="tasks">
+            <h2 className="tasks__title">
                 Фронтенд
                 <img src={editSvg} alt="Edit icon" />
             </h2>

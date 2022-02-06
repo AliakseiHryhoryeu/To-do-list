@@ -1,35 +1,28 @@
 import React, { useState, useEffect, Fragment } from 'react'
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, connect } from "react-redux";
 import classNames from 'classnames';
 
-import { auth, logout, showSettings, hideSettings, showAlert } from '@actions/userActions'
+import { logout, showSettings, hideSettings, showAlert } from '@actions/userActions'
 import { getLists } from '@actions/listsActions';
 
 import Settings from "@components/Settings";
 import Lists from '@components/Lists';
 
 import mainLogo from '@img/favicon.svg'
-import userIcon from '@img/userIcon.png'
 import settingsIcon from '@img/settingsIcon.svg'
 import exitIcon from '@img/exitIcon.svg'
-
-import DB from "@db/db.json";
 
 import './Header.scss';
 
 const Header = (props) => {
 
-  useEffect(() => {
-    dispatch(auth()),
-      dispatch(showAlert('dsogasuhsagiasgg'))
-
-  }, [])
-
   const isAuth = useSelector(state => state.user.isAuth)
   const dispatch = useDispatch()
-
+  useEffect(() => {
+    dispatch(getLists(props.userId))
+  }, [])
+  
   // responsive at mobile devices
   const [isActiveHeaderBurger, setActiveHeaderBurger] = useState(false)
   const [isActiveUsername, setActiveUsername] = useState(false)
@@ -39,11 +32,6 @@ const Header = (props) => {
   const toggleClassActiveUsername = () => {
     setActiveUsername(!isActiveUsername)
   }
-
-  //lists
-
-
-
 
   return (
     <Fragment >
@@ -107,6 +95,7 @@ const Header = (props) => {
 
 const mapStateToProps = state => ({
   username: state.user.currentUser.username,
+  userId:state.user.userId,
   settings: state.user.settingsVisible,
   alert: state.user.alert,
   image: state.user.currentUser.userIcon
