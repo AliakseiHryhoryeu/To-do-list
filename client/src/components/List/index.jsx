@@ -9,30 +9,40 @@ import './List.scss';
 
 const List = ({ items, isRemovable, onClick, onRemove }) => {
 
-    const text = (<h1>565683256253692390823578
-        sdtffggjghjkhjhjj
-        111111111111</h1>)
     const removeList = (item) => {
         if (window.confirm('Are you sure you want to delete the list?')) {
-            onRemove(item)
+            console.log(item)
         }
     }
+    const setActiveList = (key) => {
+        console.log(key)
+    }
+
+
     const test = () => {
         console.log(items)
-        let item = ''
+        let item = []
         for (let i = 0; i < items.length; i++) {
-            item += items[i]
+
+            const temp = (
+                <li onClick={() => setActiveList(items[i]._id)} key={items[i]._id}>
+                    <i>{<Badge color={items[i].color} />}</i>
+                    <span>{items[i].title}</span>
+                    <img onClick={removeList} className="main__list__remove-icon" src={removeSvg} alt="Remove icon" />
+                </li>
+            )
+            console.log(temp)
+            item.push(temp)
         }
-        console.log(item)
         return item
 
-
     }
+
+
+
     return (
-        <ul onClick={test} className="main__list">
-            {text}
-            sgassaggsasg
-            <span>span {test()}</span>
+        <ul className="main__list">
+            {test()}
         </ul>
     )
 }

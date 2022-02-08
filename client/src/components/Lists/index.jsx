@@ -14,19 +14,6 @@ import './Lists.scss'
 
 function Lists(props) {
 
-  const [lists, setLists] = useState(props.allLists)
-
-  const onAddList = (obj) => {
-    const newList = [...lists, obj];
-    setLists(newList);
-  };
-
-
-  const setActiveList = () => {
-    console.log(props.curentList)
-    console.log(props.allLists)
-
-  }
 
   return (
     <Fragment>
@@ -37,22 +24,7 @@ function Lists(props) {
         </li>
       </ul>
 
-      <ul onClick={setActiveList} className="main__list">
-        <li className="li class">
-          <i><Badge color={"red"} /></i>
-          <span>test name</span>
-          <img className="main__list__remove-icon" src={removeSvg} alt="Remove icon" />
-        </li>
-      </ul>
-
-
-      <List
-        items={props.allLists}
-        onRemove={(list) => {
-          console.log(list)
-        }}
-        isRemovable
-      />
+      <List items={props.allLists} />
       <AddList colors={DB.colors} />
     </Fragment>
 
