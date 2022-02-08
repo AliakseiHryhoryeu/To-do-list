@@ -9,20 +9,30 @@ import './List.scss';
 
 const List = ({ items, isRemovable, onClick, onRemove }) => {
 
+    const text = (<h1>565683256253692390823578
+        sdtffggjghjkhjhjj
+        111111111111</h1>)
     const removeList = (item) => {
         if (window.confirm('Are you sure you want to delete the list?')) {
             onRemove(item)
         }
     }
     const test = () => {
-        items.map(item => {
-            console.log(item)
-        })
+        console.log(items)
+        let item = ''
+        for (let i = 0; i < items.length; i++) {
+            item += items[i]
+        }
+        console.log(item)
+        return item
+
+
     }
     return (
-
         <ul onClick={test} className="main__list">
-sgassaggsasg
+            {text}
+            sgassaggsasg
+            <span>span {test()}</span>
         </ul>
     )
 }
