@@ -75,17 +75,20 @@
     }
 }
 
-
 @media (min-width: 760px) {
     .main {
         &__menu {
             display: flex;
             background: var(--menulist-color);
-            flex-grow: 0.5;
+            flex-grow: 3;
+
             &__wrapper {
                 padding: var(--mb-2) var(--mb-1);
                 width: 100%;
             }
+        }
+        &__tasks {
+            flex-grow: 7;
         }
     }
 
