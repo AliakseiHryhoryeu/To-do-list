@@ -6,7 +6,11 @@ import deleteTaskSvg from '@img/deleteTask.svg';
 import './Tasks.scss';
 
 export default function Tasks() {
-    return (
+
+
+
+    
+    return ( 
         <div className="tasks">
             <h2 className="tasks__title">
                 Фронтенд

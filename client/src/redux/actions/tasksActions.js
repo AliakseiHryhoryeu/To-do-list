@@ -5,11 +5,25 @@ import config from '@/config.json'
 
 
 
-export function getTasks(userId) {
+export function getTasksByUserId(userId) {
     return async dispatch => {
         try {
-            const response = await axios.get(config.proxy + `api/tasks/getTasks`, {
+            const response = await axios.get(config.proxy + `api/tasks/getTasksByUserId`, {
                 userId
+            })
+            console.log(response.data.lists)
+            dispatch({type:GET_TASKS, payload:response.data.lists })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export function getTasksByListId(listId) {
+    return async dispatch => {
+        try {
+            const response = await axios.get(config.proxy + `api/tasks/getTasksByListId`, {
+                listId
             })
             console.log(response.data.lists)
             dispatch({type:GET_TASKS, payload:response.data.lists })

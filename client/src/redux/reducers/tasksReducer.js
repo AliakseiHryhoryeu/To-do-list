@@ -3,12 +3,9 @@ import { SET_TASKS, ADD_TASK, EDIT_TASK, DELETE_TASK } from '@redux/types';
 
 const defaultState = {
     allTasks: {},
-    curentTasks: {
-        id: '',
-        ListId: '',
-        text: '',
-        completed:''
-    }}
+    curentTasks: {}
+
+}
 
 export function tasksReducer(state = defaultState, action) {
     switch (action.type) {

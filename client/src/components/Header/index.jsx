@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 import { logout, showSettings, hideSettings, showAlert } from '@actions/userActions'
 import { getLists } from '@actions/listsActions';
+import { getTasksByUserId } from '@actions/tasksActions';
 
 import Settings from "@components/Settings";
 import Lists from '@components/Lists';
@@ -21,6 +22,8 @@ const Header = (props) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getLists(props.userId))
+    dispatch(getTasksByUserId(props.userId))
+
   }, [])
   
   // responsive at mobile devices

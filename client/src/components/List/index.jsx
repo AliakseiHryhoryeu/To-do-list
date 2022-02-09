@@ -20,7 +20,6 @@ const List = ({ items, isRemovable, onClick, onRemove }) => {
 
 
     const test = () => {
-        console.log(items)
         let item = []
         for (let i = 0; i < items.length; i++) {
 
@@ -31,7 +30,6 @@ const List = ({ items, isRemovable, onClick, onRemove }) => {
                     <img onClick={removeList} className="main__list__remove-icon" src={removeSvg} alt="Remove icon" />
                 </li>
             )
-            console.log(temp)
             item.push(temp)
         }
         return item

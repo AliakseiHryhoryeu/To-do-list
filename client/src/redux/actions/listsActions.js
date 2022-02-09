@@ -10,7 +10,6 @@ export function getLists(userId) {
             const response = await axios.get(config.proxy + `api/lists/getLists`, {
                 userId
             })
-            console.log(response.data.lists)
             dispatch({type:GET_LISTS, payload:response.data.lists })
         } catch (e) {
             console.log(e)
