@@ -7,7 +7,7 @@ const router = new Router()
 
 
 // Get Tasks router
-router.get('/getTasks',
+router.get('/getTasksByListId',
     [
         check('listId', "Uncorrect list id").isLength({ min: 1 }),
     ],
@@ -30,11 +30,33 @@ router.get('/getTasks',
         }
     })
 
+    router.get('/getTasksByUserId',
+    [
+        check('userId', "Uncorrect user id").isLength({ min: 1 }),
+    ],
+    async function (req, res) {
+        try {
+            const { userId } = req.body
+            const user = await User.findOne({ id: userId })
+            if (!user) {
+                return res.status(404).json({ message: "User not found" })
+            }
+            const tasks = await Task.find({ tasksList })
+            return res.json({
+                tasks
+            })
+
+        } catch (e) {
+            console.log(e)
+            res.send({ message: "Server error" })
+        }
+    })
 
 // Add Task router
 router.post('/addTask',
     [
         check('listId', "Uncorrect listId").isLength({ min: 1 }),
+        check('userId', "Uncorrect userId").isLength({ min: 1 }),
         check('text', "Uncorrect text").isLength({ min: 1 }),
     ],
     async (req, res) => {
@@ -43,9 +65,10 @@ router.post('/addTask',
             if (!errors.isEmpty()) {
                 return res.status(400).json({ message: "Uncorrect request", errors })
             }
-            const { listId, text } = req.body
+            const { listId, userId, text } = req.body
 
             const list = await List.findOne({ id: listId })
+            const user = await List.findOne({ id: userId })
             const task = new Task({ text: text, listId: listId })
             list.tasksId.push(task.id)
             await task.save()
