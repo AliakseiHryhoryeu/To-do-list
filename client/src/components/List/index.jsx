@@ -19,7 +19,7 @@ const List = ({ items, isRemovable, onClick, onRemove }) => {
     }
 
 
-    const test = () => {
+    const renderList = () => {
         let item = []
         for (let i = 0; i < items.length; i++) {
 
@@ -40,39 +40,9 @@ const List = ({ items, isRemovable, onClick, onRemove }) => {
 
     return (
         <ul className="main__list">
-            {test()}
+            {renderList()}
         </ul>
     )
 }
 
 export default List;
-
-
-{/* <ul onClick={test} className="main__list">
-{
-    items.map(item => (
-        <li key={item.key} className={classNames(item.className, { 'active': item.active })}>
-            <i>{item.icon ? item.icon : <Badge color={item.color} />}</i>
-            <span>{item.name}</span>
-            {isRemovable && <img onClick={removeList} className="main__list__remove-icon" src={removeSvg} alt="Remove icon" />}
-        </li>
-    ))
-}
-
-</ul> */}
-
-
-
-
-{/* <ul className="main__list">
-{
-  props.allLists.map(item => (
-    <li key={item._id} className="test">
-      <i>{<Badge color={item.color} />}</i>
-      <span>{item.title}</span>
-      <img className="main__list__remove-icon" src={removeSvg} alt="Remove icon" />
-    </li>
-  ))
-}
-
-</ul> */}
