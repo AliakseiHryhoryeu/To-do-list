@@ -53,6 +53,7 @@ module.exports = {
       '@': path.resolve(__dirname, "src"),
 
       '@components': path.resolve(__dirname, "src/components"),
+      '@assets': path.resolve(__dirname, "src/assets"),
 
       '@redux': path.resolve(__dirname, "src/redux"),
       '@actions': path.resolve(__dirname, "src/redux/actions"),
@@ -62,7 +63,6 @@ module.exports = {
       '@fonts': path.resolve(__dirname, "src/assets/fonts"),
       '@img': path.resolve(__dirname, "src/assets/img"),
       '@styles': path.resolve(__dirname, "src/assets/styles"),
-      '@db': path.resolve(__dirname, "src/assets/db")
     }
   },
   optimization: optimization(),

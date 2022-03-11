@@ -1,5 +1,7 @@
 const Router = require("express")
 const { check, validationResult } = require("express-validator")
+const mongoose = require("mongoose")
+const User = require("../models/User")
 const List = require("../models/List")
 const Task = require("../models/Task")
 
@@ -14,7 +16,7 @@ router.get('/getTasksByListId',
     async function (req, res) {
         try {
             const { listId } = req.body
-            const list = await List.findOne({ id: listId })
+            const list = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
             if (!list) {
                 return res.status(404).json({ message: "List not found" })
             }
@@ -30,20 +32,36 @@ router.get('/getTasksByListId',
         }
     })
 
-    router.get('/getTasksByUserId',
+router.get('/getTasksByUserId',
     [
         check('userId', "Uncorrect user id").isLength({ min: 1 }),
     ],
     async function (req, res) {
         try {
             const { userId } = req.body
-            const user = await User.findOne({ id: userId })
+            const user = await User.findOne({ _id: mongoose.Types.ObjectId(userId) })
             if (!user) {
                 return res.status(404).json({ message: "User not found" })
             }
-            const tasks = await Task.find({ tasksList })
+            const userLists = user.listId
+            let userTasks = null
+            for (let i = 0; i < userLists.length; i++) {
+                const list = await List.findOne({ _id: mongoose.Types.ObjectId(userLists[i]) })
+                if (!list) {
+                    continue
+                }
+                const listTasks = List.tasksId
+                for (let j = 0; j<listTasks.length;j++) {
+                    const task = await Task.findOne({ _id: mongoose.Types.ObjectId(listTasks[j]) })
+                    if (!task) {
+                        continue
+                    }
+                    userTasks += Task
+                }
+
+            }
             return res.json({
-                tasks
+                userTasks
             })
 
         } catch (e) {
@@ -141,7 +159,7 @@ router.put('/deleteTask',
 
             await task.save()
             await list.save()
-            const response = await List.findOne({listId})
+            const response = await List.findOne({ listId })
             return res.json({
                 response
             })

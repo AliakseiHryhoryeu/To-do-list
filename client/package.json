@@ -60,6 +60,7 @@
     "optimize-css-assets-webpack-plugin": "6.0.1",
     "postcss-loader": "6.2.1",
     "react-redux": "7.2.6",
+    "react-uuid": "^1.0.2",
     "sass": "1.44.0",
     "sass-loader": "12.4.0",
     "scss-loader": "0.0.1",

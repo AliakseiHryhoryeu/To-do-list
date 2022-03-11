@@ -1,14 +1,13 @@
-import React, { useState, Children } from 'react';
-import classNames from 'classnames';
+import React from 'react';
+import { connect } from "react-redux";
+import Badge from '@components/Badge';
 
 import removeSvg from '@img/remove.svg'
 
-import Badge from '@components/Badge';
-
 import './List.scss';
 
-const List = ({ items, isRemovable, onClick, onRemove }) => {
-
+function List(props) {
+    let items = props.allLists
     const removeList = (item) => {
         if (window.confirm('Are you sure you want to delete the list?')) {
             console.log(item)
@@ -17,7 +16,6 @@ const List = ({ items, isRemovable, onClick, onRemove }) => {
     const setActiveList = (key) => {
         console.log(key)
     }
-
 
     const renderList = () => {
         let item = []
@@ -33,10 +31,7 @@ const List = ({ items, isRemovable, onClick, onRemove }) => {
             item.push(temp)
         }
         return item
-
     }
-
-
 
     return (
         <ul className="main__list">
@@ -45,4 +40,8 @@ const List = ({ items, isRemovable, onClick, onRemove }) => {
     )
 }
 
-export default List;
+const mapStateToProps = state => ({
+    allLists: state.lists.allLists
+})
+
+export default connect(mapStateToProps, null)(List)

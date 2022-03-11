@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector, connect } from "react-redux";
 import classNames from 'classnames';
@@ -37,8 +37,7 @@ const Header = (props) => {
   }
 
   return (
-    <Fragment >
-
+    <>
       <header className="header__wrapper">
         <header className="header">
           <div className="header__container">
@@ -91,7 +90,7 @@ const Header = (props) => {
       </header>
       {isAuth && props.settings && <Settings />}
 
-    </Fragment>
+    </>
 
   )
 }
