@@ -9,45 +9,61 @@ const router = new Router()
 
 
 //Get lists router
-router.get('/getLists', async function (req, res) {
-    try {
-        const { userId } = req.body
-        const user = await User.findOne({ _id:mongoose.Types.ObjectId(userId) })
-        if (!user) {
-            return res.status(404).json({ message: "User not found" })
+router.get('/getLists',
+    [
+        check('userId', "Uncorrect userId").isLength({ min: 1 }),
+    ],
+    async function (req, res) {
+        try {
+            const errors = validationResult(req)
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ message: "Uncorrect request", errors })
+            }
+            const { userId } = req.body
+            const user = await User.findOne({ _id: mongoose.Types.ObjectId(userId) })
+            if (!user) {
+                return res.status(404).json({ message: "User not found" })
+            }
+
+            const userLists = user.listId
+            const lists = await List.find({ userLists })
+
+            return res.json({
+                lists
+            })
+
+        } catch (e) {
+            console.log(e)
+            res.send({ message: "Server error (get lists)" })
         }
-
-        const userLists = user.listId
-        const lists = await List.find({ userLists })
-
-        return res.json({
-            lists
-        })
-
-    } catch (e) {
-        console.log(e)
-        res.send({ message: "Server error" })
-    }
-})
+    })
 
 //Get List router
-router.get('/getList', async function (req, res) {
-    try {
-        const { listId } = req.body
-        const list = await List.findOne({ _id:mongoose.Types.ObjectId(listId) })
-        if (!list) {
-            return res.status(404).json({ message: "List not found" })
+router.get('/getList',
+    [
+        check('listId', "Uncorrect userId").isLength({ min: 1 })
+    ],
+    async function (req, res) {
+        try {
+            const errors = validationResult(req)
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ message: "Uncorrect request", errors })
+            }
+            const { listId } = req.body
+            const list = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
+            if (!list) {
+                return res.status(404).json({ message: "List not found" })
+            }
+
+            return res.json({
+                list
+            })
+
+        } catch (e) {
+            console.log(e)
+            res.send({ message: "Server error (get list)" })
         }
-
-        return res.json({
-            list
-        })
-
-    } catch (e) {
-        console.log(e)
-        res.send({ message: "Server error" })
-    }
-})
+    })
 
 // Add list router
 router.post('/addList',
@@ -64,8 +80,8 @@ router.post('/addList',
             }
             const { userId, title, color } = req.body
 
-            const user = await User.findOne({ _id:mongoose.Types.ObjectId(userId) })
-            if(!user){
+            const user = await User.findOne({ _id: mongoose.Types.ObjectId(userId) })
+            if (!user) {
                 return res.status(400).json({ message: "User not found", errors })
             }
             const list = new List({ title: title, userId: user.id, color: color })
@@ -75,7 +91,7 @@ router.post('/addList',
             return res.json(list)
         } catch (e) {
             console.log(e)
-            res.send({ message: "Server error" })
+            res.send({ message: "Server error (add list)" })
         }
     })
 
@@ -97,14 +113,14 @@ router.put('/editList',
             const { listId, title, description, color } = req.body
 
             const list = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
-            if(!list){
+            if (!list) {
                 return res.status(400).json({ message: "List not found", errors })
             }
             list.title = title
             list.description = description
             list.color = color
             await list.save()
-            
+
             return res.json({
                 list: {
                     id: list.id,
@@ -115,7 +131,7 @@ router.put('/editList',
             })
         } catch (e) {
             console.log(e)
-            res.send({ message: "Server error" })
+            res.send({ message: "Server error (edit list)" })
         }
     })
 
@@ -133,32 +149,32 @@ router.put('/deleteList',
             const { listId } = req.body
 
             const list = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
-            if(!list){
+            if (!list) {
                 return res.status(400).json({ message: "List not found", errors })
             }
 
             const tasks = list.tasksId
             for (let i = 0; i < tasks.length; i++) {
                 let task = tasks[i]
-                const temp = await Task.findOneAndDelete({ _id:mongoose.Types.ObjectId(task) })
+                const temp = await Task.findOneAndDelete({ _id: mongoose.Types.ObjectId(task) })
             }
 
             const userId = list.userId
             const user = await User.findOneAndUpdate(
-                { _id:mongoose.Types.ObjectId(userId) },
+                { _id: mongoose.Types.ObjectId(userId) },
                 { $pull: { listId: { $in: [id] } } }
             )
-            const temp = await List.findByIdAndDelete({ _id:mongoose.Types.ObjectId(listId) })
+            const temp = await List.findByIdAndDelete({ _id: mongoose.Types.ObjectId(listId) })
             await list.save()
             await user.save()
-            const response = await User.findOne({ _id:mongoose.Types.ObjectId(userId) })
+            const response = await User.findOne({ _id: mongoose.Types.ObjectId(userId) })
             return res.json({
                 response
             })
 
         } catch (e) {
             console.log(e)
-            res.send({ message: "Server error" })
+            res.send({ message: "Server error (delete list)" })
         }
     })
 

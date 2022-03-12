@@ -37,7 +37,7 @@ router.post('/registration',
 
         } catch (e) {
             console.log(e)
-            res.send({ message: "Server error" })
+            res.send({ message: "Server error (registration)" })
         }
     })
 
@@ -66,7 +66,7 @@ router.post('/login',
 
         } catch (e) {
             console.log(e)
-            res.send({ message: "Server error" })
+            res.send({ message: "Server error (login)" })
         }
     })
 
@@ -77,14 +77,14 @@ router.get('/auth', authMiddleware, async (req, res) => {
         return res.json({
             token,
             user: {
-                id: user.id,
+                userId: user.id,
                 username: user.username,
                 userIcon: user.userIcon
             }
         })
     } catch (e) {
         console.log(e)
-        res.send({ message: "Server error" })
+        res.send({ message: "Server error (auth)" })
     }
 })
 

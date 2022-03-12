@@ -14,13 +14,9 @@ import './Registration.scss'
 export default function Registration() {
 
     const isAuth = useSelector(state => state.user.isAuth)
-    const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    useEffect(() => {
-      dispatch(auth())
-    }, [])
-    
+   
     if (isAuth === true) {
         navigate('/main',{replace: true})
     }

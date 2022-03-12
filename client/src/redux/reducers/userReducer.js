@@ -8,11 +8,10 @@ import img5 from '@img/userIcon_5.png'
 
 const defaultState = {
     currentUser: {
-        id: '',
+        userId: '',
         username: '',
-        userIcon: img1,
-        colors:[]
-    },
+        userIcon: img1
+        },
     isAuth: false,
     settingsVisible: false,
     alert: null,

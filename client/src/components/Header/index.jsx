@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector, connect } from "react-redux";
 import classNames from 'classnames';
 
 import { logout, showSettings, hideSettings, showAlert } from '@actions/userActions'
-import { getLists } from '@actions/listsActions';
-import { getTasksByUserId } from '@actions/tasksActions';
 
 import Settings from "@components/Settings";
 import Lists from '@components/Lists';
@@ -20,11 +18,6 @@ const Header = (props) => {
 
   const isAuth = useSelector(state => state.user.isAuth)
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getLists(props.userId))
-    dispatch(getTasksByUserId(props.userId))
-
-  }, [])
   
   // responsive at mobile devices
   const [isActiveHeaderBurger, setActiveHeaderBurger] = useState(false)
@@ -97,10 +90,9 @@ const Header = (props) => {
 
 const mapStateToProps = state => ({
   username: state.user.currentUser.username,
-  userId:state.user.userId,
   settings: state.user.settingsVisible,
-  alert: state.user.alert,
-  image: state.user.currentUser.userIcon
+  image: state.user.currentUser.userIcon,
+  // alert: state.user.alert,
 
 })
 

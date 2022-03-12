@@ -7,37 +7,16 @@ const Task = require("../models/Task")
 
 const router = new Router()
 
-
-// Get Tasks router
-router.get('/getTasksByListId',
-    [
-        check('listId', "Uncorrect list id").isLength({ min: 1 }),
-    ],
-    async function (req, res) {
-        try {
-            const { listId } = req.body
-            const list = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
-            if (!list) {
-                return res.status(404).json({ message: "List not found" })
-            }
-            const tasksList = list.tasksId
-            const tasks = await Task.find({ tasksList })
-            return res.json({
-                tasks
-            })
-
-        } catch (e) {
-            console.log(e)
-            res.send({ message: "Server error" })
-        }
-    })
-
 router.get('/getTasksByUserId',
     [
         check('userId', "Uncorrect user id").isLength({ min: 1 }),
     ],
     async function (req, res) {
         try {
+            const errors = validationResult(req)
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ message: "Uncorrect request", errors })
+            }
             const { userId } = req.body
             const user = await User.findOne({ _id: mongoose.Types.ObjectId(userId) })
             if (!user) {
@@ -70,11 +49,63 @@ router.get('/getTasksByUserId',
 
         } catch (e) {
             console.log(e)
-            res.send({ message: "Server error" })
+            res.send({ message: "Server error (get tasks by user id)" })
         }
     })
 
-// Add Task router
+router.get('/getTasksByListId',
+    [
+        check('listId', "Uncorrect list id").isLength({ min: 1 }),
+    ],
+    async function (req, res) {
+        try {
+            const errors = validationResult(req)
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ message: "Uncorrect request", errors })
+            }
+            const { listId } = req.body
+            const list = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
+            if (!list) {
+                return res.status(404).json({ message: "List not found" })
+            }
+            const tasksList = list.tasksId
+            const tasks = await Task.find({ tasksList })
+            return res.json({
+                tasks
+            })
+
+        } catch (e) {
+            console.log(e)
+            res.send({ message: "Server error (get tasks by list id)" })
+        }
+    })
+router.get('/getTask',
+    [
+        check('taskId', "Uncorrect listId").isLength({ min: 1 })
+    ],
+    async function (req, res) {
+        try {
+            const errors = validationResult(req)
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ message: "Uncorrect request", errors })
+            }
+            const { taskId } = req.body
+            const task = await Task.findOne({ _id: mongoose.Types.ObjectId(taskId) })
+            if (!task) {
+                return res.status(404).json({ message: "Task not found" })
+            }
+
+            return res.json({
+                list
+            })
+
+        } catch (e) {
+            console.log(e)
+            res.send({ message: "Server error (get task)" })
+        }
+    })
+
+
 router.post('/addTask',
     [
         check('listId', "Uncorrect listId").isLength({ min: 1 }),
@@ -97,7 +128,7 @@ router.post('/addTask',
             if (!user) {
                 return res.status(404).json({ message: "User not found", errors })
             }
-            const task = new Task({ text: text, listId: mongoose.Types.ObjectId(listId), userId:mongoose.Types.ObjectId(userId) })
+            const task = new Task({ text: text, listId: mongoose.Types.ObjectId(listId), userId: mongoose.Types.ObjectId(userId) })
             list.tasksId.push(task._id)
             await task.save()
             await list.save()
@@ -110,7 +141,7 @@ router.post('/addTask',
             })
         } catch (e) {
             console.log(e)
-            res.send({ message: "Server error" })
+            res.send({ message: "Server error (add task)" })
         }
     })
 
@@ -147,7 +178,7 @@ router.put('/editTask',
             })
         } catch (e) {
             console.log(e)
-            res.send({ message: "Server error" })
+            res.send({ message: "Server error (edit task)" })
         }
     })
 
@@ -165,7 +196,7 @@ router.put('/deleteTask',
             const { taskId } = req.body
 
             const task = await Task.findOne({ _id: mongoose.Types.ObjectId(taskId) })
-            if(!task){
+            if (!task) {
                 return res.status(404).json({ message: "Task not found" })
 
             }
@@ -177,14 +208,14 @@ router.put('/deleteTask',
 
             await task.save()
             await list.save()
-            const response = await List.findOne({ _id:mongoose.Types.ObjectId(listId) })
+            const response = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
             return res.json({
                 response
             })
 
         } catch (e) {
             console.log(e)
-            res.send({ message: "Server error" })
+            res.send({ message: "Server error (delete task)" })
         }
     })
 

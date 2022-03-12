@@ -11,12 +11,7 @@ import './RestorePassword.scss'
 export default function RestorePassword() {
 
     const isAuth = useSelector(state => state.user.isAuth)
-    const dispatch = useDispatch()
     const navigate = useNavigate()
-
-    useEffect(() => {
-        dispatch(auth())
-    }, [])
 
     if (isAuth === true) {
         navigate('/main', { replace: true })

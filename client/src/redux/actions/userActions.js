@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { SET_USER, LOGOUT, SETTINGS_SHOW, SETTINGS_HIDE, SET_ACTIVE_USERICON, ALERT_SHOW, ALERT_HIDE } from '@redux/types';
-
+import { getLists } from './listsActions';
 
 import config from '@/config.json'
 
@@ -12,6 +12,7 @@ export function auth() {
                 { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
             )
             dispatch(setUser(response.data.user))
+            dispatch(getLists(response.data.user.userId))
             localStorage.setItem('token', response.data.token)
         } catch (e) {
             console.log(e.response.data.message);
