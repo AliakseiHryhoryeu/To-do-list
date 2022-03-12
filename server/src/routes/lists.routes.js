@@ -8,7 +8,6 @@ const Task = require("../models/Task")
 const router = new Router()
 
 
-
 //Get lists router
 router.get('/getLists', async function (req, res) {
     try {
@@ -36,9 +35,10 @@ router.get('/getList', async function (req, res) {
     try {
         const { listId } = req.body
         const list = await List.findOne({ _id:mongoose.Types.ObjectId(listId) })
-        if (!user) {
+        if (!list) {
             return res.status(404).json({ message: "List not found" })
         }
+
         return res.json({
             list
         })
@@ -104,6 +104,7 @@ router.put('/editList',
             list.description = description
             list.color = color
             await list.save()
+            
             return res.json({
                 list: {
                     id: list.id,

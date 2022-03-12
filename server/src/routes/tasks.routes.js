@@ -44,14 +44,18 @@ router.get('/getTasksByUserId',
                 return res.status(404).json({ message: "User not found" })
             }
             const userLists = user.listId
-            let userTasks = null
+            let userTasks = [null]
             for (let i = 0; i < userLists.length; i++) {
                 const list = await List.findOne({ _id: mongoose.Types.ObjectId(userLists[i]) })
                 if (!list) {
                     continue
                 }
-                const listTasks = List.tasksId
-                for (let j = 0; j<listTasks.length;j++) {
+                let listTasks = [null]
+                listTasks = List.tasksId
+                if (!listTasks) {
+                    continue
+                }
+                for (let j = 0; j < listTasks.length; j++) {
                     const task = await Task.findOne({ _id: mongoose.Types.ObjectId(listTasks[j]) })
                     if (!task) {
                         continue
@@ -85,10 +89,16 @@ router.post('/addTask',
             }
             const { listId, userId, text } = req.body
 
-            const list = await List.findOne({ id: listId })
-            const user = await List.findOne({ id: userId })
-            const task = new Task({ text: text, listId: listId })
-            list.tasksId.push(task.id)
+            const list = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
+            if (!list) {
+                return res.status(404).json({ message: "List not found", errors })
+            }
+            const user = await List.findOne({ _id: mongoose.Types.ObjectId(userId) })
+            if (!user) {
+                return res.status(404).json({ message: "User not found", errors })
+            }
+            const task = new Task({ text: text, listId: mongoose.Types.ObjectId(listId), userId:mongoose.Types.ObjectId(userId) })
+            list.tasksId.push(task._id)
             await task.save()
             await list.save()
             return res.json({
@@ -110,7 +120,7 @@ router.post('/addTask',
 //Edit task router
 router.put('/editTask',
     [
-        check('id', "Uncorrect taskId").isLength({ min: 1 }),
+        check('taskId', "Uncorrect taskId").isLength({ min: 1 }),
         check('text', "Uncorrect text").isLength({ min: 1 }),
     ],
     async (req, res) => {
@@ -119,9 +129,13 @@ router.put('/editTask',
             if (!errors.isEmpty()) {
                 return res.status(400).json({ message: "Uncorrect request", errors })
             }
-            const { id, text, completed } = req.body
+            const { taskId, text, completed } = req.body
 
-            const task = await Task.findOne({ id: id })
+            const task = await Task.findOne({ _id: mongoose.Types.ObjectId(taskId) })
+            if (!task) {
+                return res.status(404).json({ message: "Task not found" })
+            }
+
             task.text = text
             task.completed = completed
             await task.save()
@@ -150,7 +164,11 @@ router.put('/deleteTask',
             }
             const { taskId } = req.body
 
-            const task = await Task.findOne({ id: taskId })
+            const task = await Task.findOne({ _id: mongoose.Types.ObjectId(taskId) })
+            if(!task){
+                return res.status(404).json({ message: "Task not found" })
+
+            }
             const listId = task.listId
             const list = await List.findOneAndUpdate(
                 { listId },
@@ -159,7 +177,7 @@ router.put('/deleteTask',
 
             await task.save()
             await list.save()
-            const response = await List.findOne({ listId })
+            const response = await List.findOne({ _id:mongoose.Types.ObjectId(listId) })
             return res.json({
                 response
             })
