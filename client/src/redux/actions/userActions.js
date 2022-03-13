@@ -13,6 +13,7 @@ export function auth() {
             )
             dispatch(setUser(response.data.user))
             dispatch(getLists(response.data.user.userId))
+            dispatch(getTasksByUserId(response.data.user.userId))
             localStorage.setItem('token', response.data.token)
         } catch (e) {
             console.log(e.response.data.message);
@@ -24,8 +25,8 @@ export function signIn(username, password) {
     return async dispatch => {
         try {
             const response = await axios.post(config.proxy + `api/auth/login`, {
-                username,
-                password
+                'username': username,
+                'password': password
             })
             dispatch(setUser(response.data.user))
             localStorage.setItem('token', response.data.token)

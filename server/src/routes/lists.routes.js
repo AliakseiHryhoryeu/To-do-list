@@ -19,7 +19,7 @@ router.get('/getLists',
             if (!errors.isEmpty()) {
                 return res.status(400).json({ message: "Uncorrect request", errors })
             }
-            const { userId } = req.body
+            const { userId } = req.query
             const user = await User.findOne({ _id: mongoose.Types.ObjectId(userId) })
             if (!user) {
                 return res.status(404).json({ message: "User not found" })
@@ -49,7 +49,7 @@ router.get('/getList',
             if (!errors.isEmpty()) {
                 return res.status(400).json({ message: "Uncorrect request", errors })
             }
-            const { listId } = req.body
+            const { listId } = req.query
             const list = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
             if (!list) {
                 return res.status(404).json({ message: "List not found" })
