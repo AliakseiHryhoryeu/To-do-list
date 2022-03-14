@@ -24,7 +24,7 @@ export default function Footer() {
                     </li>
                 </ul>
             </div>
-            <div className="footer__subtitle">Aliaksey Hryhoruey 2021</div>
+            <div className="footer__subtitle">Aliaksey Hryhoruey 2022</div>
 
 
         </footer>

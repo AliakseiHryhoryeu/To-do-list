@@ -154,15 +154,19 @@ router.put('/deleteList',
             }
 
             const tasks = list.tasksId
-            for (let i = 0; i < tasks.length; i++) {
-                let task = tasks[i]
-                const temp = await Task.findOneAndDelete({ _id: mongoose.Types.ObjectId(task) })
+            if(tasks){
+                try{
+                    for (let i = 0; i < tasks.length; i++) {
+                        let task = tasks[i]
+                        const temp = await Task.findOneAndDelete({ _id: mongoose.Types.ObjectId(task) })
+                    }        
+                }catch{}
             }
 
             const userId = list.userId
             const user = await User.findOneAndUpdate(
                 { _id: mongoose.Types.ObjectId(userId) },
-                { $pull: { listId: { $in: [id] } } }
+                { $pull: { listId: { $in: [listId] } } }
             )
             const temp = await List.findByIdAndDelete({ _id: mongoose.Types.ObjectId(listId) })
             await list.save()

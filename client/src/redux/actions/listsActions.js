@@ -42,7 +42,7 @@ export function addList(userId, title, color) {
                 'color': color,
                 'title': title
             })
-            dispatch({ type: ADD_LIST, payload: response.data.lists })
+            dispatch({ type: ADD_LIST, payload: response.data })
         } catch (e) {
             console.log(e)
         }
@@ -58,7 +58,7 @@ export function editList(listId, title, description, color) {
                 'description': description,
                 'color': color
             })
-            dispatch({ type: EDIT_LIST, payload: response.data.lists })
+            dispatch({ type: EDIT_LIST, payload: response.data })
         } catch (e) {
             console.log(e)
         }
@@ -68,10 +68,10 @@ export function editList(listId, title, description, color) {
 export function deleteList(listId) {
     return async dispatch => {
         try {
-            const response = await axios.put(config.proxy + `api/lists/getLists`, {
+            const response = await axios.put(config.proxy + `api/lists/deleteList`, {
                 'listId': listId
             })
-            dispatch({ type: DELETE_LIST, payload: response.data.lists })
+            dispatch({ type: DELETE_LIST, payload: response.data })
         } catch (e) {
             console.log(e)
         }

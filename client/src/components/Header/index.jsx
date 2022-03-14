@@ -56,7 +56,7 @@ const Header = (props) => {
               <ul className="header__nav__list-isAuth">
                 <li className="header__nav__item header__nav__username" >
 
-                  <div className="header__nav__username__container" onClick={toggleClassActiveUsername}>
+                  <div className="header__nav__username__container" onClick={()=>toggleClassActiveUsername()}>
                     <div className="header__nav__link-white">{props.username}</div>
                     <img className="header__nav__link-usericon" src={props.image} alt="userIcon" />
                   </div>

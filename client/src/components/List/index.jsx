@@ -1,12 +1,15 @@
 import React from 'react';
-import { connect } from "react-redux";
+import { connect,useDispatch } from "react-redux";
 import Badge from '@components/Badge';
+import { deleteList } from '@actions/listsActions';
 
 import removeSvg from '@img/remove.svg'
 
 import './List.scss';
 
 function List(props) {
+const dispatch = useDispatch()
+
     let items = props.allLists
     const removeList = (item) => {
         if (window.confirm('Are you sure you want to delete the list?')) {
@@ -20,12 +23,11 @@ function List(props) {
     const renderList = () => {
         let item = []
         for (let i = 0; i < items.length; i++) {
-
             const temp = (
                 <li onClick={() => setActiveList(items[i]._id)} key={items[i]._id}>
                     <i>{<Badge color={items[i].color} />}</i>
                     <span>{items[i].title}</span>
-                    <img onClick={removeList} className="main__list__remove-icon" src={removeSvg} alt="Remove icon" />
+                    <img onClick={()=>dispatch(deleteList(items[i]._id))} className="main__list__remove-icon" src={removeSvg} alt="Remove icon" />
                 </li>
             )
             item.push(temp)

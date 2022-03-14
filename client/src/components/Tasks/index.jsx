@@ -1,12 +1,14 @@
 import React from 'react';
+import { useDispatch,connect } from 'react-redux';
+
 import editListSvg from '@img/editList.svg';
 import editTaskSvg from '@img/editTask.svg';
 import deleteTaskSvg from '@img/deleteTask.svg';
 
 import './Tasks.scss';
 
-export default function Tasks() {
-
+const Tasks=(props)=> {
+const dispatch = useDispatch()
     
     return ( 
         <div className="tasks">
@@ -50,3 +52,11 @@ export default function Tasks() {
         </div>
     )
 }
+
+const mapStateToProps = state => ({
+    currentList: state.lists.currentList,
+  
+  })
+  
+
+export default connect(mapStateToProps, null)(Tasks)
