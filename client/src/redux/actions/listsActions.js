@@ -19,15 +19,25 @@ export function getLists(userId) {
     }
 }
 
-export function getList(listId) {
+export function setList(listId) {
     return async dispatch => {
         try {
-            const response = await axios.get(config.proxy + `api/lists/getLists`, {
+            const response = await axios.get(config.proxy + `api/lists/getList`, {
                 params: {
                     'listId': listId
                 }
             })
-            dispatch({ type: GET_LIST, payload: response.data.lists })
+            dispatch({ type: SET_LIST, payload: response.data.list })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export function showAllLists() {
+    return async dispatch => {
+        try {
+            dispatch({ type: SET_LIST, payload: {} })
         } catch (e) {
             console.log(e)
         }
@@ -71,16 +81,10 @@ export function deleteList(listId) {
             const response = await axios.put(config.proxy + `api/lists/deleteList`, {
                 'listId': listId
             })
-            dispatch({ type: DELETE_LIST, payload: response.data })
+            dispatch({ type: DELETE_LIST, payload: response.data.lists })
         } catch (e) {
             console.log(e)
         }
     }
 }
 
-export function setList(listId) {
-    return {
-        type: SET_LIST,
-        payload: listId
-    }
-}

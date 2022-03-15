@@ -165,15 +165,16 @@ router.put('/deleteList',
 
             const userId = list.userId
             const user = await User.findOneAndUpdate(
-                { _id: mongoose.Types.ObjectId(userId) },
-                { $pull: { listId: { $in: [listId] } } }
+                { _id: userId },
+                { $pull: { listId: listId  } }
             )
             const temp = await List.findByIdAndDelete({ _id: mongoose.Types.ObjectId(listId) })
-            await list.save()
             await user.save()
-            const response = await User.findOne({ _id: mongoose.Types.ObjectId(userId) })
+
+            const userLists = user.listId
+            const lists = await List.find({ userLists })
             return res.json({
-                response
+                lists
             })
 
         } catch (e) {
