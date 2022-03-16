@@ -1,5 +1,8 @@
 import React from 'react'
 
+import editTaskSvg from '@img/editTask.svg';
+import deleteTaskSvg from '@img/deleteTask.svg';
+
 export default function Task({ taskId, text, completed }) {
   return (
     <div className="tasks__items-row">
@@ -23,7 +26,7 @@ export default function Task({ taskId, text, completed }) {
           </svg>
         </label>
       </div>
-      <p>{text}</p>
+      <p>text{text}</p>
       <div className="tasks__items-row-actions">
         <div >
           <img src={editTaskSvg} alt="Edit icon" />

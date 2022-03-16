@@ -19,12 +19,6 @@ export function listsReducer(state = defaultState, action) {
                 ...state,
                 activeList: {...action.payload}
             }
-        case SHOW_ALL_LISTS:
-            return {
-                ...state,
-                activeList: null
-
-            }
         case ADD_LIST:
             return {
                 ...state,
@@ -33,7 +27,6 @@ export function listsReducer(state = defaultState, action) {
         case EDIT_LIST:
             return {
                 ...state
-
 
             }
         case DELETE_LIST:
