@@ -6,6 +6,7 @@ import Task from '../Task';
 
 
 import './Tasks.scss';
+import AddTask from '../AddTask';
 
 const Tasks = (props) => {
     const dispatch = useDispatch()
@@ -14,6 +15,8 @@ const Tasks = (props) => {
         <div className="tasks">
             <TaskHeader />
             <Task />
+<AddTask /> 
+
 
         </div>
     )
