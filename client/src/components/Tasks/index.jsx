@@ -15,7 +15,7 @@ const Tasks = (props) => {
         <div className="tasks">
             <TaskHeader />
             <Task />
-<AddTask /> 
+            <AddTask listId={''} />
 
 
         </div>
