@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { SET_USER, LOGOUT, SETTINGS_SHOW, SETTINGS_HIDE, SET_ACTIVE_USERICON, ALERT_SHOW, ALERT_HIDE } from '@redux/types';
 import { getLists } from './listsActions';
+import { getTasksByUserId } from './tasksActions';
 
 import config from '@/config.json'
 

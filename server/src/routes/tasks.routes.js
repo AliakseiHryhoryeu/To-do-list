@@ -23,14 +23,13 @@ router.get('/getTasksByUserId',
                 return res.status(404).json({ message: "User not found" })
             }
             const userLists = user.listId
-            let userTasks = [null]
+            let response = []
             for (let i = 0; i < userLists.length; i++) {
                 const list = await List.findOne({ _id: mongoose.Types.ObjectId(userLists[i]) })
                 if (!list) {
                     continue
                 }
-                let listTasks = [null]
-                listTasks = List.tasksId
+                let listTasks = list.tasksId
                 if (!listTasks) {
                     continue
                 }
@@ -39,12 +38,13 @@ router.get('/getTasksByUserId',
                     if (!task) {
                         continue
                     }
-                    userTasks += Task
+                    response.push(task)
+                    
                 }
 
             }
             return res.json({
-                userTasks
+                response
             })
 
         } catch (e) {
@@ -122,14 +122,16 @@ router.post('/addTask',
             }
             const { listId, userId, text } = req.body
 
+            const user = await User.findOne({ _id: mongoose.Types.ObjectId(userId) })
+            if (!user) {
+                return res.status(404).json({ message: "User not found", errors })
+            }
+
             const list = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
             if (!list) {
                 return res.status(404).json({ message: "List not found", errors })
             }
-            const user = await List.findOne({ _id: mongoose.Types.ObjectId(userId) })
-            if (!user) {
-                return res.status(404).json({ message: "User not found", errors })
-            }
+
             const task = new Task({ text: text, listId: mongoose.Types.ObjectId(listId), userId: mongoose.Types.ObjectId(userId) })
             list.tasksId.push(task._id)
             await task.save()

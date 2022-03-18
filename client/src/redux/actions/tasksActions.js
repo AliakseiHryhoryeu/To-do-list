@@ -12,7 +12,7 @@ export function getTasksByUserId(userId) {
                     'userId': userId
                 }
             })
-            dispatch({ type: GET_TASKS, payload: response.data.lists })
+            dispatch({ type: GET_TASKS, payload: response.data.response })
         } catch (e) {
             console.log(e)
         }
@@ -49,14 +49,15 @@ export function getTask(taskId) {
     }
 }
 
-export function addTask(listId, text) {
+export function addTask(userId, listId, text) {
     return async dispatch => {
         try {
             const response = await axios.post(config.proxy + `api/tasks/addTask`, {
+                'userId':userId,
                 'listId':listId,
                 'text':text
             })
-            dispatch({ type: ADD_TASK, payload: response.data.lists })
+            dispatch({ type: ADD_TASK, payload: response.data })
         } catch (e) {
             console.log(e)
         }

@@ -1,14 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import editTaskSvg from '@img/editTask.svg';
 import deleteTaskSvg from '@img/deleteTask.svg';
 
+import './Task.scss'
+
 export default function Task({ taskId, text, completed }) {
+
+  const [checked, setChecked] = useState()
+
+
+  const editTask = () => {
+
+  }
+  const deleteTask = () => {
+
+  }
+
   return (
     <div className="tasks__items-row">
       <div className="checkbox">
-        <input />
-        <label >
+        <input
+          onChange={() => setChecked(!checked)}
+          id={`task-123`}
+          type="checkbox"
+          checked={checked}
+        />
+        <label htmlFor={`task-123`}>
           <svg
             width="11"
             height="8"
@@ -29,10 +47,18 @@ export default function Task({ taskId, text, completed }) {
       <p>text{text}</p>
       <div className="tasks__items-row-actions">
         <div >
-          <img src={editTaskSvg} alt="Edit icon" />
+          <img
+            src={editTaskSvg}
+            alt="Edit icon"
+            onClick={editTask()}
+          />
         </div>
         <div>
-          <img src={deleteTaskSvg} alt="Delete icon" />
+          <img
+            src={deleteTaskSvg}
+            alt="Delete icon"
+            onClick={deleteTask()}
+          />
         </div>
       </div>
     </div>

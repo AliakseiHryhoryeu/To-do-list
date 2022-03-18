@@ -5,21 +5,29 @@ import { addTask } from '@actions/tasksActions'
 
 import './AddTask.scss'
 
-const AddTask = ({ listId }) => {
+const AddTask = ({ userId, listId }) => {
   const [visibleInput, setVisibleInput] = useState(false)
-  const [inputValue, setInputValue] = useState('test')
+  const [inputValue, setInputValue] = useState('')
   const dispatch = useDispatch()
 
+  const toggleVisibleInput = () => {
+    setVisibleInput(!visibleInput)
+  }
 
+  const addNewTask = () => {
+    dispatch(addTask(userId, listId, inputValue))
+    setVisibleInput(!visibleInput)
+    setInputValue('')
+  }
   return (
     <div className='add-task'>
       {!visibleInput &&
         <div
-          onClick={() => { setVisibleInput(!visibleInput) }}
+          onClick={() => { toggleVisibleInput() }}
           className="add-task__text"
         >
           <i>
-            <svg width="16" height="12" viewBox="0 0 12 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="listIconPlus">
+            <svg width="16" height="12" viewBox="0 0 12 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="addtaskIconPlus">
               <path d="M8 1V15" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               <path d="M1 8H15" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -37,16 +45,18 @@ const AddTask = ({ listId }) => {
           onChange={e => setInputValue(e.target.value)}
         />
         <div className="add-task__buttons ">
-        <button className='btn-addtask'
-          onClick={dispatch(addTask(listId, inputValue))}
-        >
-          Add Task
-        </button>
-        <button className='btn-cancel'
-          onClick={() => { setVisibleInput(!visibleInput) }}
-        >
-          Cancel
-        </button>
+
+          <button className='btn-addtask'
+            onClick={()=>addNewTask(inputValue)}
+          >
+            Add Task
+          </button>
+
+          <button className='btn-cancel'
+            onClick={() => { toggleVisibleInput() }}
+          >
+            Cancel
+          </button>
 
         </div>
       </div>
