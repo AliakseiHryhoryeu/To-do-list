@@ -48,9 +48,11 @@ const Tasks = (props) => {
         // taskId, text, completed
 
         for (let j = 0; j < tasks.length; j++) {
+
             const temp = (
-                <Task 
-                    
+                <Task key={Math.random(0,1000)}
+                taskId={tasks[j]}
+                
                  
                 />
             )

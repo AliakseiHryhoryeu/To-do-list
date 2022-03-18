@@ -14,7 +14,7 @@ export default function Main() {
             <div className="main__wrapper">
                 <div className="main__menu">
                     <div className="main__menu__wrapper">
-                        <Lists />
+                        <Lists  />
                     </div>
                 </div>
                 <div className="main__tasks">

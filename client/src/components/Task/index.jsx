@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useDispatch, userDispatch } from 'react-redux'
+import { editTask } from '@actions/tasksActions';
 
 import editTaskSvg from '@img/editTask.svg';
 import deleteTaskSvg from '@img/deleteTask.svg';
@@ -7,26 +9,40 @@ import './Task.scss'
 
 export default function Task({ taskId, text, completed }) {
 
+  const dispatch = useDispatch()
+
   const [checked, setChecked] = useState()
 
 
-  const editTask = () => {
+  const editTextTask = () => {
+    const newText = window.prompt(`New task text`, text);
+    if (newText) {
+      dispatch(editTask(taskId, newText, completed))
+    }
 
   }
-  const deleteTask = () => {
 
+  const deleteTask = () => {
+    if (window.confirm('Are you sure you want delete this task?')) {
+      dispatch(deleteTask(taskId))
+    }
+  }
+  
+  const checkTask = () => {
+    dispatch(editTask(taskId, text, !checked))
+    setChecked(!checked)
   }
 
   return (
     <div className="tasks__items-row">
       <div className="checkbox">
         <input
-          onChange={() => setChecked(!checked)}
-          id={`task-123`}
+          onChange={() => checkTask()}
+          id={`task-${taskId}`}
           type="checkbox"
           checked={checked}
         />
-        <label htmlFor={`task-123`}>
+        <label htmlFor={`task-${taskId}`}>
           <svg
             width="11"
             height="8"
@@ -50,14 +66,14 @@ export default function Task({ taskId, text, completed }) {
           <img
             src={editTaskSvg}
             alt="Edit icon"
-            onClick={editTask()}
+            onClick={() => editTextTask()}
           />
         </div>
         <div>
           <img
             src={deleteTaskSvg}
             alt="Delete icon"
-            onClick={deleteTask()}
+            onClick={() => deleteTask()}
           />
         </div>
       </div>

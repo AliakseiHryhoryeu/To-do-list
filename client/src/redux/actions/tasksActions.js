@@ -3,7 +3,7 @@ import { GET_TASKS, SET_TASKS, ADD_TASK, EDIT_TASK, DELETE_TASK } from '@redux/t
 
 import config from '@/config.json'
 
-
+// ++
 export function getTasksByUserId(userId) {
     return async dispatch => {
         try {
@@ -64,11 +64,11 @@ export function addTask(userId, listId, text) {
     }
 }
 
-export function editTask(listId, text, completed) {
+export function editTask(taskId, text, completed) {
     return async dispatch => {
         try {
             const response = await axios.put(config.proxy + `api/tasks/editTask`, {
-                'listId':listId,
+                'taskId':taskId,
                 'test':text,
                 'completed':completed
             })
