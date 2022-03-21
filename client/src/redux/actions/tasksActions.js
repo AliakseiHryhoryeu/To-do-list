@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { GET_TASKS, SET_TASKS, ADD_TASK, EDIT_TASK, DELETE_TASK } from '@redux/types';
 
+import { getLists } from './listsActions';
+
 import config from '@/config.json'
 
 // ++
@@ -57,7 +59,8 @@ export function addTask(userId, listId, text) {
                 'listId':listId,
                 'text':text
             })
-            dispatch({ type: ADD_TASK, payload: response.data })
+            dispatch({ type: ADD_TASK, payload: response.data.task })
+            dispatch(getLists(response.data.task.userId))
         } catch (e) {
             console.log(e)
         }
@@ -69,10 +72,11 @@ export function editTask(taskId, text, completed) {
         try {
             const response = await axios.put(config.proxy + `api/tasks/editTask`, {
                 'taskId':taskId,
-                'test':text,
+                'text':text,
                 'completed':completed
             })
-            dispatch({ type: EDIT_TASK, payload: response.data.lists })
+            dispatch({ type: EDIT_TASK, payload: response.data.task })
+
         } catch (e) {
             console.log(e)
         }
@@ -82,10 +86,12 @@ export function editTask(taskId, text, completed) {
 export function deleteTask(taskId) {
     return async dispatch => {
         try {
-            const response = await axios.put(config.proxy + `api/lists/getLists`, {
+            const response = await axios.put(config.proxy + `api/tasks/deleteTask`, {
                 'taskId':taskId
             })
-            dispatch({ type: DELETE_TASK, payload: response.data.lists })
+            dispatch({ type: DELETE_TASK, payload: response.data.response })
+            dispatch(getTasksByUserId(response.data.response.userId))
+
         } catch (e) {
             console.log(e)
         }

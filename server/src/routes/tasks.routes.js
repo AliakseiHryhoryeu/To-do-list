@@ -137,11 +137,7 @@ router.post('/addTask',
             await task.save()
             await list.save()
             return res.json({
-                task: {
-                    text: text,
-                    listId: listId,
-                    completed: false
-                }
+                task
             })
         } catch (e) {
             console.log(e)
@@ -155,6 +151,7 @@ router.put('/editTask',
     [
         check('taskId', "Uncorrect taskId").isLength({ min: 1 }),
         check('text', "Uncorrect text").isLength({ min: 1 }),
+        check('completed', "Uncorrect text").isLength({ min: 1 }),
     ],
     async (req, res) => {
         try {
@@ -173,10 +170,7 @@ router.put('/editTask',
             task.completed = completed
             await task.save()
             return res.json({
-                task: {
-                    text: text,
-                    completed: completed
-                }
+                task
             })
         } catch (e) {
             console.log(e)
@@ -200,16 +194,16 @@ router.put('/deleteTask',
             const task = await Task.findOne({ _id: mongoose.Types.ObjectId(taskId) })
             if (!task) {
                 return res.status(404).json({ message: "Task not found" })
-
             }
+
             const listId = task.listId
             const list = await List.findOneAndUpdate(
-                { listId },
-                { $pull: { tasksId: { $in: [taskId] } } }
+                { _id: listId },
+                { $pull: { tasksId: mongoose.Types.ObjectId(taskId)} }
             )
-
             await task.save()
             await list.save()
+            const temp = await Task.findOneAndDelete({ _id: mongoose.Types.ObjectId(taskId) })
             const response = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
             return res.json({
                 response

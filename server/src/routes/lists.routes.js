@@ -101,8 +101,7 @@ router.put('/editList',
     [
         check('listId', "Uncorrect taskId").isLength({ min: 1 }),
         check('title', "Uncorrect text").isLength({ min: 1 }),
-        check('description', "Uncorrect text").isLength({ min: 1 }),
-        check('color', "Uncorrect text").isLength({ min: 1 }),
+
     ],
     async (req, res) => {
         try {
@@ -110,24 +109,17 @@ router.put('/editList',
             if (!errors.isEmpty()) {
                 return res.status(400).json({ message: "Uncorrect request", errors })
             }
-            const { listId, title, description, color } = req.body
+            const { listId, title } = req.body
 
             const list = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
             if (!list) {
                 return res.status(400).json({ message: "List not found", errors })
             }
             list.title = title
-            list.description = description
-            list.color = color
             await list.save()
 
             return res.json({
-                list: {
-                    id: list.id,
-                    title: title,
-                    description: description,
-                    color: color
-                }
+                list
             })
         } catch (e) {
             console.log(e)
@@ -154,19 +146,19 @@ router.put('/deleteList',
             }
 
             const tasks = list.tasksId
-            if(tasks){
-                try{
+            if (tasks) {
+                try {
                     for (let i = 0; i < tasks.length; i++) {
                         let task = tasks[i]
                         const temp = await Task.findOneAndDelete({ _id: mongoose.Types.ObjectId(task) })
-                    }        
-                }catch{}
+                    }
+                } catch { }
             }
 
             const userId = list.userId
             const user = await User.findOneAndUpdate(
                 { _id: userId },
-                { $pull: { listId: listId  } }
+                { $pull: { listId: listId } }
             )
             const temp = await List.findByIdAndDelete({ _id: mongoose.Types.ObjectId(listId) })
             await user.save()

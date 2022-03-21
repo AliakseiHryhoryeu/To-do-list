@@ -8,6 +8,7 @@ import classNames from 'classnames';
 const listHeader = (props) => {
   const dispatch = useDispatch()
   const activeList = props.activeList
+
   return (
     <ul className="main__list main__list-title">
       <li
@@ -23,7 +24,7 @@ const listHeader = (props) => {
 
 
 const mapStateToProps = state => ({
-  activeList: state.lists.activeList
+  activeList: state.lists.activeList,
 })
 
 export default connect(mapStateToProps, null)(listHeader)

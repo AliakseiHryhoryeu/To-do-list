@@ -3,7 +3,6 @@ import { GET_TASKS, ADD_TASK, EDIT_TASK, DELETE_TASK } from '@redux/types';
 
 const defaultState = {
     allTasks: {},
-    activeTasks: {}
 
 }
 
@@ -17,20 +16,18 @@ export function tasksReducer(state = defaultState, action) {
         case ADD_TASK:
             return {
                 ...state,
-                allTasks: [...state.allTasks, {...action.payload}]
-                    
-            }
-        case EDIT_TASK:
-            return {
-                ...state,
-                allTasks:action.payload
+                allTasks: [...state.allTasks, { ...action.payload }]
 
             }
-        case DELETE_TASK:
+        case EDIT_TASK:
+            const index = state.allTasks.findIndex(list => list._id === action.payload._id); //finding index of the item
+            const newArray = [...state.allTasks]; //making a new array
+            newArray[index] = action.payload //changing value in the new array
             return {
                 ...state,
-                allTasks:action.payload
+                allTasks: newArray,
             }
+
         default:
             return state
     }
