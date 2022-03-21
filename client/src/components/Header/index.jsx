@@ -5,6 +5,8 @@ import classNames from 'classnames';
 
 import { logout, showSettings, hideSettings, showAlert } from '@actions/userActions'
 
+import userIcon from '@img/userIcon_1.png'
+
 import Settings from "@components/Settings";
 import Lists from '@components/Lists';
 
@@ -58,7 +60,7 @@ const Header = (props) => {
 
                   <div className="header__nav__username__container" onClick={()=>toggleClassActiveUsername()}>
                     <div className="header__nav__link-white">{props.username}</div>
-                    <img className="header__nav__link-usericon" src={props.image} alt="userIcon" />
+                    <img className="header__nav__link-usericon" src={userIcon} alt="userIcon" />
                   </div>
 
                   <div className={classNames("header__nav__username__content", { 'header__nav__username__content-active': isActiveUsername })}>
@@ -91,7 +93,6 @@ const Header = (props) => {
 const mapStateToProps = state => ({
   username: state.user.currentUser.username,
   settings: state.user.settingsVisible,
-  image: state.user.currentUser.userIcon,
   // alert: state.user.alert,
 
 })

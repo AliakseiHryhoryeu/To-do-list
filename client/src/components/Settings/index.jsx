@@ -7,10 +7,15 @@ import { hideSettings } from '@actions/userActions'
 
 import './Settings.scss'
 
-
-
 import closebtn from '@img/remove.svg'
-import UserIcons from './UserIcons/';
+
+import img1 from '@img/userIcon_1.png'
+import img2 from '@img/userIcon_2.png'
+import img3 from '@img/userIcon_3.png'
+import img4 from '@img/userIcon_4.png'
+import img5 from '@img/userIcon_5.png'
+const allUserIcons = [img1, img2, img3, img4, img5]
+
 
 function Settings(props) {
 
@@ -89,7 +94,10 @@ function Settings(props) {
                     <h3 className="settings__title">Change icon</h3>
                     <div className="settings__usericon__wrapper">
                         <div className="settings__usericon__wrapper-imageContainer">
-                            <UserIcons />
+                            {allUserIcons.map((image, index) =>
+                                <img className={"settings__usericon-img"}
+                                    key={index} src={image} alt="image"
+                                />)}
                         </div>
                     </div>
                     <button type="submit" className="settings__button btn-settings__username submit" >Change icon</button>
