@@ -15,7 +15,7 @@ const optimization = () => {
     },
     runtimeChunk: 'single'
   }
-  if (isProd) { // minimize html css js
+  if (isProd) { 
     config.minimizer = [
       new OptimizeCssAssetWebpackPlugin(),
       new TerserWebpackPlugin()
@@ -41,28 +41,18 @@ const babelOptions = (preset) => {
 module.exports = {
   context: path.resolve(__dirname, "src"),
   mode: "development",
-  entry: ['@babel/polyfill', './index.js'],
+  entry: ['@babel/polyfill', './main.tsx'],
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "[name].[fullhash].js",
     publicPath: '/'
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.scss'],
+    extensions: ['.ts', '.tsx', '.js'],
     alias: {
-      '@': path.resolve(__dirname, "src"),
-
-      '@components': path.resolve(__dirname, "src/components"),
-      '@assets': path.resolve(__dirname, "src/assets"),
-
-      '@redux': path.resolve(__dirname, "src/redux"),
-      '@actions': path.resolve(__dirname, "src/redux/actions"),
-      '@reducers': path.resolve(__dirname, "src/redux/reducers"),
-
-      '@pages': path.resolve(__dirname, "src/pages"),
-      '@fonts': path.resolve(__dirname, "src/assets/fonts"),
-      '@img': path.resolve(__dirname, "src/assets/img"),
-      '@styles': path.resolve(__dirname, "src/assets/styles"),
+      'src': path.resolve(__dirname, "src"),
+      'app': path.resolve(__dirname, "src/app"),
+      'assets': path.resolve(__dirname, "src/assets"),
     }
   },
   optimization: optimization(),
@@ -74,8 +64,8 @@ module.exports = {
   devtool: isProd ? false : 'source-map',
   plugins: [
     new HTMLWebpackPlugin({
-      template: "./index.html",
-      favicon: "./favicon.ico",
+      template: "app/html/index.html",
+      favicon: "app/html/favicon.ico",
       minify: {
         collapseWhitespace: isProd
       }
@@ -94,6 +84,13 @@ module.exports = {
           loader: 'babel-loader',
           options: babelOptions('@babel/preset-react')
         }
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: [{
+          loader: 'ts-loader'
+        }]
       },
       {
         test: /\.jsx$/,
