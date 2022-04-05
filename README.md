@@ -1,7 +1,8 @@
 ## Todo list
+## (now i working on it application)
 ### In this project i develop client-server to do list application 
 #### In Client part i use:
-+ JavaScript
++ TypeScript
 + ReactJS
 + Redux
 + Webpack
