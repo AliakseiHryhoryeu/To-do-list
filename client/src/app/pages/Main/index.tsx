@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { FC } from 'react'
 
 import { Header, Lists, Tasks } from 'app/components'
 
 import './Main.scss'
 
-export const Main = () =>{
+export const Main:FC = () =>{
 
     return (
         <div className='main'>

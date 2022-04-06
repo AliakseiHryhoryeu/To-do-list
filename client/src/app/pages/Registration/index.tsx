@@ -1,24 +1,27 @@
-import React, {useEffect} from 'react'
+import React, { FC } from 'react'
 import { Link, useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { useFormik } from 'formik';
 import { registerSchema } from './validation';
+import { UserActions } from 'app/actions';
 
-import { auth, registration } from "@actions/userActions";
+import { Header } from 'app/components'
 
-import {Header} from 'app/components'
-
+import { RootState } from 'app/reducers';
 import './Registration.scss'
 
-export const Registration = ()=> {
+export const Registration: FC = () => {
 
-    const isAuth = useSelector(state => state.user.isAuth)
     const navigate = useNavigate()
+    const { isAuth } = useSelector((state: RootState) => {
+        return {
+            isAuth: state.user.isAuth
+        }
+    })
 
-   
     if (isAuth === true) {
-        navigate('/main',{replace: true})
+        navigate('/main', { replace: true })
     }
 
 
@@ -31,7 +34,7 @@ export const Registration = ()=> {
         },
         validationSchema: registerSchema,
         onSubmit: (values) => {
-            registration(values.username, values.email, values.password)
+            UserActions.registration(values.username, values.email, values.password)
         },
     });
     return (

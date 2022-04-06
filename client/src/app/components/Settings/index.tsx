@@ -1,24 +1,21 @@
-import React, { useEffect } from 'react'
-
+import React, { FC } from 'react'
 import { useDispatch } from "react-redux";
-import { connect } from 'react-redux';
-
 import { UserActions } from 'app/actions'
 
 import './Settings.scss'
 
-import closebtn from '@img/remove.svg'
+import closebtn from 'assets/img/remove.svg'
 
-import img1 from '@img/userIcon_1.png'
-import img2 from '@img/userIcon_2.png'
-import img3 from '@img/userIcon_3.png'
-import img4 from '@img/userIcon_4.png'
-import img5 from '@img/userIcon_5.png'
+import img1 from 'assets/img/userIcon_1.png'
+import img2 from 'assets/img/userIcon_2.png'
+import img3 from 'assets/img/userIcon_3.png'
+import img4 from 'assets/img/userIcon_4.png'
+import img5 from 'assets/img/userIcon_5.png'
 
 const allUserIcons = [img1, img2, img3, img4, img5]
 
 
-export const Settings = () =>{
+export const Settings:FC = () =>{
 
     const dispatch = useDispatch();
 

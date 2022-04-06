@@ -1,22 +1,24 @@
-import React, { useEffect } from 'react'
+import React, { FC } from 'react'
 import { Link, useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux";
-
-import { auth } from "@actions/userActions";
-
+import { useSelector } from "react-redux";
+import { RootState } from 'app/reducers';
 import { Header, Slider, Footer } from 'app/components';
 
-import checkedImg from '@img/checked_1.svg';
-import img1 from '@img/slider-1.png';
-import img2 from '@img/slider-2.png';
-import img3 from '@img/slider-3.png';
+import checkedImg from 'assets/img/checked_1.svg';
+import img1 from 'assets/img/slider-1.png';
+import img2 from 'assets/img/slider-2.png';
+import img3 from 'assets/img/slider-3.png';
 
 import './Landing.scss'
 
-export const Landing = ()=> {
+export const Landing: FC = () => {
 
-    const isAuth = useSelector(state => state.user.isAuth)
     const navigate = useNavigate()
+    const { isAuth } = useSelector((state: RootState) => {
+        return {
+            isAuth: state.user.isAuth
+        }
+    })
 
     if (isAuth === true) {
         navigate('/main', { replace: true })

@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 
-import arrowPrev from '@img/arrow-prev-white.png'
-import arrowNext from '@img/arrow-next-white.png'
+import arrowPrev from 'assets/img/arrow-prev-white.png'
+import arrowNext from 'assets/img/arrow-next-white.png'
 
 import './Slider.scss'
 
-export const Slider = ({ slides }) => {
+type SliderProps = {
+    slides: string[]
+}
+
+export const Slider: FC<SliderProps> = ({ slides }) => {
 
     const [current, setCurrent] = useState(0);
     const length = slides.length;

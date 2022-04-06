@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { FC } from 'react'
 
-import {Header} from 'app/components'
+import { Header } from 'app/components'
 
 import './Page404.scss'
 
-export const Page404 = () =>{
+export const Page404: FC = () => {
     return (
         <div className="page404">
             <Header />

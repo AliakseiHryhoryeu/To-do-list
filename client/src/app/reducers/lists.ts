@@ -4,8 +4,8 @@ import { TasksActionsTypes, ListsActionsTypes } from 'app/models';
 const defaultState:RootState.ListsState = {
     allLists: [],
     activeList: [],
-    showAll: true,
-    сolors: ["grey", "lime", "purple", "black", "red", "green", "blue", "pink"]
+    showAllLists: true,
+    colors: ["grey", "lime", "purple", "black", "red", "green", "blue", "pink"]
 }
 
 export const listsReducer = (state = defaultState, action) => {
@@ -23,14 +23,14 @@ export const listsReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 activeList: state.allLists,
-                showAll: true,
+                showAllLists: true,
 
             }
         case ListsActionsTypes.SET_LIST:
             return {
                 ...state,
-                activeList: { ...action.payload },
-                showAll: false,
+                activeList: [ {...action.payload} ],
+                showAllLists: false,
 
             }
         case ListsActionsTypes.ADD_LIST:
@@ -55,7 +55,7 @@ export const listsReducer = (state = defaultState, action) => {
                 ...state,
                 allLists: action.payload,
                 activeList: action.payload,
-                showAll: true,
+                showAllLists: true,
             }
         case TasksActionsTypes.DELETE_TASK:
             index = state.allLists.findIndex(list => list._id === action.payload._id)

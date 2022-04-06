@@ -1,8 +1,7 @@
 import axios from 'axios'
-
-import config from 'assets/config.json'
 import { useMemo } from 'react';
 import { Dispatch, bindActionCreators } from 'redux';
+import config from 'assets/config.json'
 
 export namespace ListsActions {
     export enum Type {
@@ -15,7 +14,7 @@ export namespace ListsActions {
         DELETE_LIST = 'LISTS/DELETE_LIST'
     }
 
-    export const getLists = (userId) =>{
+    export const getLists = (userId) => {
         return async dispatch => {
             try {
                 const response = await axios.get(config.proxy + `api/lists/getLists`, {
@@ -30,7 +29,7 @@ export namespace ListsActions {
         }
     }
 
-    export const setList=(listId)=> {
+    export const setList = (listId) => {
         return async dispatch => {
             try {
                 const response = await axios.get(config.proxy + `api/lists/getList`, {
@@ -45,7 +44,7 @@ export namespace ListsActions {
         }
     }
 
-    export const showAllLists=()=> {
+    export const showAllLists = () => {
         return async dispatch => {
             try {
                 dispatch({ type: Type.SHOW_ALL_LISTS })
@@ -55,7 +54,7 @@ export namespace ListsActions {
         }
     }
 
-    export const addList=(userId, title, color)=> {
+    export const addList = (userId, title, color) => {
         return async dispatch => {
             try {
                 const response = await axios.post(config.proxy + `api/lists/addList`, {
@@ -70,7 +69,7 @@ export namespace ListsActions {
         }
     }
 
-    export const editList=(listId, title)=> {
+    export const editList = (listId, title) => {
         return async dispatch => {
             try {
                 const response = await axios.put(config.proxy + `api/lists/editList`, {
@@ -84,7 +83,7 @@ export namespace ListsActions {
         }
     }
 
-    export const deleteList=(listId)=> {
+    export const deleteList = (listId) => {
         return async dispatch => {
             try {
                 const response = await axios.put(config.proxy + `api/lists/deleteList`, {

@@ -1,11 +1,11 @@
 import { RootState } from './state';
 import { UserActionsTypes } from 'app/models';
 
-import img1 from '@img/userIcon_1.png'
-import img2 from '@img/userIcon_2.png'
-import img3 from '@img/userIcon_3.png'
-import img4 from '@img/userIcon_4.png'
-import img5 from '@img/userIcon_5.png'
+import img1 from 'assets/img/userIcon_1.png'
+import img2 from 'assets/img/userIcon_2.png'
+import img3 from 'assets/img/userIcon_3.png'
+import img4 from 'assets/img/userIcon_4.png'
+import img5 from 'assets/img/userIcon_5.png'
 
 const defaultState:RootState.UserState = {
     activeUser: {
@@ -19,19 +19,19 @@ const defaultState:RootState.UserState = {
     allUserIcons: [img1, img2, img3, img4, img5]
 }
 
-export function userReducer(state = defaultState, action) {
+export const userReducer=(state = defaultState, action) =>{
     switch (action.type) {
         case UserActionsTypes.SET_USER:
             return {
                 ...state,
-                currentUser: action.payload,
+                activeUser: action.payload,
                 isAuth: true
             }
         case UserActionsTypes.LOGOUT:
             localStorage.removeItem('token')
             return {
                 ...state,
-                currentUser: {},
+                activeUser: [],
                 isAuth: false
             }
         case UserActionsTypes.SETTINGS_SHOW:
@@ -42,7 +42,7 @@ export function userReducer(state = defaultState, action) {
         case UserActionsTypes.SET_ACTIVE_USERICON:
             return {
                 ...state,
-                currentUser: {...state.activeUser, userIcon:action.payload}
+                activeUser: {...state.activeUser, userIcon:action.payload}
             }
         case UserActionsTypes.SETTINGS_HIDE:
             return {

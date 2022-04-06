@@ -1,21 +1,24 @@
-import React, { useEffect } from 'react'
+import React, { FC } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 
 import { useFormik } from 'formik';
 import { signInSchema } from './validation';
 
-import { auth, signIn } from "@actions/userActions";
-
 import { Header } from 'app/components'
+import { UserActions } from 'app/actions';
+import { RootState } from 'app/reducers';
 
 import './SignIn.scss'
 
-export const SignIn = () => {
-    const isAuth = useSelector(state => state.user.isAuth)
+export const SignIn:FC = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
+    const { isAuth } = useSelector((state: RootState) => {
+        return {
+            isAuth: state.user.isAuth
+        }
+      })
     if (isAuth === true) {
         navigate('/main', { replace: true })
     }
@@ -28,7 +31,7 @@ export const SignIn = () => {
         },
         validationSchema: signInSchema,
         onSubmit: (values) => {
-            dispatch(signIn(values.username, values.password))
+            dispatch(UserActions.signIn(values.username, values.password))
             navigate('/main', { replace: true })
         },
     });

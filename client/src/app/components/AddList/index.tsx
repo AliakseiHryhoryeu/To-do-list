@@ -1,18 +1,26 @@
 import React, { FC, useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import {Badge} from 'app/components';
+import {  useDispatch, useSelector } from 'react-redux';
 
-import './AddList.scss';
-import closeSvg from '@img/close.svg';
+import { Badge } from 'app/components';
 import { ListsActions } from 'app/actions';
+import { RootState } from 'app/reducers';
 
-export const AddList:FC = ({}) => {
+import closeSvg from 'assets/img/close.svg';
+import './AddList.scss';
+
+export const AddList: FC = ({ }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [selectedColor, setSelectedColor] = useState("green");
   const [inputValue, setInputValue] = useState('');
 
+  const dispatch = useDispatch();
+  const { user, colors } = useSelector((state: RootState) => {
+    return {
+      user: state.user.activeUser,
+      colors: state.lists.colors
+    }
+  })
 
-  const dispatch = useDispatch()
 
   return (
     <div className="add-list">
@@ -31,20 +39,13 @@ export const AddList:FC = ({}) => {
         <img onClick={() => setVisiblePopup(false)} src={closeSvg} alt="Close button" className="add-list__popup-close-btn" />
         <input onChange={e => setInputValue(e.target.value)} value={inputValue} className="field" type="text" placeholder="Folder Name" />
         <div className="add-list__popup-colors">
-          {props.colors.map((color, index) => (
+          {colors.map((color, index) => (
             <Badge onClick={() => setSelectedColor(color)} key={index} color={color} className={selectedColor === color && 'active'} />
           ))}
         </div>
-        <button className="button" onClick={() => dispatch(ListsActions.addList(props.userId, inputValue, selectedColor))}>Add New List</button>
+        <button className="button" onClick={() => dispatch(ListsActions.addList(user.userId, inputValue, selectedColor))}>Add New List</button>
       </div>
       }
     </div>
-  );
+  )
 }
-
-// const mapStateToProps = state => ({
-//   colors: state.lists.сolors,
-//   userId: state.user.currentUser.userId
-// })
-
-// export default connect(mapStateToProps, null)(AddList)

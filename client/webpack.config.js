@@ -50,9 +50,9 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
-      'src': path.resolve(__dirname, "src"),
-      'app': path.resolve(__dirname, "src/app"),
-      'assets': path.resolve(__dirname, "src/assets"),
+      src: path.resolve(__dirname, "src"),
+      app: path.resolve(__dirname, "src/app"),
+      assets: path.resolve(__dirname, "src/assets"),
     }
   },
   optimization: optimization(),
@@ -64,8 +64,8 @@ module.exports = {
   devtool: isProd ? false : 'source-map',
   plugins: [
     new HTMLWebpackPlugin({
-      template: "app/html/index.html",
-      favicon: "app/html/favicon.ico",
+      template: "assets/html/index.html",
+      favicon: "assets/html/favicon.ico",
       minify: {
         collapseWhitespace: isProd
       }

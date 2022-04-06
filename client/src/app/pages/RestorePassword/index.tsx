@@ -1,17 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { FC } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from "react-redux";
-
-import { auth } from "@actions/userActions";
+import {  useSelector } from "react-redux";
 
 import { Header } from 'app/components'
 
 import './RestorePassword.scss'
+import { RootState } from 'app/reducers';
 
-export const RestorePassword = () => {
+export const RestorePassword:FC = () => {
 
-    const isAuth = useSelector(state => state.user.isAuth)
     const navigate = useNavigate()
+    const { isAuth } = useSelector((state: RootState) => {
+        return {
+            isAuth: state.user.isAuth
+        }
+      })
 
     if (isAuth === true) {
         navigate('/main', { replace: true })

@@ -1,16 +1,17 @@
-import React from 'react'
-
+import React, { FC } from 'react'
 import { useDispatch } from "react-redux";
-import { connect } from 'react-redux';
 
 import { UserActions } from 'app/actions'
 
+import closebtn from 'assets/img/remove.svg'
+
 import './Alert.scss'
 
-import closebtn from '@img/remove.svg'
+type AlertProps = {
+    text:string
+}
 
-
-export const Alert = ({ text }) => {
+export const Alert:FC<AlertProps> = ({ text }) => {
 
     const dispatch = useDispatch();
 
@@ -30,13 +31,3 @@ export const Alert = ({ text }) => {
         </div>
     )
 }
-
-
-// const mapStateToProps = state => ({
-//     user: state.user.alertVisible
-// })
-
-// const mapDispatchToProps = { hideAlert }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Alert)
-

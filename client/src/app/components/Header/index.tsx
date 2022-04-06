@@ -1,26 +1,31 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector, connect } from "react-redux";
 import classNames from 'classnames';
 
 import { UserActions } from 'app/actions';
 
-import userIcon from '@img/userIcon_1.png'
+import userIcon from 'assets/img/userIcon_1.png'
 
-import {Settings,Lists} from "app/components";
+import { Settings, Lists } from "app/components";
 
-import mainLogo from '@img/favicon.svg'
-import settingsIcon from '@img/settingsIcon.svg'
-import exitIcon from '@img/exitIcon.svg'
+import mainLogo from 'assets/img/favicon.svg'
+import settingsIcon from 'assets/img/settingsIcon.svg'
+import exitIcon from 'assets/img/exitIcon.svg'
 
 import './Header.scss';
+import { RootState } from 'app/reducers';
 
-export const Header = () => {
+export const Header: FC = () => {
+  const dispatch = useDispatch();
+  const { isAuth, username, settingsVisible } = useSelector((state: RootState) => {
+    return {
+      username: state.user.activeUser.username,
+      isAuth: state.user.isAuth,
+      settingsVisible: state.user.settingsVisible
+    }
+  })
 
-  const isAuth = useSelector(state => state.user.isAuth)
-  const dispatch = useDispatch()
-  
-  // responsive at mobile devices
   const [isActiveHeaderBurger, setActiveHeaderBurger] = useState(false)
   const [isActiveUsername, setActiveUsername] = useState(false)
   const toggleClassActiveHeaderBurger = () => {
@@ -57,8 +62,8 @@ export const Header = () => {
               <ul className="header__nav__list-isAuth">
                 <li className="header__nav__item header__nav__username" >
 
-                  <div className="header__nav__username__container" onClick={()=>toggleClassActiveUsername()}>
-                    <div className="header__nav__link-white">{props.username}</div>
+                  <div className="header__nav__username__container" onClick={() => toggleClassActiveUsername()}>
+                    <div className="header__nav__link-white">{username}</div>
                     <img className="header__nav__link-usericon" src={userIcon} alt="userIcon" />
                   </div>
 
@@ -82,23 +87,7 @@ export const Header = () => {
           </div>
         </header>
       </header>
-      {isAuth && props.settings && <Settings />}
-
+      {isAuth && settingsVisible && <Settings />}
     </>
-
   )
 }
-
-// const mapStateToProps = state => ({
-//   username: state.user.currentUser.username,
-//   settings: state.user.settingsVisible,
-//   // alert: state.user.alert,
-
-// })
-
-// const mapDispatchToProps = { showSettings, hideSettings }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Header)
-
-
-//       {props.alert && <Alert text={props.alert} />}

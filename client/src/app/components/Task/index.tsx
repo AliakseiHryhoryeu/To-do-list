@@ -1,16 +1,29 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { FC } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { TasksActions } from 'app/actions';
 
-import editTaskSvg from '@img/editTask.svg';
-import deleteTaskSvg from '@img/deleteTask.svg';
+import editTaskSvg from 'assets/img/editTask.svg';
+import deleteTaskSvg from 'assets/img/deleteTask.svg';
 
 import './Task.scss'
+import { RootState } from 'app/reducers';
+import { TaskModel } from 'app/models';
 
-export const Task = ({ allTasks, tasksId }) => {
+type TaskProps = {
+  tasks: TaskModel[]
+}
+
+export const Task: FC<TaskProps> = ({ tasks }) => {
 
 
   const dispatch = useDispatch()
+  const { lists, allTasks, user } = useSelector((state: RootState) => {
+    return {
+      user: state.user.activeUser,
+      lists: state.lists.activeList,
+      allTasks: state.tasks.allTasks
+    }
+  })
 
   const editTextTask = (taskId, text, completed) => {
     const newText = window.prompt(`New task text`, text);
@@ -29,18 +42,14 @@ export const Task = ({ allTasks, tasksId }) => {
     }
   }
 
-  const renderTask = (taskId) => {
-
-    try {
-      let task = {}
-      for (let i = 0; allTasks.length; i++) {
-        if (allTasks[i]._id == taskId) {
-          task = allTasks[i]
-          break
-        }
-      }
-
-      return (
+  if (!tasks) {
+    return (
+      <></>
+    )
+  }
+  return (
+    <>
+      {tasks.map(task => {
         <div className="tasks__items-row">
           <div className="checkbox">
             <input
@@ -87,22 +96,8 @@ export const Task = ({ allTasks, tasksId }) => {
             </div>
           </div>
         </div>
-      )
 
-    } catch (e) {
-      console.log(e)
-      return (
-        <div className="tasks__items-row">
-          <p>Tasks not found</p>
-        </div>
-      )
-    }
-
-  }
-
-  return (
-    <>
-      {tasksId && tasksId.map(taskId => renderTask(taskId)
+      }
       )}
     </>
   )

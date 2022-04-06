@@ -1,7 +1,6 @@
-import React, { FC } from 'react';
-import classNames from 'classnames';
-
-import './Badge.scss';
+import React, { FC } from 'react'
+import classNames from 'classnames'
+import './Badge.scss'
 
 type BadgeProps = {
   color:string,

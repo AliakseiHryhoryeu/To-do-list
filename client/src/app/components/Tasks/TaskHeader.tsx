@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
-import editListSvg from '@img/editList.svg';
 import { useDispatch } from 'react-redux';
 
 import { ListsActions } from 'app/actions';
+import editListSvg from 'assets/img/editList.svg';
 
 type TaskHeaderProps = {
   listId: string,

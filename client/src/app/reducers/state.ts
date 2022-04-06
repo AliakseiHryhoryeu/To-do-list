@@ -11,7 +11,7 @@ export namespace RootState {
   export type ListsState = {
     allLists: ListModel[],
     activeList: ListModel[],
-    showAll: boolean,
+    showAllLists: boolean,
     colors: string[],
   }
   export type TasksState = {

@@ -1,19 +1,11 @@
 
-export interface NotesModel {
-    id: string
-    text: string
-    imageUrl: string
-    temperature: string
-    date: Date
-}
-
 export interface ListModel {
     _id: string
     title: string
     description: string
     color: string
-    userId:string
-    tasksId:string[]
+    userId: string
+    tasksId: string[]
     date: Date
 }
 
@@ -22,7 +14,7 @@ export interface TaskModel {
     text: string
     completed: boolean
     listId: string
-    userId:string
+    userId: string
 }
 
 export interface UserModel {
