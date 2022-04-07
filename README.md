@@ -1,5 +1,4 @@
 ## Todo list
-## (now i working on it application)
 ### In this project i develop client-server to do list application 
 #### In Client part i use:
 + TypeScript
@@ -14,8 +13,6 @@
 + NodeJS
 + ExpressJS
 + MongoDB
-
-## Code not good, i refactor him later
 
 ## Figma
 https://www.figma.com/file/n5p6P6gIghvaMJvw2hVIZz/Untitled?node-id=0%3A1
