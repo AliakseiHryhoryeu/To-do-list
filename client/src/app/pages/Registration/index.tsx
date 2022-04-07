@@ -1,14 +1,13 @@
 import React, { FC } from 'react'
 import { Link, useNavigate } from "react-router-dom"
-import { useSelector } from "react-redux";
+import { useSelector } from "react-redux"
+import { useFormik } from 'formik'
 
-import { useFormik } from 'formik';
-import { registerSchema } from './validation';
-import { UserActions } from 'app/actions';
-
+import { UserActions } from 'app/actions'
 import { Header } from 'app/components'
+import { RootState } from 'app/reducers'
+import { registerSchema } from './validation'
 
-import { RootState } from 'app/reducers';
 import './Registration.scss'
 
 export const Registration: FC = () => {
@@ -36,7 +35,7 @@ export const Registration: FC = () => {
         onSubmit: (values) => {
             UserActions.registration(values.username, values.email, values.password)
         },
-    });
+    })
     return (
         <div className='registration'>
             <Header />

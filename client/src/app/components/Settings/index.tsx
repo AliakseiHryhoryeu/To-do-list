@@ -1,16 +1,16 @@
 import React, { FC } from 'react'
 import { useDispatch } from "react-redux";
+
 import { UserActions } from 'app/actions'
 
-import './Settings.scss'
-
 import closebtn from 'assets/img/remove.svg'
-
 import img1 from 'assets/img/userIcon_1.png'
 import img2 from 'assets/img/userIcon_2.png'
 import img3 from 'assets/img/userIcon_3.png'
 import img4 from 'assets/img/userIcon_4.png'
 import img5 from 'assets/img/userIcon_5.png'
+
+import './Settings.scss'
 
 const allUserIcons = [img1, img2, img3, img4, img5]
 
@@ -106,14 +106,3 @@ export const Settings:FC = () =>{
         </div>
     )
 }
-
-// const mapStateToProps = state => ({
-//     currentUserIcon: state.user.currentUser.userIcon,
-//     allUserIcons: state.user.allUserIcons
-
-// })
-
-// const mapDispatchToProps = { hideSettings }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Settings)
-

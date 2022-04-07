@@ -4,7 +4,7 @@ import { Header, Lists, Tasks } from 'app/components'
 
 import './Main.scss'
 
-export const Main:FC = () =>{
+export const Main: FC = () => {
 
     return (
         <div className='main'>

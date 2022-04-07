@@ -1,20 +1,18 @@
 import React, { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector, connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from 'classnames';
 
+import { Settings, Lists } from "app/components";
 import { UserActions } from 'app/actions';
+import { RootState } from 'app/reducers';
 
 import userIcon from 'assets/img/userIcon_1.png'
-
-import { Settings, Lists } from "app/components";
-
 import mainLogo from 'assets/img/favicon.svg'
 import settingsIcon from 'assets/img/settingsIcon.svg'
 import exitIcon from 'assets/img/exitIcon.svg'
 
 import './Header.scss';
-import { RootState } from 'app/reducers';
 
 export const Header: FC = () => {
   const dispatch = useDispatch();

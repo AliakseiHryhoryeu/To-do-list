@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux";
+
 import { RootState } from 'app/reducers';
 import { Header, Slider, Footer } from 'app/components';
 

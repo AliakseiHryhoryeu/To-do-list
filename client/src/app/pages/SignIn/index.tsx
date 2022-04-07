@@ -1,13 +1,12 @@
 import React, { FC } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from "react-redux";
-
-import { useFormik } from 'formik';
-import { signInSchema } from './validation';
+import { useDispatch, useSelector } from "react-redux"
+import { useFormik } from 'formik'
 
 import { Header } from 'app/components'
-import { UserActions } from 'app/actions';
-import { RootState } from 'app/reducers';
+import { UserActions } from 'app/actions'
+import { RootState } from 'app/reducers'
+import { signInSchema } from './validation'
 
 import './SignIn.scss'
 

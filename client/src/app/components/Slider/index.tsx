@@ -45,9 +45,7 @@ export const Slider: FC<SliderProps> = ({ slides }) => {
 
             </div>
             <img src={arrowNext} alt="nextSlide" className='arrow arrow__next' onClick={nextSlide} />
-
         </section>
-
     )
 }
 

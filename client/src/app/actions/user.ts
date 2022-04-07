@@ -41,6 +41,8 @@ export namespace UserActions {
                 })
                 dispatch(setUser(response.data.user))
                 localStorage.setItem('token', response.data.token)
+                dispatch(ListsActions.getLists(response.data.user.userId))
+                dispatch(TasksActions.getTasksByUserId(response.data.user.userId))
             } catch (e) {
                 alert(e.response.data.message)
             }

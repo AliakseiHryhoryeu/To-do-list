@@ -1,11 +1,11 @@
 import React, { FC } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import {  useSelector } from "react-redux";
+import {  useSelector } from "react-redux"
 
 import { Header } from 'app/components'
+import { RootState } from 'app/reducers'
 
 import './RestorePassword.scss'
-import { RootState } from 'app/reducers';
 
 export const RestorePassword:FC = () => {
 

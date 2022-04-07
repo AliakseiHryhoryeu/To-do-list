@@ -1,9 +1,11 @@
 import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
+
 import { List, AddList } from "app/components";
+import { RootState } from 'app/reducers';
+
 import { AllListsBtn } from './AllListsBtn';
 
-import { useSelector } from 'react-redux';
-import { RootState } from 'app/reducers';
 import './Lists.scss'
 
 export const Lists: FC = () => {
@@ -26,5 +28,3 @@ export const Lists: FC = () => {
 
   )
 }
-
-// export default Lists

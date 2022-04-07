@@ -8,7 +8,7 @@ import { RootState } from 'app/reducers';
 import closeSvg from 'assets/img/close.svg';
 import './AddList.scss';
 
-export const AddList: FC = ({ }) => {
+export const AddList: FC = () => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [selectedColor, setSelectedColor] = useState("green");
   const [inputValue, setInputValue] = useState('');

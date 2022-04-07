@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
-import uuid from "uuid";
 
-import { TaskHeader } from './TaskHeader'
 import { RootState } from 'app/reducers';
 import { AddTask, Task } from 'app/components';
+import { TaskHeader } from './TaskHeader'
 
 import './Tasks.scss';
 
@@ -40,27 +39,26 @@ export const Tasks: FC = () => {
     return (
         <div className="tasks">
             {lists.map(list => {
-                <div className='tasks__item'>
-                    <TaskHeader
-                        key={uuid.v4()}
-                        listId={list._id}
-                        title={list.title}
-                        color={list.color}
-                    />
-                    <Task
-                        key={uuid.v4()}
-                        tasks={getTasks(list.tasksId)}
-                    />
-                    <AddTask
-                        key={uuid.v4()}
-                        userId={user.userId}
-                        listId={list._id}
-                    />
+                return (
+                    <div className='tasks__item' key={list._id}>
+                        <TaskHeader
+                            listId={list._id}
+                            title={list.title}
+                            color={list.color}
+                        />
+                        <Task
+                            tasks={getTasks(list.tasksId)}
+                        />
+                        <AddTask
+                            userId={user.userId}
+                            listId={list._id}
+                        />
 
-                </div>
+                    </div>
+                )
             })}
-
         </div>
+
     )
 
 }

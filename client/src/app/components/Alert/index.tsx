@@ -26,7 +26,6 @@ export const Alert:FC<AlertProps> = ({ text }) => {
                     className="alert__close"
                     onClick={() => { dispatch(UserActions.hideAlert()) }}
                 />
-
             </div>
         </div>
     )
