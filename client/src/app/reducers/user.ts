@@ -1,5 +1,5 @@
-import { RootState } from './state';
-import { UserActionsTypes } from 'app/models';
+import { RootState } from './state'
+import { UserActionsTypes } from 'app/models'
 
 import img1 from 'assets/img/userIcon_1.png'
 import img2 from 'assets/img/userIcon_2.png'

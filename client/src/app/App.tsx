@@ -1,10 +1,9 @@
-import React, { useState, Component, useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom"
+import React, { useEffect } from "react"
+import { Routes, Route } from "react-router-dom"
+import { useDispatch } from "react-redux"
 
-import { useDispatch, useSelector } from "react-redux";
-
-import { UserActions } from "app/actions";
-import { Landing, Page404, Registration, SignIn, RestorePassword, Main } from "app/pages";
+import { UserActions } from "app/actions"
+import { Landing, Page404, Registration, SignIn, RestorePassword, Main } from "app/pages"
 
 
 function App() {
@@ -30,7 +29,7 @@ function App() {
       </Routes>
     </div>
 
-  );
+  )
 }
 
 export default App

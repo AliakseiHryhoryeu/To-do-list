@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { UserActionsTypes } from 'app/models';
+import { UserActionsTypes } from 'app/models'
 import { ListsActions, TasksActions } from 'app/actions'
 
 import config from 'assets/config.json'
@@ -27,7 +27,7 @@ export namespace UserActions {
                 dispatch(TasksActions.getTasksByUserId(response.data.user.userId))
                 localStorage.setItem('token', response.data.token)
             } catch (e) {
-                console.log(e.response.data.message);
+                console.log(e.response.data.message)
             }
         }
     }

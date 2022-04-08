@@ -1,14 +1,14 @@
 import React, { FC } from 'react'
 import { Link, useNavigate } from "react-router-dom"
-import { useSelector } from "react-redux";
+import { useSelector } from "react-redux"
 
-import { RootState } from 'app/reducers';
-import { Header, Slider, Footer } from 'app/components';
+import { RootState } from 'app/reducers'
+import { Header, Slider, Footer } from 'app/components'
 
-import checkedImg from 'assets/img/checked_1.svg';
-import img1 from 'assets/img/slider-1.png';
-import img2 from 'assets/img/slider-2.png';
-import img3 from 'assets/img/slider-3.png';
+import checkedImg from 'assets/img/checked_1.svg'
+import img1 from 'assets/img/slider-1.png'
+import img2 from 'assets/img/slider-2.png'
+import img3 from 'assets/img/slider-3.png'
 
 import './Landing.scss'
 

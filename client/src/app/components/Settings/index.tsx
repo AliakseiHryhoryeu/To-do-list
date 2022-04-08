@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux"
 
 import { UserActions } from 'app/actions'
 
@@ -17,7 +17,7 @@ const allUserIcons = [img1, img2, img3, img4, img5]
 
 export const Settings:FC = () =>{
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     return (
         <div className="settings" >

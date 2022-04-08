@@ -14,4 +14,4 @@ export const Badge:FC<BadgeProps> = ({ color, onClick, className }) => (
     onClick={e =>onClick}
     className={classNames('badge', { [`badge--${color}`]: color }, className)}
   ></i>
-);
+)

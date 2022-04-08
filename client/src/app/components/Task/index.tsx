@@ -1,12 +1,12 @@
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { TasksActions } from 'app/actions';
-import { RootState } from 'app/reducers';
-import { TaskModel } from 'app/models';
+import { TasksActions } from 'app/actions'
+import { RootState } from 'app/reducers'
+import { TaskModel } from 'app/models'
 
-import editTaskSvg from 'assets/img/editTask.svg';
-import deleteTaskSvg from 'assets/img/deleteTask.svg';
+import editTaskSvg from 'assets/img/editTask.svg'
+import deleteTaskSvg from 'assets/img/deleteTask.svg'
 
 import './Task.scss'
 
@@ -27,7 +27,7 @@ export const Task: FC<TaskProps> = ({ tasks }) => {
   })
 
   const editTextTask = (taskId, text, completed) => {
-    const newText = window.prompt(`New task text`, text);
+    const newText = window.prompt(`New task text`, text)
     if (newText) {
       dispatch(TasksActions.editTask(taskId, newText, completed))
     }

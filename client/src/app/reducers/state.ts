@@ -1,4 +1,4 @@
-import { UserModel, ListModel, TaskModel } from 'app/models';
+import { UserModel, ListModel, TaskModel } from 'app/models'
 
 export namespace RootState {
   export type UserState = {

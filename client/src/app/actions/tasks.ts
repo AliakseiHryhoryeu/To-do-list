@@ -1,9 +1,9 @@
-import { useMemo } from 'react';
-import { Dispatch, bindActionCreators } from 'redux';
+import { useMemo } from 'react'
+import { Dispatch, bindActionCreators } from 'redux'
 import axios from 'axios'
 
-import { TasksActionsTypes } from 'app/models';
-import { ListsActions } from 'app/actions';
+import { TasksActionsTypes } from 'app/models'
+import { ListsActions } from 'app/actions'
 import config from 'assets/config.json'
 
 export namespace TasksActions {
@@ -117,8 +117,8 @@ export namespace TasksActions {
     
 }
 
-export type TasksActions = Omit<typeof TasksActions, 'Type'>;
+export type TasksActions = Omit<typeof TasksActions, 'Type'>
 export const useTasksActions = (dispatch: Dispatch) => {
-    const { Type, ...actions } = TasksActions;
-    return useMemo(() => bindActionCreators(actions as any, dispatch), [dispatch]) as TasksActions;
+    const { Type, ...actions } = TasksActions
+    return useMemo(() => bindActionCreators(actions as any, dispatch), [dispatch]) as TasksActions
 }

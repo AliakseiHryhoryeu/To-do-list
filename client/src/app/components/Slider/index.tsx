@@ -11,19 +11,19 @@ type SliderProps = {
 
 export const Slider: FC<SliderProps> = ({ slides }) => {
 
-    const [current, setCurrent] = useState(0);
-    const length = slides.length;
+    const [current, setCurrent] = useState(0)
+    const length = slides.length
 
     const nextSlide = () => {
-        setCurrent(current === length - 1 ? 0 : current + 1);
+        setCurrent(current === length - 1 ? 0 : current + 1)
     }
 
     const prevSlide = () => {
-        setCurrent(current === 0 ? length - 1 : current - 1);
+        setCurrent(current === 0 ? length - 1 : current - 1)
     }
 
     if (!Array.isArray(slides) || slides.length <= 0) {
-        return null;
+        return null
     }
 
     return (
@@ -40,7 +40,7 @@ export const Slider: FC<SliderProps> = ({ slides }) => {
                                 <img src={slide} className='slide__item' onClick={nextSlide} />
                             )}
                         </div>
-                    );
+                    )
                 })}
 
             </div>

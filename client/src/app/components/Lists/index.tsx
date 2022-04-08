@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC } from 'react'
+import { useSelector } from 'react-redux'
 
-import { List, AddList } from "app/components";
-import { RootState } from 'app/reducers';
+import { List, AddList } from "app/components"
+import { RootState } from 'app/reducers'
 
-import { AllListsBtn } from './AllListsBtn';
+import { AllListsBtn } from './AllListsBtn'
 
 import './Lists.scss'
 

@@ -1,22 +1,22 @@
-import React, { FC } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import classNames from 'classnames';
+import React, { FC } from 'react'
+import { useDispatch, useSelector } from "react-redux"
+import classNames from 'classnames'
 
-import { Badge } from 'app/components';
-import { ListsActions } from 'app/actions';
-import { ListModel } from 'app/models';
-import { RootState } from 'app/reducers';
+import { Badge } from 'app/components'
+import { ListsActions } from 'app/actions'
+import { ListModel } from 'app/models'
+import { RootState } from 'app/reducers'
 
 import removeSvg from 'assets/img/remove.svg'
 
-import './List.scss';
+import './List.scss'
 
 type ListProps = {
     lists: ListModel[]
 }
 
 export const List: FC<ListProps> = ({ lists }) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const { activeList, showAllLists } = useSelector((state: RootState) => {
         return {
             activeList: state.lists.activeList,

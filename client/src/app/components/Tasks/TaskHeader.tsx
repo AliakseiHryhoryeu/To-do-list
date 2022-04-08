@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux'
 
-import { ListsActions } from 'app/actions';
-import editListSvg from 'assets/img/editList.svg';
+import { ListsActions } from 'app/actions'
+import editListSvg from 'assets/img/editList.svg'
 
 type TaskHeaderProps = {
   listId: string,
@@ -15,11 +15,11 @@ export const TaskHeader: FC<TaskHeaderProps> = ({ listId, title, color }) => {
 
 
   const editTitle = () => {
-    const newTitle = window.prompt(`New list title`, title);
+    const newTitle = window.prompt(`New list title`, title)
     if (newTitle) {
       dispatch(ListsActions.editList(listId, newTitle))
     }
-  };
+  }
 
   return (
     <div>

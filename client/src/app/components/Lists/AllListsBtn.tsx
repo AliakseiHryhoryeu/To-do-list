@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import classNames from 'classnames';
+import classNames from 'classnames'
 
-import { RootState } from 'app/reducers';
-import { ListsActions } from 'app/actions';
+import { RootState } from 'app/reducers'
+import { ListsActions } from 'app/actions'
 
 export const AllListsBtn: FC = () => {
   const dispatch = useDispatch()

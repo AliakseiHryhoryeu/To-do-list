@@ -1,19 +1,19 @@
-import React, { FC, useState } from 'react';
-import {  useDispatch, useSelector } from 'react-redux';
+import React, { FC, useState } from 'react'
+import {  useDispatch, useSelector } from 'react-redux'
 
-import { Badge } from 'app/components';
-import { ListsActions } from 'app/actions';
-import { RootState } from 'app/reducers';
+import { Badge } from 'app/components'
+import { ListsActions } from 'app/actions'
+import { RootState } from 'app/reducers'
 
-import closeSvg from 'assets/img/close.svg';
-import './AddList.scss';
+import closeSvg from 'assets/img/close.svg'
+import './AddList.scss'
 
 export const AddList: FC = () => {
-  const [visiblePopup, setVisiblePopup] = useState(false);
-  const [selectedColor, setSelectedColor] = useState("green");
-  const [inputValue, setInputValue] = useState('');
+  const [visiblePopup, setVisiblePopup] = useState(false)
+  const [selectedColor, setSelectedColor] = useState("green")
+  const [inputValue, setInputValue] = useState('')
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const { user, colors } = useSelector((state: RootState) => {
     return {
       user: state.user.activeUser,

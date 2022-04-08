@@ -1,5 +1,5 @@
-import { RootState } from './state';
-import { TasksActionsTypes, ListsActionsTypes } from 'app/models';
+import { RootState } from './state'
+import { TasksActionsTypes, ListsActionsTypes } from 'app/models'
 
 const defaultState:RootState.ListsState = {
     allLists: [],

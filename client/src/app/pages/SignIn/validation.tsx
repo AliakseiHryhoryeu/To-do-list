@@ -1,4 +1,4 @@
-import * as Yup from 'yup';
+import * as Yup from 'yup'
 
 export const signInSchema = Yup.object({
     username: Yup.string()
@@ -10,4 +10,4 @@ export const signInSchema = Yup.object({
         .min(6, 'Must be 6 characters at minimum')
         .max(20, 'Must be 20 characters or less')
         .required('Required')
-});
+})

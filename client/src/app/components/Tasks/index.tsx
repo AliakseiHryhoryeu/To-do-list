@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC } from 'react'
+import { useSelector } from 'react-redux'
 
-import { RootState } from 'app/reducers';
-import { AddTask, Task } from 'app/components';
+import { RootState } from 'app/reducers'
+import { AddTask, Task } from 'app/components'
 import { TaskHeader } from './TaskHeader'
 
-import './Tasks.scss';
+import './Tasks.scss'
 
 
 export const Tasks: FC = () => {
@@ -53,12 +53,9 @@ export const Tasks: FC = () => {
                             userId={user.userId}
                             listId={list._id}
                         />
-
                     </div>
                 )
             })}
         </div>
-
     )
-
 }

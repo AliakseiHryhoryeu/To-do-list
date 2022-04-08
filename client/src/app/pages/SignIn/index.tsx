@@ -33,7 +33,7 @@ export const SignIn:FC = () => {
             dispatch(UserActions.signIn(values.username, values.password))
             navigate('/main', { replace: true })
         },
-    });
+    })
     return (
         <div className='signIn'>
             <Header />

@@ -1,4 +1,4 @@
-export { Landing } from './Landing';
+export { Landing } from './Landing'
 export { Main } from './Main'
 export { Page404 } from './Page404'
 export { Registration } from './Registration'

@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux"
 
 import { UserActions } from 'app/actions'
 
@@ -13,7 +13,7 @@ type AlertProps = {
 
 export const Alert:FC<AlertProps> = ({ text }) => {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     return (
         <div className="alert">
