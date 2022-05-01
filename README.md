@@ -1,6 +1,6 @@
-## Todo list
-### In this project i develop client-server to do list application 
-#### In Client part i use:
+# To-do-list
+
+#### Frontend
 + TypeScript
 + ReactJS
 + Redux
@@ -8,7 +8,7 @@
 + SCSS
 + Figma
 
-#### In Server part i use:
+#### Backend
 + JavaScript
 + NodeJS
 + ExpressJS
