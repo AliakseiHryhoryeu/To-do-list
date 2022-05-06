@@ -1,18 +1,18 @@
 # To-do-list
 
 #### Frontend
-+ TypeScript
 + ReactJS
 + Redux
-+ Webpack
++ TypeScript
 + SCSS
++ Webpack
 + Figma
 
 #### Backend
-+ JavaScript
-+ NodeJS
 + ExpressJS
 + MongoDB
++ NodeJS
++ JavaScript
 
 ## Figma
 https://www.figma.com/file/n5p6P6gIghvaMJvw2hVIZz/Untitled?node-id=0%3A1
