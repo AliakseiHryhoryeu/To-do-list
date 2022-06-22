@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"description": "Client-Server application to do list",
 	"private": false,
-	"repository": "https://github.com/AliakseiHryhoryeu/try-webpack.git",
+	"repository": "https://github.com/AliakseiHryhoryeu/To-do-list",
 	"author": "AliakseiHryhoryeu <88304337+AliakseiHryhoryeu@users.noreply.github.com>",
 	"license": "MIT",
 	"browserslist": {
