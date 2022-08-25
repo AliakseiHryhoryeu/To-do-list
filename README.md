@@ -27,8 +27,4 @@ https://to-do-list-client.vercel.app/
 
 https://todo-8877.herokuapp.com/
 
-![To-do-list-preview](preview-1.jpg)
-
-![To-do-list-preview](preview-2.jpg)
-
-![To-do-list-preview](preview-old.jpg)
+![To-do-list-preview](preview.jpg)
