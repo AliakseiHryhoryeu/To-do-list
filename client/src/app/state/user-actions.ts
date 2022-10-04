@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { ListsActions, TasksActions } from 'app/actions'
+import { ListsActions, TasksActions } from 'app/state/actions'
 import config from 'assets/config.json'
 
 export namespace UserActions {

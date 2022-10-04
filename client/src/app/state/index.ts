@@ -1,18 +1,21 @@
-import { Store, createStore, applyMiddleware } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension'
-import thunk from 'redux-thunk'
+import { configureStore } from '@reduxjs/toolkit'
+import { taskReducer } from './task/task.slice'
+import { listReducer } from './list/list.slice'
+import { userReducer } from './user/user.slice'
+import { userApi } from './user/user.api'
+import { taskApi } from './task/task.api'
+import { listApi } from './list/list.api'
 
-import { RootState } from '../reducers/state'
-import { rootReducer } from 'app/reducers'
+export const store = configureStore({
+	reducer: {
+		user: userReducer,
+		task: taskReducer,
+		list: listReducer,
+		[userApi.reducerPath]: userApi.reducer,
+		[taskApi.reducerPath]: taskApi.reducer,
+		[listApi.reducerPath]: listApi.reducer,
+	},
+	middleware: getDefaultMiddleware => getDefaultMiddleware().concat(),
+})
 
-export function configureStore(initialState?: RootState): Store<RootState> {
-	let middleware = applyMiddleware(thunk)
-
-	if (process.env.NODE_ENV !== 'production') {
-		middleware = composeWithDevTools(middleware)
-	}
-
-	const store = createStore(rootReducer as any, initialState as any, middleware)
-
-	return store
-}
+export type TypeRootState = ReturnType<typeof store.getState>

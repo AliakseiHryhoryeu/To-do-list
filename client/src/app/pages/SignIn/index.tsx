@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 
 import { Header } from 'app/components'
-import { UserActions } from 'app/actions'
-import { RootState } from 'app/reducers'
+import { UserActions } from 'app/state/actions'
+import { RootState } from 'app/state/reducers'
 import { signInSchema } from './validation'
 
 import './SignIn.scss'

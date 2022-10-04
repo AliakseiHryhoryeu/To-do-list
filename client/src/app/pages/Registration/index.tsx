@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 
-import { UserActions } from 'app/actions'
+import { UserActions } from 'app/state/actions'
 import { Header } from 'app/components'
-import { RootState } from 'app/reducers'
+import { RootState } from 'app/state/reducers'
 import { registerSchema } from './validation'
 
 import './Registration.scss'
