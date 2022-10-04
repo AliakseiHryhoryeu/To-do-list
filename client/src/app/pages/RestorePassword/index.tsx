@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import { Header } from 'app/components'
-import { RootState } from 'app/reducers'
+import { RootState } from 'app/state/reducers'
 
 import './RestorePassword.scss'
 

@@ -8,14 +8,6 @@ export interface ListModel {
 	date: Date
 }
 
-export interface TaskModel {
-	_id: string
-	text: string
-	completed: boolean
-	listId: string
-	userId: string
-}
-
 export interface UserModel {
 	userId: string
 	username: string

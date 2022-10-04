@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { Dispatch, bindActionCreators } from 'redux'
 import axios from 'axios'
 
-import { ListsActions } from 'app/actions'
+import { ListsActions } from 'app/state/actions'
 import config from 'assets/config.json'
 
 export namespace TasksActions {
