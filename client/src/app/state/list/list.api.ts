@@ -1,69 +1,75 @@
-import { createApi } from '@reduxjs/toolkit/query/react'
-import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { IFeedback } from './list.types'
-import { READ_FEEDBACKS, READ_FEEDBACK } from 'app/graphql/queries/feedbacks'
-import {
-	CREATE_FEEDBACK,
-	UPDATE_FEEDBACK,
-	DELETE_FEEDBACK,
-} from 'app/graphql/mutations/feedbacks'
+import { IList } from './list.types'
 
-const serverIp = process.env.SERVER_IP
-const baseUrl = serverIp
+const serverIp = 'https://todo-8877.herokuapp.com/'
+const baseUrl = serverIp + 'api/lists'
 
 export const listApi = createApi({
 	reducerPath: 'listApi',
-	baseQuery: graphqlRequestBaseQuery({ url: baseUrl }),
+	baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
 	endpoints: builder => ({
-		readFeedbacks: builder.query<IFeedback[], string | void | null>({
-			query: () => ({ document: READ_FEEDBACKS }),
-		}),
-		readFeedback: builder.query<IFeedback[], string | void | null>({
-			query: () => ({ document: READ_FEEDBACK }),
-		}),
-		createFeedback: builder.query<
-			IFeedback[],
-			{ title: string; text: string; userId: string }
+		createList: builder.query<
+			IList[],
+			{ title: string; color: string; userId: string }
 		>({
-			query: ({ title, text, userId }) => ({
-				document: CREATE_FEEDBACK,
-				variables: {
-					title,
-					text,
-					userId,
-				},
-			}),
+			query: ({ title, color, userId }) => {
+				return {
+					url: `${baseUrl}/createlist`,
+					params: {
+						title: title,
+						color: color,
+						userId: userId,
+					},
+				}
+			},
 		}),
-		updateFeedback: builder.query<
-			IFeedback[],
-			{ id: string; title: string; text: string; userId: string }
+		readListsByUserId: builder.query<IList[], { userId: string }>({
+			query: ({ userId }) => {
+				return {
+					url: `${baseUrl}/listsbyuserid`,
+					params: { userId: userId },
+				}
+			},
+		}),
+
+		readList: builder.query<IList[], { listId: string }>({
+			query: ({ listId }) => {
+				return {
+					url: `${baseUrl}/list`,
+					params: { listId: listId },
+				}
+			},
+		}),
+		updateList: builder.query<
+			IList[],
+			{
+				listId: string
+				title: string
+			}
 		>({
-			query: ({ id, title, text, userId }) => ({
-				document: UPDATE_FEEDBACK,
-				variables: {
-					id,
-					title,
-					text,
-					userId,
-				},
-			}),
+			query: ({ listId, title }) => {
+				return {
+					url: `${baseUrl}/updatelist`,
+					params: { listId: listId, title: title },
+				}
+			},
 		}),
-		deleteFeedback: builder.query<IFeedback[], string>({
-			query: id => ({
-				document: DELETE_FEEDBACK,
-				variables: {
-					id,
-				},
-			}),
+		deleteList: builder.query<IList[], { listId: string }>({
+			query: ({ listId }) => {
+				return {
+					url: `${baseUrl}/deletelist`,
+					params: { listId: listId },
+				}
+			},
 		}),
 	}),
 })
 
 export const {
-	useReadFeedbackQuery,
-	useReadFeedbacksQuery,
-	useCreateFeedbackQuery,
-	useUpdateFeedbackQuery,
-	useDeleteFeedbackQuery,
+	useCreateListQuery,
+	useReadListsByUserIdQuery,
+	useReadListQuery,
+	useUpdateListQuery,
+	useDeleteListQuery,
 } = listApi

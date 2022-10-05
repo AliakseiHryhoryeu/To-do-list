@@ -1,19 +1,20 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 
-import { IFaqState, IFAQ } from './task.types'
+import { ITaskState, ITask } from './task.types'
 
-const initialState: IFaqState = {
-	faqPosts: [
+const initialState: ITaskState = {
+	allTasks: [
 		{
 			_id: '',
-			title: '',
 			text: '',
+			completed: false,
+			listId: '',
 			userId: '',
 		},
 	],
 }
 
-export const getFaq = createAsyncThunk('Faq/get', async () => {
+export const getTask = createAsyncThunk('Task/get', async () => {
 	// const res = await TutorialDataService.create({ title, description })
 	const res = {
 		data: '',
@@ -25,23 +26,23 @@ export const taskSlice = createSlice({
 	name: 'task',
 	initialState,
 	reducers: {
-		addFaq: (state, action: PayloadAction<IFAQ>) => {
-			state.faqPosts.push(action.payload)
+		addTask: (state, action: PayloadAction<ITask>) => {
+			state.allTasks.push(action.payload)
 		},
-		editFaq: (state, action: PayloadAction<IFAQ>) => {
-			state.faqPosts.push(action.payload)
+		editTask: (state, action: PayloadAction<ITask>) => {
+			state.allTasks.push(action.payload)
 		},
-		deleteFaq: (state, action: PayloadAction<IFAQ>) => {
-			state.faqPosts.push(action.payload)
+		deleteTask: (state, action: PayloadAction<ITask>) => {
+			state.allTasks.push(action.payload)
 		},
 	},
 	extraReducers: builder => {
-		// getFaq: (state, action: PayloadAction<IFAQ>) => {
-		// 	state.faqPosts.push(action.payload)
+		// getFaq: (state, action: PayloadAction<ITask>) => {
+		// 	state.allTasks.push(action.payload)
 		// },
-		builder.addCase(getFaq.pending, (state, action: PayloadAction<IFAQ>) => {
+		builder.addCase(getTask.pending, (state, action: PayloadAction<ITask>) => {
 			console.log(action.payload)
-			state.faqPosts.push(action.payload)
+			state.allTasks.push(action.payload)
 		})
 	},
 })
@@ -170,4 +171,170 @@ export const taskActions = taskSlice.actions
 // 		default:
 // 			return state
 // 	}
+// }
+
+// import { RootState } from '../state-types-reducer'
+
+// const defaultState: RootState.TasksState = {
+// 	allTasks: [],
+// }
+
+// export const tasksReducer = (state = defaultState, action) => {
+// 	switch (action.type) {
+// 		case TasksActionsTypes.GET_TASKS:
+// 			return {
+// 				...state,
+// 				allTasks: action.payload,
+// 			}
+// 		case TasksActionsTypes.ADD_TASK:
+// 			return {
+// 				...state,
+// 				allTasks: [...state.allTasks, { ...action.payload }],
+// 			}
+// 		case TasksActionsTypes.EDIT_TASK:
+// 			const index = state.allTasks.findIndex(
+// 				list => list._id === action.payload._id
+// 			)
+// 			const newArray = [...state.allTasks]
+// 			newArray[index] = action.payload
+// 			return {
+// 				...state,
+// 				allTasks: newArray,
+// 			}
+
+// 		default:
+// 			return state
+// 	}
+// }
+
+// import { useMemo } from 'react'
+// import { Dispatch, bindActionCreators } from 'redux'
+// import axios from 'axios'
+
+// import { ListsActions } from 'app/state/actions'
+// import config from 'assets/config.json'
+
+// export namespace TasksActions {
+// 	export enum Type {
+// 		GET_TASKS = 'TASKS/GET_TASKS',
+// 		SET_TASKS = 'TASKS/SET_TASKS',
+// 		ADD_TASK = 'TASKS/ADD_TASK',
+// 		EDIT_TASK = 'TASKS/EDIT_TASK',
+// 		DELETE_TASK = 'TASKS/DELETE_TASK',
+// 	}
+
+// 	export const getTasksByUserId = userId => {
+// 		return async dispatch => {
+// 			try {
+// 				const response = await axios.get(
+// 					config.proxy + `api/tasks/getTasksByUserId`,
+// 					{
+// 						params: {
+// 							userId: userId,
+// 						},
+// 					}
+// 				)
+// 				dispatch({ type: Type.GET_TASKS, payload: response.data.response })
+// 			} catch (e) {
+// 				console.log(e)
+// 			}
+// 		}
+// 	}
+
+// 	export const getTasksByListId = listId => {
+// 		return async dispatch => {
+// 			try {
+// 				const response = await axios.get(
+// 					config.proxy + `api/tasks/getTasksByListId`,
+// 					{
+// 						params: {
+// 							listId: listId,
+// 						},
+// 					}
+// 				)
+// 				dispatch({ type: Type.GET_TASKS, payload: response.data.lists })
+// 			} catch (e) {
+// 				console.log(e)
+// 			}
+// 		}
+// 	}
+
+// 	export const getTask = taskId => {
+// 		return async dispatch => {
+// 			try {
+// 				const response = await axios.get(config.proxy + `api/tasks/getTask`, {
+// 					params: {
+// 						taskId: taskId,
+// 					},
+// 				})
+// 				dispatch({ type: Type.GET_TASKS, payload: response.data.lists })
+// 			} catch (e) {
+// 				console.log(e)
+// 			}
+// 		}
+// 	}
+
+// 	export const addTask = (userId, listId, text) => {
+// 		return async dispatch => {
+// 			try {
+// 				const response = await axios.post(config.proxy + `api/tasks/addTask`, {
+// 					userId: userId,
+// 					listId: listId,
+// 					text: text,
+// 				})
+// 				dispatch({ type: Type.ADD_TASK, payload: response.data.task })
+// 				dispatch(ListsActions.getLists(response.data.task.userId))
+// 			} catch (e) {
+// 				console.log(e)
+// 			}
+// 		}
+// 	}
+
+// 	export const editTask = (taskId, text, completed) => {
+// 		return async dispatch => {
+// 			try {
+// 				const response = await axios.put(config.proxy + `api/tasks/editTask`, {
+// 					taskId: taskId,
+// 					text: text,
+// 					completed: completed,
+// 				})
+// 				dispatch({ type: Type.EDIT_TASK, payload: response.data.task })
+// 			} catch (e) {
+// 				console.log(e)
+// 			}
+// 		}
+// 	}
+
+// 	export const deleteTask = taskId => {
+// 		return async dispatch => {
+// 			try {
+// 				const response = await axios.put(
+// 					config.proxy + `api/tasks/deleteTask`,
+// 					{
+// 						taskId: taskId,
+// 					}
+// 				)
+// 				dispatch({ type: Type.DELETE_TASK, payload: response.data.response })
+// 				dispatch(getTasksByUserId(response.data.response.userId))
+// 			} catch (e) {
+// 				console.log(e)
+// 			}
+// 		}
+// 	}
+
+// 	export function setTasks(listId) {
+// 		return {
+// 			type: Type.SET_TASKS,
+// 			payload: listId,
+// 		}
+// 	}
+// }
+
+// export type TasksActions = Omit<typeof TasksActions, 'Type'>
+// export const useTasksActions = (dispatch: Dispatch) => {
+// 	const { Type, ...actions } = TasksActions
+// 	return useMemo(
+// 		() => bindActionCreators(actions as any, dispatch),
+// 		[dispatch]
+// 	) as TasksActions
 // }

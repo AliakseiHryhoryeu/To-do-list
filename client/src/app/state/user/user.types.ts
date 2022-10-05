@@ -40,3 +40,17 @@ export type AuthState =
 	| ILoggedWithoutInfo
 	| ILoggedAndLoadingInfo
 	| IUnlogged
+
+export interface UserModel {
+	userId: string
+	username: string
+	userIcon: File
+}
+
+//   export type UserState = {
+//     activeUser: UserModel,
+//     isAuth: boolean,
+//     settingsVisible: boolean,
+//     alert: null | string,
+//     allUserIcons: string[]
+//   }

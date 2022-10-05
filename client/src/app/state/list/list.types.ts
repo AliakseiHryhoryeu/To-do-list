@@ -1,11 +1,25 @@
-export interface IFeedback {
+export interface IList {
 	_id: string
 	title: string
-	text: string
-	username: string
-	date: string
+	color: string
 	userId: string
+	tasksId: string[]
+	date: string
 }
-export interface IFeedbackState {
-	feedbackPosts: IFeedback[]
+export interface IListState {
+	allLists: IList[]
+	activeList: IList[]
+	showAllLists: boolean
+	colors: string[]
 }
+
+export const ColorsList = [
+	'gray',
+	'lime',
+	'purple',
+	'black',
+	'red',
+	'green',
+	'blue',
+	'pink',
+]
