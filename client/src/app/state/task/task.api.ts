@@ -1,63 +1,82 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
-
-// import { CREATE_FAQ, UPDATE_FAQ, DELETE_FAQ } from 'app/graphql/mutations/faqs'
-// import { READ_FAQS, READ_FAQ } from 'app/graphql/queries/faqs'
 import { ITask } from './task.types'
 
 const serverIp = 'https://todo-8877.herokuapp.com/'
-const baseUrl = serverIp + 'api/auth'
+const baseUrl = serverIp + 'api/tasks'
 
 export const taskApi = createApi({
 	reducerPath: '',
 	baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
 	endpoints: builder => ({
-		createFaq: builder.query<
+		createTask: builder.query<
 			ITask[],
-			{ text: string; completed: boolean; listId: string; userId: string }
+			{ text: string; listId: string; userId: string }
 		>({
-			query: ({ text, completed, listId, userId }) => ``,
+			query: ({ text, listId, userId }) => {
+				return {
+					url: `${baseUrl}/createtask`,
+					params: {
+						text: text,
+						listId: listId,
+						userId: userId,
+					},
+				}
+			},
 		}),
-		readFaqs: builder.query<ITask[], string | void | null>({
-			query: () => ({ document: READ_FAQS }),
+		readTasksByUserId: builder.query<ITask[], { userId: string }>({
+			query: ({ userId }) => {
+				return {
+					url: `${baseUrl}/tasksbyuserid`,
+					params: { userId: userId },
+				}
+			},
 		}),
-		readFaq: builder.query<ITask, string>({
-			query: id => ({
-				document: READ_FAQ,
-				variables: {
-					id,
-				},
-			}),
+		readTasksByListId: builder.query<ITask[], { listId: string }>({
+			query: ({ listId }) => {
+				return {
+					url: `${baseUrl}/tasksbylistid`,
+					params: { listId: listId },
+				}
+			},
 		}),
-		updateFaq: builder.query<
+		readTask: builder.query<ITask[], { taskId: string }>({
+			query: ({ taskId }) => {
+				return {
+					url: `${baseUrl}/task`,
+					params: { taskId: taskId },
+				}
+			},
+		}),
+		updateTask: builder.query<
 			ITask[],
-			{ id: string; title: string; text: string; userId: string }
+			{
+				taskId: string
+				text: string
+				completed: boolean
+			}
 		>({
-			query: ({ id, title, text, userId }) => ({
-				document: UPDATE_FAQ,
-				variables: {
-					id,
-					title,
-					text,
-					userId,
-				},
-			}),
+			query: ({ taskId, text, completed }) => {
+				return {
+					url: `${baseUrl}/updatetask`,
+					params: { taskId: taskId, text: text, completed: completed },
+				}
+			},
 		}),
-		deleteFaq: builder.query<ITask[], string>({
-			query: id => ({
-				document: DELETE_FAQ,
-				variables: {
-					id,
-				},
-			}),
+		deleteTask: builder.query<ITask[], { taskId: string }>({
+			query: ({ taskId }) => {
+				return {
+					url: `${baseUrl}/deletetask`,
+					params: { taskId: taskId },
+				}
+			},
 		}),
 	}),
 })
 
 export const {
-	useCreateFaqQuery,
-	useReadFaqsQuery,
-	useReadFaqQuery,
-	useUpdateFaqQuery,
-	useDeleteFaqQuery,
+	useReadTasksByUserIdQuery,
+	useReadTasksByListIdQuery,
+	useReadTaskQuery,
+	useUpdateTaskQuery,
+	useDeleteTaskQuery,
 } = taskApi
