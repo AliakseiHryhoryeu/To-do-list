@@ -15,7 +15,13 @@ export const store = configureStore({
 		[taskApi.reducerPath]: taskApi.reducer,
 		[listApi.reducerPath]: listApi.reducer,
 	},
-	middleware: getDefaultMiddleware => getDefaultMiddleware().concat(),
+	middleware: getDefaultMiddleware =>
+		getDefaultMiddleware().concat(
+			userApi.middleware,
+			taskApi.middleware,
+			listApi.middleware
+		),
 })
 
-export type TypeRootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch

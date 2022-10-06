@@ -3,21 +3,21 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import { Header } from 'app/components'
-import { RootState } from 'app/state/reducers'
+// import { RootState } from 'app/state/reducers'
 
 import './RestorePassword.scss'
 
 export const RestorePassword: FC = () => {
 	const navigate = useNavigate()
-	const { isAuth } = useSelector((state: RootState) => {
-		return {
-			isAuth: state.user.isAuth,
-		}
-	})
+	// const { isAuth } = useSelector((state: RootState) => {
+	// 	return {
+	// 		isAuth: state.user.isAuth,
+	// 	}
+	// })
 
-	if (isAuth === true) {
-		navigate('/main', { replace: true })
-	}
+	// if (isAuth === true) {
+	// 	navigate('/main', { replace: true })
+	// }
 
 	return (
 		<div className='restorepass'>

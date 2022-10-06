@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import classNames from 'classnames'
 
 import { Settings, Lists } from 'app/components'
-import { UserActions } from 'app/state/actions'
-import { RootState } from 'app/state/reducers'
+// import { UserActions } from 'app/state/actions'
+// import { RootState } from 'app/state/reducers'
 
 import userIcon from 'assets/img/userIcon_1.png'
 import mainLogo from 'assets/img/favicon.svg'
@@ -16,15 +16,15 @@ import './Header.scss'
 
 export const Header: FC = () => {
 	const dispatch = useDispatch()
-	const { isAuth, username, settingsVisible } = useSelector(
-		(state: RootState) => {
-			return {
-				username: state.user.activeUser.username,
-				isAuth: state.user.isAuth,
-				settingsVisible: state.user.settingsVisible,
-			}
-		}
-	)
+	// const { isAuth, username, settingsVisible } = useSelector(
+	// 	(state: RootState) => {
+	// 		return {
+	// 			username: state.user.activeUser.username,
+	// 			isAuth: state.user.isAuth,
+	// 			settingsVisible: state.user.settingsVisible,
+	// 		}
+	// 	}
+	// )
 
 	const [isActiveHeaderBurger, setActiveHeaderBurger] = useState(false)
 	const [isActiveUsername, setActiveUsername] = useState(false)
@@ -52,7 +52,7 @@ export const Header: FC = () => {
 							<img className='header__mainLogo' src={mainLogo} alt='mainLogo' />
 							To do list
 						</Link>
-						{!isAuth && (
+						{/* {!isAuth && (
 							<nav
 								className={classNames('header__nav', {
 									'header__nav-active': isActiveHeaderBurger,
@@ -124,11 +124,11 @@ export const Header: FC = () => {
 									<Lists />
 								</ul>
 							</nav>
-						)}
+						)} */}
 					</div>
 				</header>
 			</header>
-			{isAuth && settingsVisible && <Settings />}
+			{/* {isAuth && settingsVisible && <Settings />} */}
 		</>
 	)
 }

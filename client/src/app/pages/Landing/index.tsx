@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { RootState } from 'app/state/reducers'
+// import { RootState } from 'app/state/reducers'
 import { Header, Slider, Footer } from 'app/components'
 
 import checkedImg from 'assets/img/checked_1.svg'
@@ -14,15 +14,15 @@ import './Landing.scss'
 
 export const Landing: FC = () => {
 	const navigate = useNavigate()
-	const { isAuth } = useSelector((state: RootState) => {
-		return {
-			isAuth: state.user.isAuth,
-		}
-	})
+	// const { isAuth } = useSelector((state: RootState) => {
+	// 	return {
+	// 		isAuth: state.user.isAuth,
+	// 	}
+	// })
 
-	if (isAuth === true) {
-		navigate('/main', { replace: true })
-	}
+	// if (isAuth === true) {
+	// 	navigate('/main', { replace: true })
+	// }
 
 	const sliderDB = [img1, img2, img3]
 

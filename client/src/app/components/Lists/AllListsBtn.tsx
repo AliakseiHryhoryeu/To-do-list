@@ -2,20 +2,20 @@ import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import classNames from 'classnames'
 
-import { RootState } from 'app/state/reducers'
-import { ListsActions } from 'app/state/actions'
+// import { RootState } from 'app/state/reducers'
+// import { ListsActions } from 'app/state/actions'
 
 export const AllListsBtn: FC = () => {
 	const dispatch = useDispatch()
-	const { showAllLists } = useSelector((state: RootState) => {
-		return {
-			showAllLists: state.lists.showAllLists,
-		}
-	})
+	// const { showAllLists } = useSelector((state: RootState) => {
+	// 	return {
+	// 		showAllLists: state.lists.showAllLists,
+	// 	}
+	// })
 
 	return (
 		<ul className='main__list main__list-title'>
-			<li
+			{/* <li
 				className={classNames(showAllLists ? 'active' : '')}
 				onClick={() => dispatch(ListsActions.showAllLists())}
 			>
@@ -35,7 +35,7 @@ export const AllListsBtn: FC = () => {
 					</svg>
 				</i>
 				<span>All Tasks</span>
-			</li>
+			</li> */}
 		</ul>
 	)
 }

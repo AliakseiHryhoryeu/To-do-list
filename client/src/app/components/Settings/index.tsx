@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { UserActions } from 'app/state/actions'
+// import { UserActions } from 'app/state/actions'
 
 import closebtn from 'assets/img/remove.svg'
 import img1 from 'assets/img/userIcon_1.png'
@@ -20,14 +20,14 @@ export const Settings: FC = () => {
 	return (
 		<div className='settings'>
 			<div className='settings__wrapper'>
-				<img
+				{/* <img
 					src={closebtn}
 					alt='Remove icon'
 					className='settings__close'
 					onClick={() => {
 						dispatch(UserActions.hideSettings())
 					}}
-				/>
+				/> */}
 
 				<div className='settings__block settings__password'>
 					<h3 className='settings__title'>Change password</h3>

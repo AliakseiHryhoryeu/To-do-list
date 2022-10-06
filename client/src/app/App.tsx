@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-
-import { UserActions } from 'app/state/actions'
+import { useActions } from './hooks/useActions'
+// import { UserActions } from 'app/state/actions'
 import {
 	Landing,
 	Page404,
@@ -14,11 +14,13 @@ import {
 
 function App() {
 	const dispatch = useDispatch()
-
+	const allActions = useActions()
 	useEffect(() => {
-		dispatch(UserActions.auth())
+		allActions.readTask()
 	}, [])
-
+	// useEffect(() => {
+	// 	dispatch(UserActions.auth())
+	// }, [])
 	return (
 		<div className='App'>
 			<Routes>
