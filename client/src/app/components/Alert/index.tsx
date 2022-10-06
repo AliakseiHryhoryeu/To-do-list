@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { UserActions } from 'app/state/actions'
+// import { UserActions } from 'app/state/actions'
 
 import closebtn from 'assets/img/remove.svg'
 
@@ -16,7 +16,7 @@ export const Alert: FC<AlertProps> = ({ text }) => {
 
 	return (
 		<div className='alert'>
-			<div
+			{/* <div
 				className='alert__wrapper'
 				onClick={() => {
 					dispatch(UserActions.hideAlert())
@@ -31,7 +31,7 @@ export const Alert: FC<AlertProps> = ({ text }) => {
 						dispatch(UserActions.hideAlert())
 					}}
 				/>
-			</div>
+			</div> */}
 		</div>
 	)
 }

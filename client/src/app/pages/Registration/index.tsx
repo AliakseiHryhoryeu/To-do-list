@@ -3,42 +3,42 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 
-import { UserActions } from 'app/state/actions'
+// import { UserActions } from 'app/state/actions'
 import { Header } from 'app/components'
-import { RootState } from 'app/state/reducers'
+// import { RootState } from 'app/state/reducers'
 import { registerSchema } from './validation'
 
 import './Registration.scss'
 
 export const Registration: FC = () => {
 	const navigate = useNavigate()
-	const { isAuth } = useSelector((state: RootState) => {
-		return {
-			isAuth: state.user.isAuth,
-		}
-	})
+	// const { isAuth } = useSelector((state: RootState) => {
+	// 	return {
+	// 		isAuth: state.user.isAuth,
+	// 	}
+	// })
 
-	if (isAuth === true) {
-		navigate('/main', { replace: true })
-	}
+	// if (isAuth === true) {
+	// 	navigate('/main', { replace: true })
+	// }
 
-	const formik = useFormik({
-		initialValues: {
-			username: '',
-			email: '',
-			password: '',
-			repeatPassword: '',
-		},
-		validationSchema: registerSchema,
-		onSubmit: values => {
-			UserActions.registration(values.username, values.email, values.password)
-		},
-	})
+	// const formik = useFormik({
+	// 	initialValues: {
+	// 		username: '',
+	// 		email: '',
+	// 		password: '',
+	// 		repeatPassword: '',
+	// 	},
+	// 	validationSchema: registerSchema,
+	// 	onSubmit: values => {
+	// 		UserActions.registration(values.username, values.email, values.password)
+	// 	},
+	// })
 	return (
 		<div className='registration'>
 			<Header />
 			<div className='registration__container'>
-				<form
+				{/* <form
 					className='registration__form'
 					onSubmit={formik.handleSubmit}
 					noValidate
@@ -88,7 +88,7 @@ export const Registration: FC = () => {
 					<Link to='/auth' className='registration__button-signIn'>
 						Alredy have account? Sign in
 					</Link>
-				</form>
+				</form> */}
 			</div>
 		</div>
 	)

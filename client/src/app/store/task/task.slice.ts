@@ -2,6 +2,8 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 
 import { ITaskState, ITask } from './task.types'
 
+import { useReadTasksByUserIdQuery } from './task.api'
+
 const initialState: ITaskState = {
 	allTasks: [
 		{
@@ -14,12 +16,11 @@ const initialState: ITaskState = {
 	],
 }
 
-export const getTask = createAsyncThunk('Task/get', async () => {
-	// const res = await TutorialDataService.create({ title, description })
-	const res = {
-		data: '',
+export const readTask = createAsyncThunk('Task/read', async () => {
+	;async ({ taskId }) => {
+		const res = await useReadTasksByUserIdQuery(taskId)
+		return res
 	}
-	return res.data
 })
 
 export const taskSlice = createSlice({
@@ -35,12 +36,15 @@ export const taskSlice = createSlice({
 		deleteTask: (state, action: PayloadAction<ITask>) => {
 			state.allTasks.push(action.payload)
 		},
+		readTask: (state, action: PayloadAction<ITask>) => {
+			state.allTasks.push(action.payload)
+		},
 	},
 	extraReducers: builder => {
 		// getFaq: (state, action: PayloadAction<ITask>) => {
 		// 	state.allTasks.push(action.payload)
 		// },
-		builder.addCase(getTask.pending, (state, action: PayloadAction<ITask>) => {
+		builder.addCase(readTask.pending, (state, action: PayloadAction<ITask>) => {
 			console.log(action.payload)
 			state.allTasks.push(action.payload)
 		})

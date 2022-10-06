@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { TasksActions } from 'app/state/actions'
-import { RootState } from 'app/state/reducers'
-import { TaskModel } from 'app/models'
+// import { TasksActions } from 'app/state/actions'
+// import { RootState } from 'app/state/reducers'
+import { ITask } from 'app/store/task/task.types'
 
 import editTaskSvg from 'assets/img/editTask.svg'
 import deleteTaskSvg from 'assets/img/deleteTask.svg'
@@ -11,42 +11,43 @@ import deleteTaskSvg from 'assets/img/deleteTask.svg'
 import './Task.scss'
 
 type TaskProps = {
-	tasks: TaskModel[]
+	tasks: ITask[]
 }
 
 export const Task: FC<TaskProps> = ({ tasks }) => {
 	const dispatch = useDispatch()
-	const { lists, allTasks, user } = useSelector((state: RootState) => {
-		return {
-			user: state.user.activeUser,
-			lists: state.lists.activeList,
-			allTasks: state.tasks.allTasks,
-		}
-	})
+	// const { lists, allTasks, user } = useSelector((state: RootState) => {
+	// 	return {
+	// 		user: state.user.activeUser,
+	// 		lists: state.lists.activeList,
+	// 		allTasks: state.tasks.allTasks,
+	// 	}
+	// })
 
-	const editTextTask = (taskId, text, completed) => {
-		const newText = window.prompt(`New task text`, text)
-		if (newText) {
-			dispatch(TasksActions.editTask(taskId, newText, completed))
-		}
-	}
+	// const editTextTask = (taskId, text, completed) => {
+	// 	const newText = window.prompt(`New task text`, text)
+	// 	if (newText) {
+	// 		dispatch(TasksActions.editTask(taskId, newText, completed))
+	// 	}
+	// }
 
-	const checkTask = (taskId, text, completed) => {
-		dispatch(TasksActions.editTask(taskId, text, !completed))
-	}
+	// const checkTask = (taskId, text, completed) => {
+	// 	dispatch(TasksActions.editTask(taskId, text, !completed))
+	// }
 
-	const delTask = taskId => {
-		if (window.confirm('Are you sure you want delete this task?')) {
-			dispatch(TasksActions.deleteTask(taskId))
-		}
-	}
+	// const delTask = taskId => {
+	// 	if (window.confirm('Are you sure you want delete this task?')) {
+	// 		dispatch(TasksActions.deleteTask(taskId))
+	// 	}
+	// }
 
-	if (!tasks) {
-		return <></>
-	}
+	// if (!tasks) {
+	// 	return <></>
+	// }
 	return (
 		<>
-			{tasks.map(task => {
+			test
+			{/* {tasks.map(task => {
 				return (
 					<div className='tasks__items-row' key={task._id}>
 						<div className='checkbox'>
@@ -89,7 +90,7 @@ export const Task: FC<TaskProps> = ({ tasks }) => {
 						</div>
 					</div>
 				)
-			})}
+			})} */}
 		</>
 	)
 }

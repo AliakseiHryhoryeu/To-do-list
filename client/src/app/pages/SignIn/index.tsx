@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 
 import { Header } from 'app/components'
-import { UserActions } from 'app/state/actions'
-import { RootState } from 'app/state/reducers'
+// import { UserActions } from 'app/state/actions'
+// import { RootState } from 'app/state/reducers'
 import { signInSchema } from './validation'
 
 import './SignIn.scss'
@@ -13,31 +13,31 @@ import './SignIn.scss'
 export const SignIn: FC = () => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
-	const { isAuth } = useSelector((state: RootState) => {
-		return {
-			isAuth: state.user.isAuth,
-		}
-	})
-	if (isAuth === true) {
-		navigate('/main', { replace: true })
-	}
+	// const { isAuth } = useSelector((state: RootState) => {
+	// 	return {
+	// 		isAuth: state.user.isAuth,
+	// 	}
+	// })
+	// if (isAuth === true) {
+	// 	navigate('/main', { replace: true })
+	// }
 
-	const formik = useFormik({
-		initialValues: {
-			username: '',
-			password: '',
-		},
-		validationSchema: signInSchema,
-		onSubmit: values => {
-			dispatch(UserActions.signIn(values.username, values.password))
-			navigate('/main', { replace: true })
-		},
-	})
+	// const formik = useFormik({
+	// 	initialValues: {
+	// 		username: '',
+	// 		password: '',
+	// 	},
+	// 	validationSchema: signInSchema,
+	// 	onSubmit: values => {
+	// 		dispatch(UserActions.signIn(values.username, values.password))
+	// 		navigate('/main', { replace: true })
+	// 	},
+	// })
 	return (
 		<div className='signIn'>
 			<Header />
 			<div className='signIn__container'>
-				<form
+				{/* <form
 					className='signIn__form'
 					onSubmit={formik.handleSubmit}
 					noValidate
@@ -72,7 +72,7 @@ export const SignIn: FC = () => {
 					<Link to='/restorepass' className='signIn__button btn-restorepass'>
 						Forgot your password?
 					</Link>
-				</form>
+				</form> */}
 			</div>
 		</div>
 	)

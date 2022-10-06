@@ -1,7 +1,7 @@
 import React, { useState, FC } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { TasksActions } from 'app/state/actions'
+// import { TasksActions } from 'app/state/actions'
 
 import './AddTask.scss'
 
@@ -19,11 +19,11 @@ export const AddTask: FC<AddTaskProps> = ({ userId, listId }) => {
 		setVisibleInput(!visibleInput)
 	}
 
-	const addNewTask = () => {
-		dispatch(TasksActions.addTask(userId, listId, inputValue))
-		setVisibleInput(!visibleInput)
-		setInputValue('')
-	}
+	// const addNewTask = () => {
+	// 	dispatch(TasksActions.addTask(userId, listId, inputValue))
+	// 	setVisibleInput(!visibleInput)
+	// 	setInputValue('')
+	// }
 	return (
 		<div className='add-task'>
 			{!visibleInput && (
@@ -72,9 +72,9 @@ export const AddTask: FC<AddTaskProps> = ({ userId, listId }) => {
 						onChange={e => setInputValue(e.target.value)}
 					/>
 					<div className='add-task__buttons '>
-						<button className='btn-addtask' onClick={() => addNewTask()}>
+						{/* <button className='btn-addtask' onClick={() => addNewTask()}>
 							Add Task
-						</button>
+						</button> */}
 
 						<button
 							className='btn-cancel'
