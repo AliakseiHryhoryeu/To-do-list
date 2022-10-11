@@ -2,7 +2,7 @@ import { RootState } from 'app/store'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { IUser } from './user.types'
 
-const serverIp = 'https://todo-8877.herokuapp.com/'
+const serverIp = process.env.SERVER_IP
 const baseUrl = serverIp + 'api/auth'
 
 export interface UserResponse {
@@ -10,17 +10,11 @@ export interface UserResponse {
 	token: string
 }
 
-export interface LoginRequest {
-	email: string
-	password: string
-}
-
 export const userApi = createApi({
-	reducerPath: 'faqApi',
+	reducerPath: 'userApi',
 	baseQuery: fetchBaseQuery({
 		baseUrl: baseUrl,
 		prepareHeaders: (headers, { getState }) => {
-			// By default, if we have a token in the store, let's use that for authenticated requests
 			const token = (getState() as RootState).user.token
 			if (token) {
 				headers.set('authorization', `Bearer ${token}`)
@@ -28,56 +22,54 @@ export const userApi = createApi({
 			return headers
 		},
 	}),
-
 	endpoints: build => ({
-		signUp: build.query<IUser, { email; password; username }>({
-			query: ({ email, password, username }) => {
-				return {
-					url: `${baseUrl}/signup`,
-					params: {
-						email: email,
-						password: password,
-						username: username,
-					},
-				}
-			},
+		// SIGN UP
+		signUp: build.query<
+			IUser,
+			{ email: string; username: string; password: string }
+		>({
+			query: ({ email, password, username }) => ({
+				url: `${baseUrl}/signup`,
+				method: 'POST',
+				body: {
+					email: email,
+					password: password,
+					username: username,
+				},
+			}),
 		}),
 
-		login: build.mutation<UserResponse, LoginRequest>({
+		// LOGIN
+		login: build.query<UserResponse, { email: string; password: string }>({
 			query: items => ({
 				url: `${baseUrl}/login`,
 				method: 'POST',
 				body: items,
 			}),
 		}),
-		auth: build.query<IUser[], { token }>({
-			query: ({ token }) => {
-				return {
-					url: `${baseUrl}/auth`,
-					params: {
-						token: token,
-					},
-				}
-			},
+
+		// AUTH
+		auth: build.query<IUser[], { token: string }>({
+			query: ({ token }) => ({
+				url: `${baseUrl}/auth`,
+				method: 'GET',
+				body: {
+					token: token,
+				},
+			}),
 		}),
-		protected: build.mutation<{ message: string }, void>({
-			query: () => 'protected',
-		}),
-		// logout: build.query<IUser[], string>({
-		// 	query: (faqId: string = '') => `getFaq?faqId=${faqId}`,
-		// }),
-		// setUser: build.query<IUser[], string>({
-		// 	query: (faqId: string = '') => `getFaq?faqId=${faqId}`,
-		// }),
 	}),
 })
 
-export const {
-	useSignUpQuery,
-	useLoginMutation,
-	useProtectedMutation,
-	useAuthQuery,
-} = userApi
+export const { useSignUpQuery, useLoginQuery, useAuthQuery } = userApi
+export const userApiActions = userApi.internalActions
+
+// logout: build.query<IUser[], string>({
+// 	query: (faqId: string = '') => `getFaq?faqId=${faqId}`,
+// }),
+// setUser: build.query<IUser[], string>({
+// 	query: (faqId: string = '') => `getFaq?faqId=${faqId}`,
+// }),
 
 // export function auth() {
 // 	return async dispatch => {

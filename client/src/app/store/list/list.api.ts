@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { IList } from './list.types'
 
-const serverIp = 'https://todo-8877.herokuapp.com/'
+const serverIp = process.env.SERVER_IP
 const baseUrl = serverIp + 'api/lists'
 
 export const listApi = createApi({
@@ -13,55 +13,39 @@ export const listApi = createApi({
 			IList[],
 			{ title: string; color: string; userId: string }
 		>({
-			query: ({ title, color, userId }) => {
-				return {
-					url: `${baseUrl}/createlist`,
-					params: {
-						title: title,
-						color: color,
-						userId: userId,
-					},
-				}
-			},
+			query: ({ title, color, userId }) => ({
+				url: `${baseUrl}/createlist`,
+				body: {
+					title: title,
+					color: color,
+					userId: userId,
+				},
+			}),
 		}),
 		readListsByUserId: builder.query<IList[], { userId: string }>({
-			query: ({ userId }) => {
-				return {
-					url: `${baseUrl}/listsbyuserid`,
-					params: { userId: userId },
-				}
-			},
+			query: ({ userId }) => ({
+				url: `${baseUrl}/listsbyuserid`,
+				body: { userId: userId },
+			}),
 		}),
 
 		readList: builder.query<IList[], { listId: string }>({
-			query: ({ listId }) => {
-				return {
-					url: `${baseUrl}/list`,
-					params: { listId: listId },
-				}
-			},
+			query: ({ listId }) => ({
+				url: `${baseUrl}/list`,
+				body: { listId: listId },
+			}),
 		}),
-		updateList: builder.query<
-			IList[],
-			{
-				listId: string
-				title: string
-			}
-		>({
-			query: ({ listId, title }) => {
-				return {
-					url: `${baseUrl}/updatelist`,
-					params: { listId: listId, title: title },
-				}
-			},
+		updateList: builder.query<IList[], { listId: string; title: string }>({
+			query: ({ listId, title }) => ({
+				url: `${baseUrl}/updatelist`,
+				body: { listId: listId, title: title },
+			}),
 		}),
 		deleteList: builder.query<IList[], { listId: string }>({
-			query: ({ listId }) => {
-				return {
-					url: `${baseUrl}/deletelist`,
-					params: { listId: listId },
-				}
-			},
+			query: ({ listId }) => ({
+				url: `${baseUrl}/deletelist`,
+				body: { listId: listId },
+			}),
 		}),
 	}),
 })

@@ -7,7 +7,7 @@ import { IUser, IUserState } from './user.types'
 
 const initialState: IUserState = {
 	activeUser: {
-		userId: '',
+		id: '',
 		username: '',
 	},
 	token: null,
@@ -15,13 +15,22 @@ const initialState: IUserState = {
 	alert: null,
 }
 
+interface ISetUserPayload {
+	id: string
+	username: string
+	token: string
+}
+
 export const userSlice = createSlice({
-	name: 'user',
+	name: 'userSlice',
 	initialState,
 	reducers: {
-		// setUser: (state, action: PayloadAction<IUser>) => {
-		// 	state.activeUser.push(action.payload)
-		// },
+		// async function?
+		setUser: (state, action: PayloadAction<ISetUserPayload>) => {
+			state.activeUser.id = action.payload.id
+			state.activeUser.username = action.payload.username
+			localStorage.setItem('token', action.payload.token)
+		},
 		// signUp: (state, action: PayloadAction<IUser>) => {
 		// 	state.push(action.payload)
 		// },
@@ -38,6 +47,7 @@ export const userSlice = createSlice({
 			(state, { payload }) => {
 				state.token = payload.token
 				state.activeUser = payload.user
+				localStorage.setItem('token', payload.token)
 			}
 		)
 	},
