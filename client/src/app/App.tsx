@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useActions } from './hooks/useActions'
+import { useAuth } from './hooks/useAuth'
 // import { UserActions } from 'app/state/actions'
 import {
 	Landing,
@@ -11,12 +12,24 @@ import {
 	RestorePassword,
 	Main,
 } from 'app/pages'
+import { useLoginQuery } from './store/user/user.api'
+import { useSignUpQuery } from './store/user/user.api'
 
 function App() {
 	const dispatch = useDispatch()
-	const allActions = useActions()
+	const { data, error, isLoading } = useLoginQuery({
+		email: 'test123@gmail.com',
+		password: 'test123',
+	})
+	// const { data, error, isLoading } = useSignUpQuery({
+	// 	email: 'test1234@gmail.com',
+	// 	username: 'test1234',
+	// 	password: 'test1234',
+	// })
 	useEffect(() => {
-		allActions.readTask()
+		console.log(data)
+		console.log(error)
+		console.log(isLoading)
 	}, [])
 	// useEffect(() => {
 	// 	dispatch(UserActions.auth())

@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { setupListeners } from '@reduxjs/toolkit/query'
 import { taskReducer } from './task/task.slice'
 import { listReducer } from './list/list.slice'
 import { userReducer } from './user/user.slice'
@@ -16,12 +17,10 @@ export const store = configureStore({
 		[listApi.reducerPath]: listApi.reducer,
 	},
 	middleware: getDefaultMiddleware =>
-		getDefaultMiddleware().concat(
-			userApi.middleware,
-			taskApi.middleware,
-			listApi.middleware
-		),
+		getDefaultMiddleware().concat(userApi.middleware),
 })
+
+setupListeners(store.dispatch)
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
