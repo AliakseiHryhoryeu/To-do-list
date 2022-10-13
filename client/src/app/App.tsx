@@ -4,14 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useActions } from './hooks/useActions'
 import { useAuth } from './hooks/useAuth'
 // import { UserActions } from 'app/state/actions'
-import {
-	Landing,
-	Page404,
-	Signup,
-	Login,
-	RestorePassword,
-	Main,
-} from 'app/pages'
+import { Landing, Page404, Signup, Login, PasswordReset, Main } from 'app/pages'
 import { useLoginQuery } from './store/user/user.api'
 import { useSignUpQuery } from './store/user/user.api'
 
@@ -38,13 +31,10 @@ function App() {
 		<div className='App'>
 			<Routes>
 				<Route path='/' element={<Main />} />
-
 				<Route path='/login' element={<Login />} />
 				<Route path='/signup' element={<Signup />} />
-				<Route path='/restorepass' element={<RestorePassword />} />
-
+				<Route path='/password-reset' element={<PasswordReset />} />
 				<Route path='/landing' element={<Landing />} />
-
 				<Route path='*' element={<Page404 />} />
 			</Routes>
 		</div>

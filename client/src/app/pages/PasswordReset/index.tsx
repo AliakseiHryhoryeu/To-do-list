@@ -5,9 +5,9 @@ import { useSelector } from 'react-redux'
 import { Header } from 'app/components'
 // import { RootState } from 'app/state/reducers'
 
-import './RestorePassword.scss'
+import './PasswordReset.scss'
 
-export const RestorePassword: FC = () => {
+export const PasswordReset: FC = () => {
 	const navigate = useNavigate()
 	// const { isAuth } = useSelector((state: RootState) => {
 	// 	return {
@@ -20,22 +20,22 @@ export const RestorePassword: FC = () => {
 	// }
 
 	return (
-		<div className='restorepass'>
+		<div className='passwordreset'>
 			<Header />
-			<div className='restorepass__container'>
-				<div className='restorepass__form'>
-					<div className='restorepass__title'>Restore Password</div>
+			<div className='passwordreset__container'>
+				<div className='passwordreset__form'>
+					<div className='passwordreset__title'>Restore Password</div>
 
 					<input
-						className='restorepass__input'
+						className='passwordreset__input'
 						type='text'
 						placeholder='Email Adress...'
 					/>
 
-					<a href='' className='restorepass__button-reg'>
+					<a href='' className='passwordreset__button-reg'>
 						Restore Password
 					</a>
-					<Link to='/auth' className='restorepass__button-signIn'>
+					<Link to='/auth' className='passwordreset__button-signIn'>
 						Alredy have account? Sign in
 					</Link>
 				</div>
