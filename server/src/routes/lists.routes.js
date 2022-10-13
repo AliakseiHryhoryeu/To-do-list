@@ -17,7 +17,7 @@ router.get(
 			if (!errors.isEmpty()) {
 				return res.status(400).json({ message: 'Uncorrect request', errors })
 			}
-			const { userId } = req.query
+			const { userId } = req.body
 			const user = await User.findOne({ _id: mongoose.Types.ObjectId(userId) })
 			if (!user) {
 				return res.status(404).json({ message: 'User not found' })
@@ -46,14 +46,18 @@ router.get(
 			if (!errors.isEmpty()) {
 				return res.status(400).json({ message: 'Uncorrect request', errors })
 			}
-			const { listId } = req.query
+			const { listId } = req.body
 			const list = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
 			if (!list) {
 				return res.status(404).json({ message: 'List not found' })
 			}
 
 			return res.json({
-				list,
+				id: list.id,
+				title: list.title,
+				color: list.color,
+				userId: list.userId,
+				tasks: list.tasks,
 			})
 		} catch (e) {
 			console.log(e)
@@ -86,7 +90,13 @@ router.post(
 			user.listId.push(list.id)
 			await list.save()
 			await user.save()
-			return res.json(list)
+			return res.json({
+				id: list.id,
+				title: list.title,
+				color: list.color,
+				userId: list.userId,
+				tasks: list.tasks,
+			})
 		} catch (e) {
 			console.log(e)
 			res.send({ message: 'Server error (add list)' })
@@ -117,7 +127,11 @@ router.put(
 			await list.save()
 
 			return res.json({
-				list,
+				id: list.id,
+				title: list.title,
+				color: list.color,
+				userId: list.userId,
+				tasks: list.tasks,
 			})
 		} catch (e) {
 			console.log(e)

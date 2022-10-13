@@ -41,7 +41,18 @@ router.post(
 			const hashPassword = await bcrypt.hash(password, 4)
 			const user = new User({ email, password: hashPassword, username })
 			await user.save()
-			return res.json({ message: 'User was created' })
+
+			// find user
+			const userFind = await User.findOne({ email })
+			const token = jwt.sign({ id: userFind.id }, config.secretKey, {
+				expiresIn: '48h',
+			})
+			return res.json({
+				userId: userFind.id,
+				email: userFind.email,
+				username: userFind.username,
+				token,
+			})
 		} catch (e) {
 			console.log(e)
 			res.send({ message: 'Server error (registration)' })
@@ -49,33 +60,39 @@ router.post(
 	}
 )
 
-router.post('/login', async (req, res) => {
-	try {
-		const { email, password } = req.body
-		const user = await User.findOne({ email })
-		if (!user) {
-			return res.status(404).json({ message: 'User not found' })
-		}
+router.post(
+	'/login',
+	[
+		check('email', 'Uncorrect email').isEmail(),
+		check('password', 'Uncorrect username').isLength({ min: 1 }),
+	],
+	async (req, res) => {
+		try {
+			const { email, password } = req.body
+			const user = await User.findOne({ email })
+			if (!user) {
+				return res.status(404).json({ message: 'User not found' })
+			}
 
-		const isPassValid = bcrypt.compareSync(password, user.password)
-		if (!isPassValid) {
-			return res.status(400).json({ message: 'Invalid password' })
-		}
-		const token = jwt.sign({ id: user.id }, config.secretKey, {
-			expiresIn: '48h',
-		})
-		return res.json({
-			token,
-			user: {
-				id: user.id,
+			const isPassValid = bcrypt.compareSync(password, user.password)
+			if (!isPassValid) {
+				return res.status(400).json({ message: 'Invalid password' })
+			}
+			const token = jwt.sign({ id: user.id }, config.secretKey, {
+				expiresIn: '48h',
+			})
+			return res.json({
+				userId: user.id,
+				email: user.email,
 				username: user.username,
-			},
-		})
-	} catch (e) {
-		console.log(e)
-		res.send({ message: 'Server error (login)' })
+				token,
+			})
+		} catch (e) {
+			console.log(e)
+			res.send({ message: 'Server error (login)' })
+		}
 	}
-})
+)
 
 router.get('/auth', authMiddleware, async (req, res) => {
 	try {
@@ -84,12 +101,10 @@ router.get('/auth', authMiddleware, async (req, res) => {
 			expiresIn: '48h',
 		})
 		return res.json({
+			userId: user.id,
+			email: user.email,
+			username: user.username,
 			token,
-			user: {
-				userId: user.id,
-				username: user.username,
-				userIcon: user.userIcon,
-			},
 		})
 	} catch (e) {
 		console.log(e)

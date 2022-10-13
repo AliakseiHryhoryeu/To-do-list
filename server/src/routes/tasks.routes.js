@@ -16,7 +16,7 @@ router.get(
 			if (!errors.isEmpty()) {
 				return res.status(400).json({ message: 'Uncorrect request', errors })
 			}
-			const { userId } = req.query
+			const { userId } = req.body
 			const user = await User.findOne({ _id: mongoose.Types.ObjectId(userId) })
 			if (!user) {
 				return res.status(404).json({ message: 'User not found' })
@@ -45,7 +45,7 @@ router.get(
 				}
 			}
 			return res.json({
-				response,
+				tasks: response,
 			})
 		} catch (e) {
 			console.log(e)
@@ -63,15 +63,25 @@ router.get(
 			if (!errors.isEmpty()) {
 				return res.status(400).json({ message: 'Uncorrect request', errors })
 			}
-			const { listId } = req.query
+			const { listId } = req.body
 			const list = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
 			if (!list) {
 				return res.status(404).json({ message: 'List not found' })
 			}
-			const tasksList = list.tasksId
-			const tasks = await Task.find({ tasksList })
+			const response = []
+
+			for (let i = 0; i < list.tasksId.length; i++) {
+				const task = await Task.findOne({
+					_id: mongoose.Types.ObjectId(list.tasksId[i]),
+				})
+				if (!task) {
+					continue
+				}
+				response.push(task)
+			}
+
 			return res.json({
-				tasks,
+				tasks: response,
 			})
 		} catch (e) {
 			console.log(e)
@@ -82,21 +92,25 @@ router.get(
 
 router.get(
 	'/task',
-	[check('taskId', 'Uncorrect listId').isLength({ min: 1 })],
+	[check('taskId', 'Uncorrect taskId').isLength({ min: 1 })],
 	async function (req, res) {
 		try {
 			const errors = validationResult(req)
 			if (!errors.isEmpty()) {
 				return res.status(400).json({ message: 'Uncorrect request', errors })
 			}
-			const { taskId } = req.query
+			const { taskId } = req.body
 			const task = await Task.findOne({ _id: mongoose.Types.ObjectId(taskId) })
 			if (!task) {
 				return res.status(404).json({ message: 'Task not found' })
 			}
 
 			return res.json({
-				list,
+				id: task.id,
+				text: task.text,
+				completed: task.completed,
+				listId: task.listId,
+				userId: task.userId,
 			})
 		} catch (e) {
 			console.log(e)
@@ -139,7 +153,11 @@ router.post(
 			await task.save()
 			await list.save()
 			return res.json({
-				task,
+				id: task.id,
+				text: task.text,
+				completed: task.completed,
+				listId: task.listId,
+				userId: task.userId,
 			})
 		} catch (e) {
 			console.log(e)
@@ -150,7 +168,7 @@ router.post(
 
 //Edit task router
 router.put(
-	'/updateTask',
+	'/updatetask',
 	[
 		check('taskId', 'Uncorrect taskId').isLength({ min: 1 }),
 		check('text', 'Uncorrect text').isLength({ min: 1 }),
@@ -173,7 +191,11 @@ router.put(
 			task.completed = completed
 			await task.save()
 			return res.json({
-				task,
+				id: taskId,
+				text: task.text,
+				completed: task.completed,
+				listId: task.listId,
+				userId: task.userId,
 			})
 		} catch (e) {
 			console.log(e)
@@ -184,7 +206,7 @@ router.put(
 
 //Delete task
 router.put(
-	'/deleteTask',
+	'/deletetask',
 	[check('taskId', 'Uncorrect taskId').isLength({ min: 1 })],
 	async (req, res) => {
 		try {
@@ -213,7 +235,7 @@ router.put(
 				_id: mongoose.Types.ObjectId(listId),
 			})
 			return res.json({
-				response,
+				tasks: response,
 			})
 		} catch (e) {
 			console.log(e)
