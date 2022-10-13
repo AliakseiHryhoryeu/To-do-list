@@ -7,8 +7,8 @@ import { useAuth } from './hooks/useAuth'
 import {
 	Landing,
 	Page404,
-	Registration,
-	SignIn,
+	Signup,
+	Login,
 	RestorePassword,
 	Main,
 } from 'app/pages'
@@ -39,8 +39,8 @@ function App() {
 			<Routes>
 				<Route path='/' element={<Main />} />
 
-				<Route path='/auth' element={<SignIn />} />
-				<Route path='/registration' element={<Registration />} />
+				<Route path='/login' element={<Login />} />
+				<Route path='/signup' element={<Signup />} />
 				<Route path='/restorepass' element={<RestorePassword />} />
 
 				<Route path='/landing' element={<Landing />} />

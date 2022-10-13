@@ -6,11 +6,11 @@ import { useFormik } from 'formik'
 // import { UserActions } from 'app/state/actions'
 import { Header } from 'app/components'
 // import { RootState } from 'app/state/reducers'
-import { registerSchema } from './validation'
+import { signupSchema } from './validation'
 
-import './Registration.scss'
+import './Signup.scss'
 
-export const Registration: FC = () => {
+export const Signup: FC = () => {
 	const navigate = useNavigate()
 	// const { isAuth } = useSelector((state: RootState) => {
 	// 	return {
@@ -35,18 +35,18 @@ export const Registration: FC = () => {
 	// 	},
 	// })
 	return (
-		<div className='registration'>
+		<div className='Signup'>
 			<Header />
-			<div className='registration__container'>
+			<div className='Signup__container'>
 				{/* <form
-					className='registration__form'
+					className='Signup__form'
 					onSubmit={formik.handleSubmit}
 					noValidate
 				>
-					<div className='registration__title'>Registration</div>
+					<div className='Signup__title'>Signup</div>
 
 					<input
-						className='registration__input'
+						className='Signup__input'
 						placeholder='User name...'
 						name='username'
 						type='text'
@@ -55,7 +55,7 @@ export const Registration: FC = () => {
 						value={formik.values.username}
 					/>
 					<input
-						className='registration__input'
+						className='Signup__input'
 						placeholder='Email Adress...'
 						name='email'
 						type='text'
@@ -64,7 +64,7 @@ export const Registration: FC = () => {
 						value={formik.values.email}
 					/>
 					<input
-						className='registration__input'
+						className='Signup__input'
 						placeholder='Password...'
 						name='password'
 						type='password'
@@ -73,7 +73,7 @@ export const Registration: FC = () => {
 						value={formik.values.password}
 					/>
 					<input
-						className='registration__input'
+						className='Signup__input'
 						placeholder='Repeat your password...'
 						name='repeatPassword'
 						type='password'
@@ -82,10 +82,10 @@ export const Registration: FC = () => {
 						value={formik.values.repeatPassword}
 					/>
 
-					<button type='submit' className='registration__button-reg'>
+					<button type='submit' className='Signup__button-reg'>
 						Register
 					</button>
-					<Link to='/auth' className='registration__button-signIn'>
+					<Link to='/auth' className='Signup__button-signIn'>
 						Alredy have account? Sign in
 					</Link>
 				</form> */}

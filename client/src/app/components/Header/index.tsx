@@ -11,6 +11,7 @@ import userIcon from 'assets/img/userIcon_1.png'
 import mainLogo from 'assets/img/favicon.svg'
 import settingsIcon from 'assets/img/settingsIcon.svg'
 import exitIcon from 'assets/img/exitIcon.svg'
+import themeIcon from 'assets/img/Theme-icon.svg'
 
 import './Header.scss'
 
@@ -25,7 +26,7 @@ export const Header: FC = () => {
 	// 		}
 	// 	}
 	// )
-
+	const isAuth = false
 	const [isActiveHeaderBurger, setActiveHeaderBurger] = useState(false)
 	const [isActiveUsername, setActiveUsername] = useState(false)
 	const toggleClassActiveHeaderBurger = () => {
@@ -48,25 +49,26 @@ export const Header: FC = () => {
 						>
 							<span></span>
 						</div>
-						<Link to='/main' className='header__link'>
+						<Link to='/' className='header__link'>
 							<img className='header__mainLogo' src={mainLogo} alt='mainLogo' />
 							To do list
 						</Link>
-						{/* {!isAuth && (
+
+						{!isAuth && (
 							<nav
 								className={classNames('header__nav', {
 									'header__nav-active': isActiveHeaderBurger,
 								})}
 							>
 								<ul className='header__nav__list'>
-									<li className='nav__item'>
-										<Link to='/registration' className='header__nav__link'>
-											Registration
+									<li className='header__nav__item header__login'>
+										<Link to='/login' className='header__nav__link '>
+											Log in
 										</Link>
 									</li>
-									<li className='header__nav__item'>
-										<Link to='/auth' className='header__nav__link'>
-											Sign in
+									<li className='header__nav__item header__signup'>
+										<Link to='/signup' className='header__nav__link '>
+											Sign Up
 										</Link>
 									</li>
 								</ul>
@@ -85,7 +87,7 @@ export const Header: FC = () => {
 											className='header__nav__username__container'
 											onClick={() => toggleClassActiveUsername()}
 										>
-											<div className='header__nav__link-white'>{username}</div>
+											<div className='header__nav__link-white'>Username</div>
 											<img
 												className='header__nav__link-usericon'
 												src={userIcon}
@@ -100,22 +102,51 @@ export const Header: FC = () => {
 											})}
 										>
 											<div className='header__nav__username__item'>
-												<img src={settingsIcon} alt='settingsIcon' />
-												<button
-													className='header__nav__link-white'
-													onClick={() => dispatch(UserActions.showSettings())}
-												>
-													Settings
-												</button>
-											</div>
-											<div
-												className='header__nav__username__item'
-												onClick={() => dispatch(UserActions.logout())}
-											>
-												<img src={exitIcon} alt='exitIcon' />
-												<Link to='/' className='header__nav__link-white'>
-													Logout
-												</Link>
+												<div className='header__nav__settings-container-userdata'>
+													<div className='header__nav__settings-row2'>
+														<img
+															className='header__nav__settings-usericon'
+															src={userIcon}
+															alt='userIcon'
+														/>
+														<div className='header__nav__settings-userdata'>
+															<div className='header__nav__settings-userdata-username'>
+																Username
+															</div>
+															<div className='header__nav__settings-userdata-email'>
+																testemail@gmail.com
+															</div>
+														</div>
+													</div>
+
+													<div className='header__nav__settings-row'>
+														<img src={settingsIcon} alt='settingsIcon' />
+														<div className='header__nav__settings-text'>
+															Settings
+														</div>
+													</div>
+												</div>
+												<div className='header__nav__settings-sep'></div>
+												<div className='header__nav__settings-container'>
+													<div
+														className='header__nav__settings-row'
+														// onClick={() => dispatch(UserActions.logout())}
+													>
+														<img src={themeIcon} alt='exitIcon' />
+														<Link to='/' className='header__nav__link-white'>
+															Theme
+														</Link>
+													</div>
+													<div
+														className='header__nav__settings-row'
+														// onClick={() => dispatch(UserActions.logout())}
+													>
+														<img src={exitIcon} alt='exitIcon' />
+														<Link to='/' className='header__nav__link-white'>
+															Logout
+														</Link>
+													</div>
+												</div>
 											</div>
 										</div>
 									</li>
@@ -124,7 +155,7 @@ export const Header: FC = () => {
 									<Lists />
 								</ul>
 							</nav>
-						)} */}
+						)}
 					</div>
 				</header>
 			</header>

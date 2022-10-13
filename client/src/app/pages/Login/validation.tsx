@@ -1,6 +1,6 @@
 import * as Yup from 'yup'
 
-export const signInSchema = Yup.object({
+export const loginSchema = Yup.object({
 	username: Yup.string()
 		.min(2, 'Must be 2 characters at minimum')
 		.max(20, 'Must be 20 characters or less')
