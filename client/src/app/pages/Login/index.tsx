@@ -8,6 +8,10 @@ import { Header } from 'app/components'
 // import { RootState } from 'app/state/reducers'
 import { loginSchema } from './validation'
 
+import googleIcon from 'assets/img/Google-icon.svg'
+import facebookIcon from 'assets/img/Facebook-icon.svg'
+import appleIcon from 'assets/img/Apple-icon.svg'
+
 import './Login.scss'
 
 export const Login: FC = () => {
@@ -22,57 +26,99 @@ export const Login: FC = () => {
 	// 	navigate('/main', { replace: true })
 	// }
 
-	// const formik = useFormik({
-	// 	initialValues: {
-	// 		username: '',
-	// 		password: '',
-	// 	},
-	// 	validationSchema: signInSchema,
-	// 	onSubmit: values => {
-	// 		dispatch(UserActions.signIn(values.username, values.password))
-	// 		navigate('/main', { replace: true })
-	// 	},
-	// })
+	const formik = useFormik({
+		initialValues: {
+			email: '',
+			password: '',
+		},
+		validationSchema: loginSchema,
+		onSubmit: values => {
+			// dispatch(UserActions.login(values.username, values.password))
+			navigate('/', { replace: true })
+		},
+	})
 	return (
-		<div className='signIn'>
+		<div className='login'>
 			<Header />
-			<div className='signIn__container'>
-				{/* <form
-					className='signIn__form'
-					onSubmit={formik.handleSubmit}
-					noValidate
-				>
-					<div className='signIn__title'>Sign In</div>
+			<div className='login__container'>
+				<form className='login__form' onSubmit={formik.handleSubmit} noValidate>
+					<div className='login__title'>Log in</div>
+					<div className='login__social'>
+						<img
+							className='login__social-icon'
+							src={googleIcon}
+							alt='google-icon'
+						/>
+						<div className='login__social-text'>Continue with Google</div>
+					</div>
+					<div className='login__social'>
+						<img
+							className='login__social-icon'
+							src={facebookIcon}
+							alt='facebook-icon'
+						/>
+						<div className='login__social-text'>Continue with Facebook</div>
+					</div>
+					<div className='login__social login__social-last'>
+						<img
+							className='login__social-icon'
+							src={appleIcon}
+							alt='apple-icon'
+						/>
+						<div className='login__social-text'>Continue with Apple</div>
+					</div>
+					<div className='login__input'>
+						<label className='login__input-label' htmlFor='login__input-email'>
+							Email
+						</label>
+						<input
+							className='login__input-input login__input-email'
+							placeholder='Enter your email...'
+							name='email'
+							type='email'
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+							value={formik.values.email}
+						/>
+					</div>
 
-					<input
-						className='signIn__input'
-						placeholder='Username...'
-						name='username'
-						type='text'
-						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
-						value={formik.values.username}
-					/>
-					<input
-						className='signIn__input'
-						placeholder='Password...'
-						name='password'
-						type='password'
-						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
-						value={formik.values.password}
-					/>
+					<div className='login__input'>
+						<label htmlFor='login__input-password'>Password</label>
+						<input
+							className='login__input-input login__input-password'
+							placeholder='Enter your password...'
+							name='password'
+							type='password'
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+							value={formik.values.password}
+						/>
+					</div>
 
-					<button type='submit' className='signIn__button btn-signIn submit'>
-						Sign In
+					<button type='submit' className='login__button btn-login submit'>
+						Log in
 					</button>
-					<Link to='/registration' className='signIn__button btn-reg'>
-						Dont have account? Register
-					</Link>
-					<Link to='/restorepass' className='signIn__button btn-restorepass'>
-						Forgot your password?
-					</Link>
-				</form> */}
+
+					<div className='login__text'>
+						<Link to='/password-reset' className=''>
+							Forgot your password?
+						</Link>
+					</div>
+
+					<div className='login__text'>
+						By continuing with Google, Apple, or Email, you agree to Todolist’s
+						<span className='login__text-underline'>Terms of Service</span>
+						and
+						<span className='login__text-underline'>Privacy Policy</span>.
+					</div>
+
+					<div className='login__text'>
+						Don’t have an account?
+						<Link to='/signup' className='login__text-ml5'>
+							Sign up
+						</Link>
+					</div>
+				</form>
 			</div>
 		</div>
 	)
