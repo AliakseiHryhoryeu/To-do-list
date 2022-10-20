@@ -251,10 +251,12 @@
 				&-userdata {
 					display: none;
 				}
+
 				&-row {
 					display: flex;
 					flex-direction: row;
 					padding: 3px 0px;
+
 					a {
 						color: #ffffff;
 					}
@@ -391,11 +393,18 @@
 				&-container-userdata:hover {
 					background-color: #f3f1f1;
 				}
+				&-container {
+					width: 100%;
+				}
 				&-row {
 					display: flex;
 					flex-direction: row;
 					align-items: center;
 					padding: 3px 0px;
+					width: 100%;
+					&:hover {
+						background: #f3f1f1;
+					}
 					a {
 						color: #000000;
 					}

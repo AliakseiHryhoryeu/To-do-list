@@ -26,7 +26,9 @@ export const Header: FC = () => {
 	// 		}
 	// 	}
 	// )
-	const [isAuth, setIsAuth] = useState(false)
+	const [isAuth, setIsAuth] = useState(true)
+	const [settingsVisible, setSettingsVisible] = useState(false)
+
 	const [isActiveHeaderBurger, setActiveHeaderBurger] = useState(false)
 	const [isActiveUsername, setActiveUsername] = useState(false)
 	const toggleClassActiveHeaderBurger = () => {
@@ -163,7 +165,7 @@ export const Header: FC = () => {
 					</div>
 				</header>
 			</header>
-			{/* {isAuth && settingsVisible && <Settings />} */}
+			{isAuth && settingsVisible && <Settings />}
 		</>
 	)
 }

@@ -15,9 +15,9 @@ export const AllListsBtn: FC = () => {
 
 	return (
 		<ul className='main__list main__list-title'>
-			{/* <li
-				className={classNames(showAllLists ? 'active' : '')}
-				onClick={() => dispatch(ListsActions.showAllLists())}
+			<li
+			// className={classNames(showAllLists ? 'active' : '')}
+			// onClick={() => dispatch(ListsActions.showAllLists())}
 			>
 				<i>
 					<svg
@@ -35,7 +35,7 @@ export const AllListsBtn: FC = () => {
 					</svg>
 				</i>
 				<span>All Tasks</span>
-			</li> */}
+			</li>
 		</ul>
 	)
 }
