@@ -8,11 +8,10 @@ import { IUser, IUserState } from './user.types'
 const initialState: IUserState = {
 	activeUser: {
 		id: '',
+		email: '',
 		username: '',
 	},
 	token: null,
-	settingsVisible: false,
-	alert: null,
 }
 
 interface ISetUserPayload {
@@ -20,17 +19,19 @@ interface ISetUserPayload {
 	username: string
 	token: string
 }
+// Добавить log out
 
+// Добавить auth
 export const userSlice = createSlice({
 	name: 'userSlice',
 	initialState,
 	reducers: {
 		// async function?
-		setUser: (state, action: PayloadAction<ISetUserPayload>) => {
-			state.activeUser.id = action.payload.id
-			state.activeUser.username = action.payload.username
-			localStorage.setItem('token', action.payload.token)
-		},
+		// setUser: (state, action: PayloadAction<ISetUserPayload>) => {
+		// 	state.activeUser.id = action.payload.id
+		// 	state.activeUser.username = action.payload.username
+		// 	localStorage.setItem('token', action.payload.token)
+		// },
 		// signUp: (state, action: PayloadAction<IUser>) => {
 		// 	state.push(action.payload)
 		// },
@@ -46,10 +47,22 @@ export const userSlice = createSlice({
 			userApi.endpoints.login.matchFulfilled,
 			(state, { payload }) => {
 				state.token = payload.token
-				state.activeUser = payload.user
+				state.activeUser.email = payload.email
+				state.activeUser.id = payload.userId
+				state.activeUser.username = payload.userId
 				localStorage.setItem('token', payload.token)
 			}
-		)
+		),
+			builder.addMatcher(
+				userApi.endpoints.auth.matchFulfilled,
+				(state, { payload }) => {
+					state.token = payload.token
+					state.activeUser.email = payload.email
+					state.activeUser.id = payload.userId
+					state.activeUser.username = payload.userId
+					localStorage.setItem('token', payload.token)
+				}
+			)
 	},
 })
 

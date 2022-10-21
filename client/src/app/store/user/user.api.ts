@@ -3,11 +3,13 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { IUser } from './user.types'
 
 const serverIp = process.env.SERVER_IP
-const baseUrl = serverIp + 'api/auth'
+const baseUrl = serverIp + 'api/user'
 
 export interface UserResponse {
-	user: IUser
 	token: string
+	email: string
+	userId: string
+	username: string
 }
 
 export const userApi = createApi({
@@ -15,7 +17,9 @@ export const userApi = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: baseUrl,
 		prepareHeaders: (headers, { getState }) => {
-			const token = (getState() as RootState).user.token
+			// const token = (getState() as RootState).user.token
+
+			const token = localStorage.getItem('token')
 			if (token) {
 				headers.set('authorization', `Bearer ${token}`)
 			}
@@ -44,18 +48,21 @@ export const userApi = createApi({
 			query: items => ({
 				url: `${baseUrl}/login`,
 				method: 'POST',
-				body: items,
+				body: {
+					email: items.email,
+					password: items.password,
+				},
 			}),
 		}),
 
 		// AUTH
-		auth: build.query<IUser[], { token: string }>({
+		auth: build.query<UserResponse, { token: string }>({
 			query: ({ token }) => ({
 				url: `${baseUrl}/auth`,
 				method: 'GET',
-				body: {
-					token: token,
-				},
+				// params: {
+				// 	token: token,
+				// },
 			}),
 		}),
 	}),

@@ -5,7 +5,7 @@ const serverIp = process.env.SERVER_IP
 const baseUrl = serverIp + 'api/tasks'
 
 export const taskApi = createApi({
-	reducerPath: '',
+	reducerPath: 'tasksApi',
 	baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
 	endpoints: builder => ({
 		createTask: builder.query<

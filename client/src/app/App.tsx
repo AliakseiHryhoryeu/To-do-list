@@ -5,20 +5,33 @@ import { useActions } from './hooks/useActions'
 import { useAuth } from './hooks/useAuth'
 // import { UserActions } from 'app/state/actions'
 import { Landing, Page404, Signup, Login, PasswordReset, Main } from 'app/pages'
-import { useLoginQuery } from './store/user/user.api'
+import { useLoginQuery, useAuthQuery } from './store/user/user.api'
 import { useSignUpQuery } from './store/user/user.api'
 
 function App() {
 	const dispatch = useDispatch()
-	const { data, error, isLoading } = useLoginQuery({
-		email: 'test123@gmail.com',
-		password: 'test123',
-	})
+	// const { data, error, isLoading } = useLoginQuery({
+	// 	email: 'test123@gmail.com',
+	// 	password: 'test123',
+	// })
 	// const { data, error, isLoading } = useSignUpQuery({
 	// 	email: 'test1234@gmail.com',
 	// 	username: 'test1234',
 	// 	password: 'test1234',
 	// })
+
+	const token = localStorage.getItem('token')
+	const { data, error, isLoading } = useAuthQuery({
+		token: token,
+	})
+	console.log(token)
+
+	setTimeout(() => {
+		console.log(data)
+		console.log(error)
+		console.log(isLoading)
+	}, 1000)
+
 	useEffect(() => {
 		console.log(data)
 		console.log(error)
