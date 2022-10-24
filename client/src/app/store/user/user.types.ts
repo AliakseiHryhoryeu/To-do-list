@@ -7,4 +7,6 @@ export interface IUser {
 export type IUserState = {
 	activeUser: IUser
 	token: string
+	trialMode: boolean
+	settingsVisible: boolean
 }

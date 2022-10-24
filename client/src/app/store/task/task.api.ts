@@ -4,12 +4,31 @@ import { ITask } from './task.types'
 const serverIp = process.env.SERVER_IP
 const baseUrl = serverIp + 'api/tasks'
 
+export interface TasksResponse {
+	tasks: ITask[]
+}
+
+export interface TaskResponse {
+	task: ITask
+}
+
 export const taskApi = createApi({
 	reducerPath: 'tasksApi',
-	baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
+	baseQuery: fetchBaseQuery({
+		baseUrl: baseUrl,
+		prepareHeaders: (headers, { getState }) => {
+			// const token = (getState() as RootState).user.token
+
+			const token = localStorage.getItem('token')
+			if (token) {
+				headers.set('authorization', `Bearer ${token}`)
+			}
+			return headers
+		},
+	}),
 	endpoints: builder => ({
 		createTask: builder.query<
-			ITask[],
+			TasksResponse,
 			{ text: string; listId: string; userId: string }
 		>({
 			query: ({ text, listId, userId }) => ({
@@ -21,26 +40,26 @@ export const taskApi = createApi({
 				},
 			}),
 		}),
-		readTasksByUserId: builder.query<ITask[], { userId: string }>({
+		readTasksByUserId: builder.query<TasksResponse, { userId: string }>({
 			query: ({ userId }) => ({
 				url: `${baseUrl}/tasksbyuserid`,
 				body: { userId: userId },
 			}),
 		}),
-		readTasksByListId: builder.query<ITask[], { listId: string }>({
+		readTasksByListId: builder.query<TasksResponse, { listId: string }>({
 			query: ({ listId }) => ({
 				url: `${baseUrl}/tasksbylistid`,
 				body: { listId: listId },
 			}),
 		}),
-		readTask: builder.query<ITask[], { taskId: string }>({
+		readTask: builder.query<TasksResponse, { taskId: string }>({
 			query: ({ taskId }) => ({
 				url: `${baseUrl}/task`,
 				body: { taskId: taskId },
 			}),
 		}),
 		updateTask: builder.query<
-			ITask[],
+			TasksResponse,
 			{ taskId: string; text: string; completed: boolean }
 		>({
 			query: ({ taskId, text, completed }) => ({
@@ -48,7 +67,7 @@ export const taskApi = createApi({
 				body: { taskId: taskId, text: text, completed: completed },
 			}),
 		}),
-		deleteTask: builder.query<ITask[], { taskId: string }>({
+		deleteTask: builder.query<TasksResponse, { taskId: string }>({
 			query: ({ taskId }) => ({
 				url: `${baseUrl}/deletetask`,
 				body: { taskId: taskId },
@@ -58,6 +77,7 @@ export const taskApi = createApi({
 })
 
 export const {
+	useCreateTaskQuery,
 	useReadTasksByUserIdQuery,
 	useReadTasksByListIdQuery,
 	useReadTaskQuery,

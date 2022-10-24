@@ -8,4 +8,5 @@ export interface ITask {
 
 export interface ITaskState {
 	allTasks: ITask[]
+	allTasksTrial: ITask[]
 }

@@ -7,39 +7,35 @@ import { useAuth } from './hooks/useAuth'
 import { Landing, Page404, Signup, Login, PasswordReset, Main } from 'app/pages'
 import { useLoginQuery, useAuthQuery } from './store/user/user.api'
 import { useSignUpQuery } from './store/user/user.api'
+import { useReadListsByUserIdQuery } from './store/list/list.api'
+import { listActions } from './store/list/list.slice'
+import { useTypedSelector } from './hooks/useAppSelector'
 
 function App() {
 	const dispatch = useDispatch()
-	// const { data, error, isLoading } = useLoginQuery({
-	// 	email: 'test123@gmail.com',
-	// 	password: 'test123',
-	// })
-	// const { data, error, isLoading } = useSignUpQuery({
-	// 	email: 'test1234@gmail.com',
-	// 	username: 'test1234',
-	// 	password: 'test1234',
-	// })
+	const {} = useLoginQuery({
+		email: 'test123@gmail.com',
+		password: 'test123',
+	})
+
+	const {} = useReadListsByUserIdQuery({
+		userId: '620926a63d305426d0569798',
+	})
 
 	const token = localStorage.getItem('token')
-	const { data, error, isLoading } = useAuthQuery({
+	const {} = useAuthQuery({
 		token: token,
 	})
-	console.log(token)
 
-	setTimeout(() => {
-		console.log(data)
-		console.log(error)
-		console.log(isLoading)
-	}, 1000)
+	const allActions = useActions()
 
-	useEffect(() => {
-		console.log(data)
-		console.log(error)
-		console.log(isLoading)
-	}, [])
-	// useEffect(() => {
-	// 	dispatch(UserActions.auth())
-	// }, [])
+	const test = listActions.addList({
+		title: 'test-list',
+		color: 'blue',
+		userId: '620926a63d305426d0569798',
+	})
+
+	console.log(test, 'test')
 	return (
 		<div className='App'>
 			<Routes>

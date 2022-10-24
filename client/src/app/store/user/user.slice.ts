@@ -12,6 +12,8 @@ const initialState: IUserState = {
 		username: '',
 	},
 	token: null,
+	trialMode: true,
+	settingsVisible: false,
 }
 
 interface ISetUserPayload {
@@ -26,6 +28,13 @@ export const userSlice = createSlice({
 	name: 'userSlice',
 	initialState,
 	reducers: {
+		// 		SET_USER = 'USER/SET_USER',
+		// 		LOGOUT = 'USER/LOGOUT',
+		// 		SETTINGS_SHOW = 'USER/SETTINGS_SHOW',
+		// 		SETTINGS_HIDE = 'USER/SETTINGS_HIDE',
+		// 		SET_ACTIVE_USERICON = 'USER/SET_ACTIVE_USERICON',
+		// 		ALERT_SHOW = 'USER/ALERT_SHOW',
+		// 		ALERT_HIDE = 'USER/ALERT_HIDE',
 		// async function?
 		// setUser: (state, action: PayloadAction<ISetUserPayload>) => {
 		// 	state.activeUser.id = action.payload.id
@@ -51,6 +60,7 @@ export const userSlice = createSlice({
 				state.activeUser.id = payload.userId
 				state.activeUser.username = payload.userId
 				localStorage.setItem('token', payload.token)
+				state.trialMode = false
 			}
 		),
 			builder.addMatcher(
@@ -61,6 +71,7 @@ export const userSlice = createSlice({
 					state.activeUser.id = payload.userId
 					state.activeUser.username = payload.userId
 					localStorage.setItem('token', payload.token)
+					state.trialMode = false
 				}
 			)
 	},

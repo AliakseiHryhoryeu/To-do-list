@@ -4,11 +4,11 @@ export interface IList {
 	color: string
 	userId: string
 	tasksId: string[]
-	date: string
 }
 export interface IListState {
 	allLists: IList[]
-	activeList: IList[]
+	allListsTrial: IList[]
+	activeList: IList
 	showAllLists: boolean
 	colors: string[]
 }

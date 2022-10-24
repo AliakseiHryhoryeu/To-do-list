@@ -1,5 +1,17 @@
 import { IList, IListState, ColorsList } from './list.types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {
+	listApi,
+	useCreateListQuery,
+	useReadListQuery,
+	useReadListsByUserIdQuery,
+} from 'app/store/list/list.api'
+import type { RootState } from 'app/store'
+import { userApi } from '../user/user.api'
+import { useTypedSelector } from 'app/hooks/useAppSelector'
+import uuid from 'react-uuid'
+import { useSelector } from 'react-redux'
+import { STATEMENT_OR_BLOCK_KEYS } from '@babel/types'
 
 const initialState: IListState = {
 	allLists: [
@@ -7,32 +19,117 @@ const initialState: IListState = {
 			_id: '',
 			title: '',
 			color: 'blue',
-			date: '',
 			tasksId: [''],
 			userId: '',
 		},
 	],
-	activeList: [],
+	allListsTrial: [
+		{
+			_id: '',
+			title: '',
+			color: 'blue',
+			tasksId: [''],
+			userId: '',
+		},
+	],
+	activeList: {
+		_id: '',
+		title: '',
+		color: 'blue',
+		tasksId: [''],
+		userId: '',
+	},
 	showAllLists: true,
 	colors: ColorsList,
 }
 
+// сделать нормальное описание листа возможно скопировать с какого нибудь приложения
+const emptyList = [
+	{
+		_id: 'tguhjirftg',
+		title: 'test title',
+		color: 'blue',
+		tasksId: [''],
+		userId: '',
+	},
+]
+
 export const listSlice = createSlice({
-	name: 'list',
+	name: 'listSlice',
 	initialState,
 	reducers: {
-		getFeedback: (state, action: PayloadAction<IList>) => {
-			state.allLists.push(action.payload)
+		// get all lists from localStorage
+		getLists: (state, action: PayloadAction<null>) => {
+			const LocalStorage_allLists =
+				localStorage.getItem('allListsTrial') || emptyList
+			// @ts-ignore
+			state.allListsTrial = JSON.parse(LocalStorage_allLists)
 		},
-		addFeedback: (state, action: PayloadAction<IList>) => {
-			state.allLists.push(action.payload)
+
+		// save all lists to localStorage
+		addList: (
+			state,
+			action: PayloadAction<{
+				title: string
+				color: string
+				userId: string
+			}>
+		) => {
+			listSlice.actions.getLists()
+
+			const newList = {
+				_id: uuid(),
+				title: action.payload.title,
+				color: action.payload.color,
+				tasksId: [''],
+				userId: action.payload.userId,
+			}
+			state.allListsTrial.push(newList)
+			localStorage.setItem('allListsTrial', JSON.stringify(state.allListsTrial))
+
+			useCreateListQuery({
+				title: action.payload.title,
+				color: action.payload.color,
+				userId: action.payload.userId,
+			})
 		},
-		editFeedback: (state, action: PayloadAction<IList>) => {
-			state.allLists.push(action.payload)
+
+		// show only 1 list
+		setList: (state, action: PayloadAction<{ listId: string }>) => {
+			useReadListQuery({
+				listId: action.payload.listId,
+			})
+			state.showAllLists = false
 		},
-		deleteFeedback: (state, action: PayloadAction<IList>) => {
-			state.allLists.push(action.payload)
+
+		// show all lists
+		showAllLists: (state, action: PayloadAction<{ userId: string }>) => {
+			useReadListsByUserIdQuery({
+				userId: action.payload.userId,
+			})
+			state.showAllLists = true
 		},
+
+		// 		GET_LIST = 'LISTS/GET_LIST',
+		// 		EDIT_LIST = 'LISTS/EDIT_LIST',
+		// 		DELETE_LIST = 'LISTS/DELETE_LIST',
+	},
+	extraReducers: builder => {
+		// Auto update all lists from server (when use request to server)
+		builder.addMatcher(
+			listApi.endpoints.readListsByUserId.matchFulfilled,
+			(state, { payload }) => {
+				state.allLists = payload.lists
+			}
+		)
+
+		// Auto update active list (when use request to server)
+		builder.addMatcher(
+			listApi.endpoints.readList.matchFulfilled,
+			(state, { payload }) => {
+				state.activeList = payload.list
+			}
+		)
 	},
 })
 
@@ -41,6 +138,24 @@ export default listSlice.reducer
 export const listReducer = listSlice.reducer
 export const listActions = listSlice.actions
 
+export const selectCurrentList = (state: RootState) => state.user.activeUser
+
+// 	extraReducers: builder => {
+// 		builder.addMatcher(
+// 			listApi.endpoints.readListsByUserId.matchFulfilled,
+// 			(state, { payload }) => {
+// state.showAllLists=true
+
+// 				console.log(payload)
+// 				// state.token = payload.token
+// 				// state.activeUser.email = payload.email
+// 				// state.activeUser.id = payload.userId
+// 				// state.activeUser.username = payload.userId
+// 				// localStorage.setItem('token', payload.token)
+// 			}
+// 		),
+
+// 	},
 
 // import { useMemo } from 'react'
 // import { Dispatch, bindActionCreators } from 'redux'

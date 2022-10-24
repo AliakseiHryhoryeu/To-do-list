@@ -1,8 +1,11 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 
+import uuid from 'react-uuid'
+
+import { useCreateTaskQuery } from './task.api'
 import { ITaskState, ITask } from './task.types'
 
-import { useReadTasksByUserIdQuery } from './task.api'
+import { taskApi, useReadTasksByUserIdQuery } from './task.api'
 
 const initialState: ITaskState = {
 	allTasks: [
@@ -14,7 +17,26 @@ const initialState: ITaskState = {
 			userId: '',
 		},
 	],
+	allTasksTrial: [
+		{
+			_id: '',
+			text: '',
+			completed: false,
+			listId: '',
+			userId: '',
+		},
+	],
 }
+
+const emptyTask = [
+	{
+		_id: 'sagsag',
+		text: 'sagasg',
+		completed: false,
+		listId: 'sagasg',
+		userId: 'asgsag',
+	},
+]
 
 export const readTask = createAsyncThunk('Task/read', async () => {
 	;async ({ taskId }) => {
@@ -27,11 +49,39 @@ export const taskSlice = createSlice({
 	name: 'task',
 	initialState,
 	reducers: {
-		addTask: (state, action: PayloadAction<ITask>) => {
-			state.allTasks.push(action.payload)
+		// get all lists from localStorage
+		getTasks: (state, action: PayloadAction<null>) => {
+			const LocalStorage_allLists =
+				localStorage.getItem('allListsTrial') || emptyTask
+			// @ts-ignore
+			state.allListsTrial = JSON.parse(LocalStorage_allLists)
 		},
-		editTask: (state, action: PayloadAction<ITask>) => {
-			state.allTasks.push(action.payload)
+		// save all lists to localStorage
+		addTask: (
+			state,
+			action: PayloadAction<{
+				text: string
+				listId: string
+				userId: string
+			}>
+		) => {
+			taskSlice.actions.getTasks()
+
+			const newTask = {
+				_id: uuid(),
+				text: 'sagasg',
+				completed: false,
+				listId: action.payload.listId,
+				userId: action.payload.userId,
+			}
+			state.allTasksTrial.push(newTask)
+			localStorage.setItem('allListsTrial', JSON.stringify(state.allTasksTrial))
+
+			useCreateTaskQuery({
+				text: action.payload.text,
+				listId: action.payload.listId,
+				userId: action.payload.userId,
+			})
 		},
 		deleteTask: (state, action: PayloadAction<ITask>) => {
 			state.allTasks.push(action.payload)
@@ -41,13 +91,12 @@ export const taskSlice = createSlice({
 		},
 	},
 	extraReducers: builder => {
-		// getFaq: (state, action: PayloadAction<ITask>) => {
-		// 	state.allTasks.push(action.payload)
-		// },
-		builder.addCase(readTask.pending, (state, action: PayloadAction<ITask>) => {
-			console.log(action.payload)
-			state.allTasks.push(action.payload)
-		})
+		builder.addMatcher(
+			taskApi.endpoints.readTasksByUserId.matchFulfilled,
+			(state, { payload }) => {
+				state.allTasks = payload.tasks
+			}
+		)
 	},
 })
 

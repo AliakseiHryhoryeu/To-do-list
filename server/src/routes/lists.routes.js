@@ -17,7 +17,7 @@ router.get(
 			if (!errors.isEmpty()) {
 				return res.status(400).json({ message: 'Uncorrect request', errors })
 			}
-			const { userId } = req.body
+			const { userId } = req.query
 			const user = await User.findOne({ _id: mongoose.Types.ObjectId(userId) })
 			if (!user) {
 				return res.status(404).json({ message: 'User not found' })
@@ -53,7 +53,7 @@ router.get(
 			}
 
 			return res.json({
-				id: list.id,
+				_id: list.id,
 				title: list.title,
 				color: list.color,
 				userId: list.userId,
@@ -91,7 +91,7 @@ router.post(
 			await list.save()
 			await user.save()
 			return res.json({
-				id: list.id,
+				_id: list.id,
 				title: list.title,
 				color: list.color,
 				userId: list.userId,
@@ -127,7 +127,7 @@ router.put(
 			await list.save()
 
 			return res.json({
-				id: list.id,
+				_id: list.id,
 				title: list.title,
 				color: list.color,
 				userId: list.userId,
