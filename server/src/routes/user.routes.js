@@ -25,13 +25,16 @@ router.post(
 			if (!errors.isEmpty()) {
 				return res.status(400).json({ message: 'Uncorrect request', errors })
 			}
-			const { email, password, username } = req.body
+			const { email, password } = req.body
 			const candidateEmail = await User.findOne({ email })
 			if (candidateEmail) {
 				return res
 					.status(400)
 					.json({ message: `User with email ${email} alredy exsist` })
 			}
+			const nameMatch = email.match(/^([^@]*)@/)
+			const username = nameMatch ? nameMatch[1] : null
+
 			const candidateUsername = await User.findOne({ username })
 			if (candidateUsername) {
 				return res

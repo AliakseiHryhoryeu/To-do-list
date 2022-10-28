@@ -4,6 +4,14 @@ import { userApi } from './user.api'
 import type { RootState } from 'app/store'
 
 import { IUser, IUserState } from './user.types'
+import { useGetData } from 'app/hooks/useGetData'
+import { useReadListsByUserIdQuery } from 'app/store/list/list.api'
+import { useReadTasksByUserIdQuery } from 'app/store/task/task.api'
+import {
+	useSignUpQuery,
+	useAuthQuery,
+	useLoginQuery,
+} from 'app/store/user/user.api'
 
 const initialState: IUserState = {
 	activeUser: {
@@ -14,42 +22,81 @@ const initialState: IUserState = {
 	token: null,
 	trialMode: true,
 	settingsVisible: false,
+	alert: false,
 }
 
-interface ISetUserPayload {
-	id: string
-	username: string
-	token: string
-}
-// Добавить log out
+// const initRequests = (userId: string) => {
+// useReadListsByUserIdQuery({
+// 	userId: userId,
+// })
+// useReadTasksByUserIdQuery({
+// 	userId: userId,
+// })
+// }
 
-// Добавить auth
 export const userSlice = createSlice({
 	name: 'userSlice',
 	initialState,
 	reducers: {
-		// 		SET_USER = 'USER/SET_USER',
-		// 		LOGOUT = 'USER/LOGOUT',
-		// 		SETTINGS_SHOW = 'USER/SETTINGS_SHOW',
-		// 		SETTINGS_HIDE = 'USER/SETTINGS_HIDE',
-		// 		SET_ACTIVE_USERICON = 'USER/SET_ACTIVE_USERICON',
-		// 		ALERT_SHOW = 'USER/ALERT_SHOW',
-		// 		ALERT_HIDE = 'USER/ALERT_HIDE',
-		// async function?
-		// setUser: (state, action: PayloadAction<ISetUserPayload>) => {
-		// 	state.activeUser.id = action.payload.id
-		// 	state.activeUser.username = action.payload.username
-		// 	localStorage.setItem('token', action.payload.token)
-		// },
-		// signUp: (state, action: PayloadAction<IUser>) => {
-		// 	state.push(action.payload)
-		// },
-		// auth: (state, action: PayloadAction<IUser>) => {
-		// 	state.push(action.payload)
-		// },
-		// login: (state, action: PayloadAction<IUser>) => {
-		// 	state.push(action.payload)
-		// },
+		signup: (
+			state,
+			action: PayloadAction<{
+				email: string
+				username: string
+				password: string
+			}>
+		) => {
+			// useSignUpQuery({
+			// 	email: action.payload.email,
+			// 	password: action.payload.password,
+			// })
+		},
+
+		auth: (state, action: PayloadAction<null>) => {
+			const token = localStorage.getItem('token')
+			// useAuthQuery({
+			// 	token: token,
+			// })
+		},
+
+		login: (
+			state,
+			action: PayloadAction<{
+				email: string
+				password: string
+			}>
+		) => {
+			// useLoginQuery({
+			// 	email: action.payload.email,
+			// 	password: action.payload.password,
+			// })
+		},
+
+		logout: (state, action: PayloadAction<null>) => {
+			localStorage.removeItem('token')
+			state.activeUser.email = ''
+			state.activeUser.id = ''
+			state.activeUser.username = ''
+			state.settingsVisible = false
+			state.token = ''
+			state.trialMode = true
+		},
+
+		// Settings
+		settingsShow: (state, action: PayloadAction<null>) => {
+			state.settingsVisible = true
+		},
+		settingsHide: (state, action: PayloadAction<null>) => {
+			state.settingsVisible = false
+		},
+
+		// Alerts
+		alertShow: (state, action: PayloadAction<{ message: string }>) => {
+			state.alert = action.payload.message
+		},
+		alertHide: (state, action: PayloadAction<null>) => {
+			state.alert = false
+		},
 	},
 	extraReducers: builder => {
 		builder.addMatcher(
@@ -58,7 +105,7 @@ export const userSlice = createSlice({
 				state.token = payload.token
 				state.activeUser.email = payload.email
 				state.activeUser.id = payload.userId
-				state.activeUser.username = payload.userId
+				state.activeUser.username = payload.username
 				localStorage.setItem('token', payload.token)
 				state.trialMode = false
 			}
@@ -69,7 +116,18 @@ export const userSlice = createSlice({
 					state.token = payload.token
 					state.activeUser.email = payload.email
 					state.activeUser.id = payload.userId
-					state.activeUser.username = payload.userId
+					state.activeUser.username = payload.username
+					localStorage.setItem('token', payload.token)
+					state.trialMode = false
+				}
+			),
+			builder.addMatcher(
+				userApi.endpoints.signUp.matchFulfilled,
+				(state, { payload }) => {
+					state.token = payload.token
+					state.activeUser.email = payload.email
+					state.activeUser.id = payload.userId
+					state.activeUser.username = payload.username
 					localStorage.setItem('token', payload.token)
 					state.trialMode = false
 				}
@@ -80,6 +138,17 @@ export const userSlice = createSlice({
 export default userSlice.reducer
 export const userReducer = userSlice.reducer
 export const userActions = userSlice.actions
+
+export const {
+	signup,
+	auth,
+	login,
+	logout,
+	settingsHide,
+	settingsShow,
+	alertHide,
+	alertShow,
+} = userSlice.actions
 
 export const selectCurrentUser = (state: RootState) => state.user.activeUser
 

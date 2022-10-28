@@ -1,9 +1,12 @@
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import { selectCurrentUser } from 'app/store/user/user.slice'
+import { useAuthQuery } from 'app/store/user/user.api'
 
 export const useAuth = () => {
-	const user = useSelector(selectCurrentUser)
+	const token = localStorage.getItem('token')
 
-	return useMemo(() => ({ user }), [user])
+	useAuthQuery({
+		token: token,
+	})
+	return useMemo(() => ({}), [token])
 }

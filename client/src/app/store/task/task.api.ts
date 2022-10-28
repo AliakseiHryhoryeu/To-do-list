@@ -43,19 +43,19 @@ export const taskApi = createApi({
 		readTasksByUserId: builder.query<TasksResponse, { userId: string }>({
 			query: ({ userId }) => ({
 				url: `${baseUrl}/tasksbyuserid`,
-				body: { userId: userId },
+				params: { userId: userId },
 			}),
 		}),
 		readTasksByListId: builder.query<TasksResponse, { listId: string }>({
 			query: ({ listId }) => ({
 				url: `${baseUrl}/tasksbylistid`,
-				body: { listId: listId },
+				params: { listId: listId },
 			}),
 		}),
 		readTask: builder.query<TasksResponse, { taskId: string }>({
 			query: ({ taskId }) => ({
 				url: `${baseUrl}/task`,
-				body: { taskId: taskId },
+				params: { taskId: taskId },
 			}),
 		}),
 		updateTask: builder.query<

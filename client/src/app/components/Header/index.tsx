@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 import { Settings, Lists } from 'app/components'
 // import { UserActions } from 'app/state/actions'
-// import { RootState } from 'app/state/reducers'
+import { RootState } from 'app/store'
 
 import userIcon from 'assets/img/userIcon_1.png'
 import mainLogo from 'assets/img/favicon.svg'
@@ -17,17 +17,18 @@ import './Header.scss'
 
 export const Header: FC = () => {
 	const dispatch = useDispatch()
-	// const { isAuth, username, settingsVisible } = useSelector(
-	// 	(state: RootState) => {
-	// 		return {
-	// 			username: state.user.activeUser.username,
-	// 			isAuth: state.user.isAuth,
-	// 			settingsVisible: state.user.settingsVisible,
-	// 		}
-	// 	}
-	// )
-	const [isAuth, setIsAuth] = useState(true)
-	const [settingsVisible, setSettingsVisible] = useState(false)
+	const { isAuth, username, userEmail, settingsVisible } = useSelector(
+		(state: RootState) => {
+			return {
+				userEmail: state.user.activeUser.email,
+				username: state.user.activeUser.username,
+				isAuth: !state.user.trialMode,
+				settingsVisible: state.user.settingsVisible,
+			}
+		}
+	)
+	// const [isAuth, setIsAuth] = useState(true)
+	// const [settingsVisible, setSettingsVisible] = useState(false)
 
 	const [isActiveHeaderBurger, setActiveHeaderBurger] = useState(false)
 	const [isActiveUsername, setActiveUsername] = useState(false)
@@ -65,7 +66,7 @@ export const Header: FC = () => {
 								<ul className='header__nav__list'>
 									<li
 										className='header__nav__item header__login'
-										onClick={() => setIsAuth(true)}
+										// onClick={() => setIsAuth(true)}
 									>
 										<Link to='/login' className='header__nav__link '>
 											Log in
@@ -92,7 +93,7 @@ export const Header: FC = () => {
 											className='header__nav__username__container'
 											onClick={() => toggleClassActiveUsername()}
 										>
-											<div className='header__nav__link-white'>Username</div>
+											<div className='header__nav__link-white'>{username}</div>
 											<img
 												className='header__nav__link-usericon'
 												src={userIcon}
@@ -116,10 +117,10 @@ export const Header: FC = () => {
 														/>
 														<div className='header__nav__settings-userdata'>
 															<div className='header__nav__settings-userdata-username'>
-																Username
+																{username}
 															</div>
 															<div className='header__nav__settings-userdata-email'>
-																testemail@gmail.com
+																{userEmail}
 															</div>
 														</div>
 													</div>
@@ -144,7 +145,7 @@ export const Header: FC = () => {
 													</div>
 													<div
 														className='header__nav__settings-row'
-														onClick={() => setIsAuth(false)}
+														// onClick={() => setIsAuth(false)}
 														// onClick={() => dispatch(UserActions.logout())}
 													>
 														<img src={exitIcon} alt='exitIcon' />

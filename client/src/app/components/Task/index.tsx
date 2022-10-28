@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 // import { TasksActions } from 'app/state/actions'
-// import { RootState } from 'app/state/reducers'
+import { RootState } from 'app/store'
 import { ITask } from 'app/store/task/task.types'
 
 import editTaskSvg from 'assets/img/editTask.svg'
@@ -16,13 +16,13 @@ type TaskProps = {
 
 export const Task: FC<TaskProps> = ({ tasks }) => {
 	const dispatch = useDispatch()
-	// const { lists, allTasks, user } = useSelector((state: RootState) => {
-	// 	return {
-	// 		user: state.user.activeUser,
-	// 		lists: state.lists.activeList,
-	// 		allTasks: state.tasks.allTasks,
-	// 	}
-	// })
+	const { lists, allTasks, user } = useSelector((state: RootState) => {
+		return {
+			user: state.user.activeUser,
+			lists: state.list.activeList,
+			allTasks: state.task.allTasks,
+		}
+	})
 
 	// const editTextTask = (taskId, text, completed) => {
 	// 	const newText = window.prompt(`New task text`, text)
@@ -41,22 +41,22 @@ export const Task: FC<TaskProps> = ({ tasks }) => {
 	// 	}
 	// }
 
-	// if (!tasks) {
-	// 	return <></>
-	// }
+	if (!tasks) {
+		return <></>
+	}
 	return (
 		<>
 			test
-			{/* {tasks.map(task => {
+			{tasks.map(task => {
 				return (
 					<div className='tasks__items-row' key={task._id}>
 						<div className='checkbox'>
-							<input
-								onChange={() => checkTask(task._id, task.text, task.completed)}
+							{/* <input
+								// onChange={() => checkTask(task._id, task.text, task.completed)}
 								id={`task-${task._id}`}
 								type='checkbox'
 								checked={task.completed}
-							/>
+							/> */}
 							<label htmlFor={`task-${task._id}`}>
 								<svg
 									width='11'
@@ -78,19 +78,21 @@ export const Task: FC<TaskProps> = ({ tasks }) => {
 						<p>{task.text}</p>
 						<div className='tasks__items-row-actions'>
 							<div
-								onClick={() =>
-									editTextTask(task._id, task.text, task.completed)
-								}
+							// onClick={() =>
+							// 	editTextTask(task._id, task.text, task.completed)
+							// }
 							>
 								<img src={editTaskSvg} alt='Edit icon' />
 							</div>
-							<div onClick={() => delTask(task._id)}>
+							<div
+							// onClick={() => delTask(task._id)}
+							>
 								<img src={deleteTaskSvg} alt='Delete icon' />
 							</div>
 						</div>
 					</div>
 				)
-			})} */}
+			})}
 		</>
 	)
 }
