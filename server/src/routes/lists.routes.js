@@ -8,7 +8,7 @@ const Task = require('../models/Task')
 const router = new Router()
 
 //Get lists By UserId
-router.get('/listsbyuserid', async function (req, res) {
+router.get('/listsbyusertoken', async function (req, res) {
 	try {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
