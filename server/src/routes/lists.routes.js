@@ -8,33 +8,37 @@ const Task = require('../models/Task')
 const router = new Router()
 
 //Get lists By UserId
-router.get(
-	'/listsbyuserid',
-	[check('userId', 'Uncorrect userId').isLength({ min: 1 })],
-	async function (req, res) {
-		try {
-			const errors = validationResult(req)
-			if (!errors.isEmpty()) {
-				return res.status(400).json({ message: 'Uncorrect request', errors })
-			}
-			const { userId } = req.query
-			const user = await User.findOne({ _id: mongoose.Types.ObjectId(userId) })
-			if (!user) {
-				return res.status(404).json({ message: 'User not found' })
-			}
-
-			const userLists = user.listId
-			const lists = await List.find({ userLists })
-
-			return res.json({
-				lists,
-			})
-		} catch (e) {
-			console.log(e)
-			res.send({ message: 'Server error (get lists)' })
+router.get('/listsbyuserid', async function (req, res) {
+	try {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ message: 'Uncorrect request', errors })
 		}
+
+		const token = req.headers.authorization.split(' ')[1]
+		if (!token) {
+			return res.status(401).json({ message: 'Auth error' })
+		}
+		const decoded = jwt.verify(token, config.secretKey)
+		req.user = decoded
+		const userId = req.user.id
+
+		const user = await User.findOne({ userId })
+		if (!user) {
+			return res.status(404).json({ message: 'User not found' })
+		}
+
+		const userLists = user.listId
+		const lists = await List.find({ userLists })
+
+		return res.json({
+			lists,
+		})
+	} catch (e) {
+		console.log(e)
+		res.send({ message: 'Server error (get lists)' })
 	}
-)
+})
 
 //Get List By ListId
 router.get(
@@ -46,7 +50,21 @@ router.get(
 			if (!errors.isEmpty()) {
 				return res.status(400).json({ message: 'Uncorrect request', errors })
 			}
-			const { listId } = req.body
+
+			const token = req.headers.authorization.split(' ')[1]
+			if (!token) {
+				return res.status(401).json({ message: 'Auth error' })
+			}
+			const decoded = jwt.verify(token, config.secretKey)
+			req.user = decoded
+			const userId = req.user.id
+
+			const user = await User.findOne({ userId })
+			if (!user) {
+				return res.status(404).json({ message: 'User not found' })
+			}
+
+			const { listId } = req.query
 			const list = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
 			if (!list) {
 				return res.status(404).json({ message: 'List not found' })
@@ -72,7 +90,6 @@ router.post(
 	[
 		check('title', 'Uncorrect title').isLength({ min: 1 }),
 		check('color', 'Uncorrect color').isLength({ min: 1 }),
-		check('userId', 'Uncorrect userId').isLength({ min: 1 }),
 	],
 	async (req, res) => {
 		try {
@@ -80,12 +97,21 @@ router.post(
 			if (!errors.isEmpty()) {
 				return res.status(400).json({ message: 'Uncorrect request', errors })
 			}
-			const { userId, title, color } = req.body
-
-			const user = await User.findOne({ _id: mongoose.Types.ObjectId(userId) })
-			if (!user) {
-				return res.status(400).json({ message: 'User not found', errors })
+			const token = req.headers.authorization.split(' ')[1]
+			if (!token) {
+				return res.status(401).json({ message: 'Auth error' })
 			}
+			const decoded = jwt.verify(token, config.secretKey)
+			req.user = decoded
+			const userId = req.user.id
+
+			const user = await User.findOne({ userId })
+			if (!user) {
+				return res.status(404).json({ message: 'User not found' })
+			}
+
+			const { title, color } = req.body
+
 			const list = new List({ title: title, userId: user.id, color: color })
 			user.listId.push(list.id)
 			await list.save()
@@ -117,6 +143,20 @@ router.put(
 			if (!errors.isEmpty()) {
 				return res.status(400).json({ message: 'Uncorrect request', errors })
 			}
+
+			const token = req.headers.authorization.split(' ')[1]
+			if (!token) {
+				return res.status(401).json({ message: 'Auth error' })
+			}
+			const decoded = jwt.verify(token, config.secretKey)
+			req.user = decoded
+			const userId = req.user.id
+
+			const user = await User.findOne({ userId })
+			if (!user) {
+				return res.status(404).json({ message: 'User not found' })
+			}
+
 			const { listId, title } = req.body
 
 			const list = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
@@ -150,6 +190,20 @@ router.put(
 			if (!errors.isEmpty()) {
 				return res.status(400).json({ message: 'Uncorrect request', errors })
 			}
+
+			const token = req.headers.authorization.split(' ')[1]
+			if (!token) {
+				return res.status(401).json({ message: 'Auth error' })
+			}
+			const decoded = jwt.verify(token, config.secretKey)
+			req.user = decoded
+			const userId = req.user.id
+
+			const user = await User.findOne({ userId })
+			if (!user) {
+				return res.status(404).json({ message: 'User not found' })
+			}
+
 			const { listId } = req.body
 
 			const list = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
@@ -169,17 +223,19 @@ router.put(
 				} catch {}
 			}
 
-			const userId = list.userId
-			const user = await User.findOneAndUpdate(
+			if (userId != list.userId) {
+				return res.status(404).json({ message: 'Server error, invalid token' })
+			}
+			const userList = await User.findOneAndUpdate(
 				{ _id: userId },
 				{ $pull: { listId: listId } }
 			)
 			const temp = await List.findByIdAndDelete({
 				_id: mongoose.Types.ObjectId(listId),
 			})
-			await user.save()
+			await userList.save()
 
-			const userLists = user.listId
+			const userLists = userList.listId
 			const lists = await List.find({ userLists })
 			return res.json({
 				lists,
