@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 // import { RootState } from 'app/state/reducers'
-import { Header, Slider, Footer } from 'app/components'
+import { Header, Slider } from 'app/components'
 
 import checkedImg from 'assets/img/checked_1.svg'
 import img1 from 'assets/img/slider-1.png'
@@ -74,7 +74,6 @@ export const Landing: FC = () => {
 					</Link>
 				</div>
 			</section>
-			<Footer />
 		</div>
 	)
 }

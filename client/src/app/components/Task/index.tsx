@@ -51,12 +51,15 @@ export const Task: FC<TaskProps> = ({ tasks }) => {
 				return (
 					<div className='tasks__items-row' key={task._id}>
 						<div className='checkbox'>
-							{/* <input
-								// onChange={() => checkTask(task._id, task.text, task.completed)}
+							<input
+								onChange={
+									() => {}
+									// checkTask(task._id, task.text, task.completed)
+								}
 								id={`task-${task._id}`}
 								type='checkbox'
 								checked={task.completed}
-							/> */}
+							/>
 							<label htmlFor={`task-${task._id}`}>
 								<svg
 									width='11'

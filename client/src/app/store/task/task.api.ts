@@ -41,9 +41,8 @@ export const taskApi = createApi({
 			}),
 		}),
 		readTasksByUserId: builder.query<TasksResponse, { userId: string }>({
-			query: ({ userId }) => ({
-				url: `${baseUrl}/tasksbyuserid`,
-				params: { userId: userId },
+			query: () => ({
+				url: `${baseUrl}/tasksbyusertoken`,
 			}),
 		}),
 		readTasksByListId: builder.query<TasksResponse, { listId: string }>({

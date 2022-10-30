@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { useActions } from 'app/hooks/useActions'
 import editListSvg from 'assets/img/editList.svg'
 
 type TaskHeaderProps = {
@@ -9,23 +8,26 @@ type TaskHeaderProps = {
 	title: string
 	color: string
 }
-const allActions = useActions()
 
 export const TaskHeader: FC<TaskHeaderProps> = ({ listId, title, color }) => {
-	const dispatch = useDispatch()
+	// const dispatch = useDispatch()
 
-	const editTitle = () => {
-		const newTitle = window.prompt(`New list title`, title)
-		if (newTitle) {
-			// dispatch(allActions.updateList(listId, newTitle))
-		}
-	}
+	// const editTitle = () => {
+	// 	const newTitle = window.prompt(`New list title`, title)
+	// 	if (newTitle) {
+	// 		// dispatch(allActions.updateList(listId, newTitle))
+	// 	}
+	// }
 
 	return (
 		<div>
 			<h2 className={`tasks__title title--${color}`}>
 				{title}
-				<img src={editListSvg} alt='Edit icon' onClick={() => editTitle()} />
+				<img
+					src={editListSvg}
+					alt='Edit icon'
+					// onClick={() => editTitle()}
+				/>
 			</h2>
 		</div>
 	)

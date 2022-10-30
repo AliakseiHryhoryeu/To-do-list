@@ -16,22 +16,22 @@ export const Alert: FC<AlertProps> = ({ text }) => {
 
 	return (
 		<div className='alert'>
-			{/* <div
+			<div
 				className='alert__wrapper'
-				onClick={() => {
-					dispatch(UserActions.hideAlert())
-				}}
+				// onClick={() => {
+				// 	dispatch(UserActions.hideAlert())
+				// }}
 			>
 				<div className='alert__message'>{text}</div>
 				<img
 					src={closebtn}
 					alt='Remove icon'
 					className='alert__close'
-					onClick={() => {
-						dispatch(UserActions.hideAlert())
-					}}
+					// onClick={() => {
+					// 	dispatch(UserActions.hideAlert())
+					// }}
 				/>
-			</div> */}
+			</div>
 		</div>
 	)
 }

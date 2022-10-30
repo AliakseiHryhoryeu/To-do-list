@@ -3,27 +3,27 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Badge } from 'app/components'
 // import { ListsActions } from 'app/state/actions'
-// import { RootState } from 'app/state/reducers'
+import { RootState } from 'app/store'
 
 import closeSvg from 'assets/img/close.svg'
 import './AddList.scss'
 
 export const AddList: FC = () => {
-	// const [visiblePopup, setVisiblePopup] = useState(false)
-	// const [selectedColor, setSelectedColor] = useState('green')
-	// const [inputValue, setInputValue] = useState('')
+	const [visiblePopup, setVisiblePopup] = useState(false)
+	const [selectedColor, setSelectedColor] = useState('green')
+	const [inputValue, setInputValue] = useState('')
 
-	// const dispatch = useDispatch()
-	// const { user, colors } = useSelector((state: RootState) => {
-	// 	return {
-	// 		user: state.user.activeUser,
-	// 		colors: state.lists.colors,
-	// 	}
-	// })
+	const dispatch = useDispatch()
+	const { user, colors } = useSelector((state: RootState) => {
+		return {
+			user: state.user.activeUser,
+			colors: state.list.colors,
+		}
+	})
 
 	return (
 		<div className='add-list'>
-			{/* <ul
+			<ul
 				onClick={() => {
 					setVisiblePopup(!visiblePopup)
 				}}
@@ -57,9 +57,9 @@ export const AddList: FC = () => {
 					</i>
 					<span>Add List</span>
 				</li>
-			</ul> */}
+			</ul>
 
-			{/* {visiblePopup && (
+			{visiblePopup && (
 				<div className='add-list__popup'>
 					<img
 						onClick={() => setVisiblePopup(false)}
@@ -86,16 +86,16 @@ export const AddList: FC = () => {
 					</div>
 					<button
 						className='button'
-						onClick={() =>
-							dispatch(
-								ListsActions.addList(user.userId, inputValue, selectedColor)
-							)
-						}
+						// onClick={() =>
+						// 	dispatch(
+						// 		ListsActions.addList(user.userId, inputValue, selectedColor)
+						// 	)
+						// }
 					>
 						Add New List
 					</button>
 				</div>
-			)} */}
+			)}
 		</div>
 	)
 }

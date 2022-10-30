@@ -35,11 +35,11 @@ export const Tasks: FC = () => {
 			{lists.map(list => {
 				return (
 					<div className='tasks__item' key={list._id}>
-						{/* <TaskHeader
+						<TaskHeader
 							listId={list._id}
 							title={list.title}
 							color={list.color}
-						/> */}
+						/>
 						<Task tasks={getTasks(list.tasksId)} />
 						<AddTask userId={user.id} listId={list._id} />
 					</div>

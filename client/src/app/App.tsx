@@ -19,13 +19,7 @@ import { listActions } from './store/list/list.slice'
 import { useTypedSelector } from './hooks/useAppSelector'
 
 function App() {
-	const { isTrialMode } = useSelector((state: RootState) => {
-		return {
-			isTrialMode: state.user.trialMode,
-		}
-	})
 	useAuth()
-	console.log(isTrialMode)
 	useGetData()
 
 	return (
