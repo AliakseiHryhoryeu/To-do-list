@@ -40,7 +40,7 @@ export const taskApi = createApi({
 				},
 			}),
 		}),
-		readTasksByUserId: builder.query<TasksResponse, { userId: string }>({
+		readTasksByToken: builder.query<TasksResponse, {}>({
 			query: () => ({
 				url: `${baseUrl}/tasksbyusertoken`,
 			}),
@@ -77,7 +77,7 @@ export const taskApi = createApi({
 
 export const {
 	useCreateTaskQuery,
-	useReadTasksByUserIdQuery,
+	useReadTasksByTokenQuery,
 	useReadTasksByListIdQuery,
 	useReadTaskQuery,
 	useUpdateTaskQuery,

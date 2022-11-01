@@ -5,8 +5,6 @@ import type { RootState } from 'app/store'
 
 import { IUser, IUserState } from './user.types'
 import { useGetData } from 'app/hooks/useGetData'
-import { useReadListsByUserIdQuery } from 'app/store/list/list.api'
-import { useReadTasksByUserIdQuery } from 'app/store/task/task.api'
 import {
 	useSignUpQuery,
 	useAuthQuery,

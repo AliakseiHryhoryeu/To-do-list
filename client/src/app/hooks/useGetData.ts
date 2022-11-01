@@ -2,8 +2,8 @@ import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { useAuthQuery } from 'app/store/user/user.api'
 import { RootState } from 'app/store'
-import { useReadListsByUserIdQuery } from 'app/store/list/list.api'
-import { useReadTasksByUserIdQuery } from 'app/store/task/task.api'
+import { useReadListsByTokenQuery } from 'app/store/list/list.api'
+import { useReadTasksByTokenQuery } from 'app/store/task/task.api'
 
 export const useGetData = () => {
 	const token = localStorage.getItem('token')
@@ -14,13 +14,9 @@ export const useGetData = () => {
 			userId: state.user.activeUser.id,
 		}
 	})
-	useReadListsByUserIdQuery({
-		userId: userId,
-	})
+	useReadListsByTokenQuery({})
 
-	useReadTasksByUserIdQuery({
-		userId: userId,
-	})
+	useReadTasksByTokenQuery({})
 
 	return useMemo(() => ({}), [userId])
 }

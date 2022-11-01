@@ -18,7 +18,9 @@ export const listApi = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: baseUrl,
 		prepareHeaders: (headers, { getState }) => {
-			const token = (getState() as RootState).user.token
+			const token = localStorage.getItem('token')
+
+			// const token = (getState() as RootState).user.token
 			if (token) {
 				headers.set('authorization', `Bearer ${token}`)
 			}
@@ -40,11 +42,10 @@ export const listApi = createApi({
 				},
 			}),
 		}),
-		readListsByUserId: builder.query<allListsResponse, { userId: string }>({
-			query: ({ userId }) => ({
-				url: `${baseUrl}/listsbyuserid`,
+		readListsByToken: builder.query<allListsResponse, {}>({
+			query: () => ({
+				url: `${baseUrl}/listsbyusertoken`,
 				method: 'GET',
-				params: { userId: userId },
 			}),
 		}),
 
@@ -75,7 +76,7 @@ export const listApi = createApi({
 
 export const {
 	useCreateListQuery,
-	useReadListsByUserIdQuery,
+	useReadListsByTokenQuery,
 	useReadListQuery,
 	useUpdateListQuery,
 	useDeleteListQuery,

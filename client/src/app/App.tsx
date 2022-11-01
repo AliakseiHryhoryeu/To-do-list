@@ -14,7 +14,6 @@ import {
 	useAuthQuery,
 } from './store/user/user.api'
 import { userActions } from './store/user/user.slice'
-import { useReadListsByUserIdQuery } from './store/list/list.api'
 import { listActions } from './store/list/list.slice'
 import { useTypedSelector } from './hooks/useAppSelector'
 

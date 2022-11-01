@@ -14,7 +14,7 @@ export interface IListState {
 }
 
 export const ColorsList = [
-	'gray',
+	'grey',
 	'lime',
 	'purple',
 	'black',

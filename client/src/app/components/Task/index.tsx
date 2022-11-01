@@ -46,7 +46,6 @@ export const Task: FC<TaskProps> = ({ tasks }) => {
 	}
 	return (
 		<>
-			test
 			{tasks.map(task => {
 				return (
 					<div className='tasks__items-row' key={task._id}>

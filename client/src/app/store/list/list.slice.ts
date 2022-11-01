@@ -4,14 +4,10 @@ import {
 	listApi,
 	useCreateListQuery,
 	useReadListQuery,
-	useReadListsByUserIdQuery,
+	useReadListsByTokenQuery,
 } from 'app/store/list/list.api'
 import type { RootState } from 'app/store'
-import { userApi } from '../user/user.api'
-import { useTypedSelector } from 'app/hooks/useAppSelector'
 import uuid from 'react-uuid'
-import { useSelector } from 'react-redux'
-import { STATEMENT_OR_BLOCK_KEYS } from '@babel/types'
 
 const initialState: IListState = {
 	allLists: [
@@ -104,7 +100,7 @@ export const listSlice = createSlice({
 
 		// show all lists
 		showAllLists: (state, action: PayloadAction<{ userId: string }>) => {
-			useReadListsByUserIdQuery({
+			useReadListsByTokenQuery({
 				userId: action.payload.userId,
 			})
 			state.showAllLists = true
@@ -117,7 +113,7 @@ export const listSlice = createSlice({
 	extraReducers: builder => {
 		// Auto update all lists from server (when use request to server)
 		builder.addMatcher(
-			listApi.endpoints.readListsByUserId.matchFulfilled,
+			listApi.endpoints.readListsByToken.matchFulfilled,
 			(state, { payload }) => {
 				state.allLists = payload.lists
 			}

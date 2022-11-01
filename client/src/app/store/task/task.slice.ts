@@ -5,7 +5,7 @@ import uuid from 'react-uuid'
 import { useCreateTaskQuery } from './task.api'
 import { ITaskState, ITask } from './task.types'
 
-import { taskApi, useReadTasksByUserIdQuery } from './task.api'
+import { taskApi, useReadTasksByTokenQuery } from './task.api'
 
 const initialState: ITaskState = {
 	allTasks: [
@@ -40,7 +40,7 @@ const emptyTask = [
 
 export const readTask = createAsyncThunk('Task/read', async () => {
 	;async ({ taskId }) => {
-		const res = await useReadTasksByUserIdQuery(taskId)
+		const res = await useReadTasksByTokenQuery(taskId)
 		return res
 	}
 })
@@ -92,7 +92,7 @@ export const taskSlice = createSlice({
 	},
 	extraReducers: builder => {
 		builder.addMatcher(
-			taskApi.endpoints.readTasksByUserId.matchFulfilled,
+			taskApi.endpoints.readTasksByToken.matchFulfilled,
 			(state, { payload }) => {
 				state.allTasks = payload.tasks
 			}

@@ -1,5 +1,8 @@
 const Router = require('express')
 const { check, validationResult } = require('express-validator')
+const jwt = require('jsonwebtoken')
+const config = require('../config.json')
+
 const mongoose = require('mongoose')
 const User = require('../models/User')
 const List = require('../models/List')

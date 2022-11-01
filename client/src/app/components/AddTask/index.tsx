@@ -72,9 +72,12 @@ export const AddTask: FC<AddTaskProps> = ({ userId, listId }) => {
 						onChange={e => setInputValue(e.target.value)}
 					/>
 					<div className='add-task__buttons '>
-						{/* <button className='btn-addtask' onClick={() => addNewTask()}>
+						<button
+							className='btn-addtask'
+							// onClick={() => addNewTask()}
+						>
 							Add Task
-						</button> */}
+						</button>
 
 						<button
 							className='btn-cancel'
