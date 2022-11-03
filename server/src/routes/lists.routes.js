@@ -135,7 +135,7 @@ router.post(
 
 //Update List
 router.put(
-	'/updateList',
+	'/updatelist',
 	[
 		check('listId', 'Uncorrect taskId').isLength({ min: 1 }),
 		check('title', 'Uncorrect text').isLength({ min: 1 }),
@@ -185,7 +185,7 @@ router.put(
 
 //Delete List router
 router.put(
-	'/deleteList',
+	'/deletelist',
 	[check('listId', 'Uncorrect listId').isLength({ min: 1 })],
 	async (req, res) => {
 		try {

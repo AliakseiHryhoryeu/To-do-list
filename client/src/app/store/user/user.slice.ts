@@ -4,7 +4,6 @@ import { userApi } from './user.api'
 import type { RootState } from 'app/store'
 
 import { IUser, IUserState } from './user.types'
-import { useGetData } from 'app/hooks/useGetData'
 import {
 	useSignUpQuery,
 	useAuthQuery,
@@ -23,53 +22,10 @@ const initialState: IUserState = {
 	alert: false,
 }
 
-// const initRequests = (userId: string) => {
-// useReadListsByUserIdQuery({
-// 	userId: userId,
-// })
-// useReadTasksByUserIdQuery({
-// 	userId: userId,
-// })
-// }
-
 export const userSlice = createSlice({
 	name: 'userSlice',
 	initialState,
 	reducers: {
-		signup: (
-			state,
-			action: PayloadAction<{
-				email: string
-				username: string
-				password: string
-			}>
-		) => {
-			// useSignUpQuery({
-			// 	email: action.payload.email,
-			// 	password: action.payload.password,
-			// })
-		},
-
-		auth: (state, action: PayloadAction<null>) => {
-			const token = localStorage.getItem('token')
-			// useAuthQuery({
-			// 	token: token,
-			// })
-		},
-
-		login: (
-			state,
-			action: PayloadAction<{
-				email: string
-				password: string
-			}>
-		) => {
-			// useLoginQuery({
-			// 	email: action.payload.email,
-			// 	password: action.payload.password,
-			// })
-		},
-
 		logout: (state, action: PayloadAction<null>) => {
 			localStorage.removeItem('token')
 			state.activeUser.email = ''
@@ -137,16 +93,8 @@ export default userSlice.reducer
 export const userReducer = userSlice.reducer
 export const userActions = userSlice.actions
 
-export const {
-	signup,
-	auth,
-	login,
-	logout,
-	settingsHide,
-	settingsShow,
-	alertHide,
-	alertShow,
-} = userSlice.actions
+export const { logout, settingsHide, settingsShow, alertHide, alertShow } =
+	userSlice.actions
 
 export const selectCurrentUser = (state: RootState) => state.user.activeUser
 

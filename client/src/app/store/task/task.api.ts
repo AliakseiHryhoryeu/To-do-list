@@ -33,27 +33,30 @@ export const taskApi = createApi({
 		>({
 			query: ({ text, listId, userId }) => ({
 				url: `${baseUrl}/createtask`,
+				method: 'POST',
 				body: {
 					text: text,
 					listId: listId,
-					userId: userId,
 				},
 			}),
 		}),
 		readTasksByToken: builder.query<TasksResponse, {}>({
 			query: () => ({
 				url: `${baseUrl}/tasksbyusertoken`,
+				method: 'GET',
 			}),
 		}),
 		readTasksByListId: builder.query<TasksResponse, { listId: string }>({
 			query: ({ listId }) => ({
 				url: `${baseUrl}/tasksbylistid`,
+				method: 'GET',
 				params: { listId: listId },
 			}),
 		}),
 		readTask: builder.query<TasksResponse, { taskId: string }>({
 			query: ({ taskId }) => ({
 				url: `${baseUrl}/task`,
+				method: 'GET',
 				params: { taskId: taskId },
 			}),
 		}),
@@ -63,12 +66,14 @@ export const taskApi = createApi({
 		>({
 			query: ({ taskId, text, completed }) => ({
 				url: `${baseUrl}/updatetask`,
+				method: 'PUT',
 				body: { taskId: taskId, text: text, completed: completed },
 			}),
 		}),
 		deleteTask: builder.query<TasksResponse, { taskId: string }>({
 			query: ({ taskId }) => ({
 				url: `${baseUrl}/deletetask`,
+				method: 'PUT',
 				body: { taskId: taskId },
 			}),
 		}),

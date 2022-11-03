@@ -17,15 +17,6 @@ const initialState: ITaskState = {
 			userId: '',
 		},
 	],
-	allTasksTrial: [
-		{
-			_id: '',
-			text: '',
-			completed: false,
-			listId: '',
-			userId: '',
-		},
-	],
 }
 
 const emptyTask = [
@@ -74,8 +65,8 @@ export const taskSlice = createSlice({
 				listId: action.payload.listId,
 				userId: action.payload.userId,
 			}
-			state.allTasksTrial.push(newTask)
-			localStorage.setItem('allListsTrial', JSON.stringify(state.allTasksTrial))
+			// state.allTasksTrial.push(newTask)
+			// localStorage.setItem('allListsTrial', JSON.stringify(state.allTasksTrial))
 
 			useCreateTaskQuery({
 				text: action.payload.text,

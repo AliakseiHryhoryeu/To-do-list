@@ -157,7 +157,7 @@ router.get(
 )
 
 router.post(
-	'/createTask',
+	'/createtask',
 	[
 		check('text', 'Uncorrect text').isLength({ min: 1 }),
 		check('listId', 'Uncorrect listId').isLength({ min: 1 }),

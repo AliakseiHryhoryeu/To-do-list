@@ -12,29 +12,22 @@ import uuid from 'react-uuid'
 const initialState: IListState = {
 	allLists: [
 		{
-			_id: '',
-			title: '',
+			_id: 'WEGSDGDS',
+			title: 'HFGHGFH',
 			color: 'blue',
 			tasksId: [''],
-			userId: '',
+			userId: 'FHDHDFH',
 		},
 	],
-	allListsTrial: [
+	activeList: [
 		{
-			_id: '',
-			title: '',
+			_id: 'SAGSAGSAG',
+			title: 'GFJGFJ',
 			color: 'blue',
 			tasksId: [''],
-			userId: '',
+			userId: 'FGJFDJDF',
 		},
 	],
-	activeList: {
-		_id: '',
-		title: '',
-		color: 'blue',
-		tasksId: [''],
-		userId: '',
-	},
 	showAllLists: true,
 	colors: ColorsList,
 }
@@ -80,8 +73,8 @@ export const listSlice = createSlice({
 				tasksId: [''],
 				userId: action.payload.userId,
 			}
-			state.allListsTrial.push(newList)
-			localStorage.setItem('allListsTrial', JSON.stringify(state.allListsTrial))
+			// state.allListsTrial.push(newList)
+			// localStorage.setItem('allListsTrial', JSON.stringify(state.allListsTrial))
 
 			useCreateListQuery({
 				title: action.payload.title,
@@ -92,17 +85,19 @@ export const listSlice = createSlice({
 
 		// show only 1 list
 		setList: (state, action: PayloadAction<{ listId: string }>) => {
-			useReadListQuery({
-				listId: action.payload.listId,
-			})
+			const activeList = state.allLists.filter(
+				item => item._id === action.payload.listId
+			)
+			state.activeList = activeList
 			state.showAllLists = false
 		},
-
+		deleteList: (state, action: PayloadAction<{ listId: string }>) => {
+			// useDeleteListQuery({
+			// 	listId: action.payload.listId,
+			// })
+		},
 		// show all lists
-		showAllLists: (state, action: PayloadAction<{ userId: string }>) => {
-			useReadListsByTokenQuery({
-				userId: action.payload.userId,
-			})
+		showAllLists: (state, action: PayloadAction<{}>) => {
 			state.showAllLists = true
 		},
 
@@ -116,14 +111,6 @@ export const listSlice = createSlice({
 			listApi.endpoints.readListsByToken.matchFulfilled,
 			(state, { payload }) => {
 				state.allLists = payload.lists
-			}
-		)
-
-		// Auto update active list (when use request to server)
-		builder.addMatcher(
-			listApi.endpoints.readList.matchFulfilled,
-			(state, { payload }) => {
-				state.activeList = payload.list
 			}
 		)
 	},

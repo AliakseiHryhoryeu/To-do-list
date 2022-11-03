@@ -38,7 +38,6 @@ export const listApi = createApi({
 				body: {
 					title: title,
 					color: color,
-					userId: userId,
 				},
 			}),
 		}),
@@ -62,12 +61,14 @@ export const listApi = createApi({
 		>({
 			query: ({ listId, title }) => ({
 				url: `${baseUrl}/updatelist`,
+				method: 'PUT',
 				body: { listId: listId, title: title },
 			}),
 		}),
-		deleteList: builder.query<allListsResponse[], { listId: string }>({
+		deleteList: builder.mutation<allListsResponse[], { listId: string }>({
 			query: ({ listId }) => ({
 				url: `${baseUrl}/deletelist`,
+				method: 'PUT',
 				body: { listId: listId },
 			}),
 		}),
@@ -79,5 +80,5 @@ export const {
 	useReadListsByTokenQuery,
 	useReadListQuery,
 	useUpdateListQuery,
-	useDeleteListQuery,
+	useDeleteListMutation,
 } = listApi
