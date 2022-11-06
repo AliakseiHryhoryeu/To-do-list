@@ -1,9 +1,11 @@
 import React, { FC, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { Badge } from 'app/components'
 import { RootState } from 'app/store'
+import { useTypedSelector } from 'app/hooks/useAppSelector'
 import { useCreateListMutation } from 'app/store/list/list.api'
+
 import closeSvg from 'assets/img/close.svg'
 
 import './AddList.scss'
@@ -13,11 +15,12 @@ export const AddList: FC = () => {
 	const [selectedColor, setSelectedColor] = useState('purple')
 	const [inputFolderName, setInputFolderValue] = useState('')
 
-	const [addList, { isLoading: isLoading }] = useCreateListMutation()
+	const [addListMutation, { isLoading: isLoadingCreateList }] =
+		useCreateListMutation()
 
 	const dispatch = useDispatch()
 
-	const { user, colors } = useSelector((state: RootState) => {
+	const { user, colors } = useTypedSelector((state: RootState) => {
 		return {
 			user: state.user.activeUser,
 			colors: state.list.colors,
@@ -28,8 +31,9 @@ export const AddList: FC = () => {
 		setSelectedColor(color)
 	}
 	const createList = (title: string, color: string) => {
-		addList({ title: title, color: color })
+		addListMutation({ title: title, color: color })
 	}
+
 	return (
 		<div className='add-list'>
 			<ul

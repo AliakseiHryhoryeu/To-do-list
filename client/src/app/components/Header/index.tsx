@@ -1,11 +1,14 @@
 import React, { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import classNames from 'classnames'
 
 import { useActions } from 'app/hooks/useActions'
 import { Settings, Lists } from 'app/components'
 import { RootState } from 'app/store'
+import { useAuth } from 'app/hooks/useAuth'
+
+import { useTypedSelector } from 'app/hooks/useAppSelector'
 
 import userIcon from 'assets/img/userIcon_1.png'
 import mainLogo from 'assets/img/favicon.svg'
@@ -20,7 +23,9 @@ export const Header: FC = () => {
 
 	const allActions = useActions()
 
-	const { isAuth, username, userEmail, settingsVisible } = useSelector(
+	useAuth()
+
+	const { isAuth, username, userEmail, settingsVisible } = useTypedSelector(
 		(state: RootState) => {
 			return {
 				userEmail: state.user.activeUser.email,

@@ -1,14 +1,13 @@
 import React, { FC } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
-// import { TasksActions } from 'app/state/actions'
 import { RootState } from 'app/store'
-import { ITask } from 'app/store/task/task.types'
 
 import {
 	useUpdateTaskMutation,
 	useDeleteTaskMutation,
 } from 'app/store/task/task.api'
+
+import { useTypedSelector } from 'app/hooks/useAppSelector'
 
 import editTaskSvg from 'assets/img/editTask.svg'
 import deleteTaskSvg from 'assets/img/deleteTask.svg'
@@ -16,16 +15,13 @@ import deleteTaskSvg from 'assets/img/deleteTask.svg'
 import './Task.scss'
 
 type TaskProps = {
-	tasks: ITask[]
+	listId: string
 }
 
-export const Task: FC<TaskProps> = ({ tasks }) => {
-	const dispatch = useDispatch()
-	const { lists, allTasks, user } = useSelector((state: RootState) => {
+export const Task: FC<TaskProps> = ({ listId }) => {
+	const { tasks } = useTypedSelector((state: RootState) => {
 		return {
-			user: state.user.activeUser,
-			lists: state.list.activeList,
-			allTasks: state.task.allTasks,
+			tasks: state.task.allTasks.filter(item => item.listId === listId),
 		}
 	})
 	const [updateTaskRequest, { isLoading: isLoadingUpdate }] =

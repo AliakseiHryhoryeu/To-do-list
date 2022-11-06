@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux'
 import { RootState } from 'app/store'
 
 import { useAuthQuery } from 'app/store/user/user.api'
-import { useReadListsByTokenQuery } from 'app/store/list/list.api'
-import { useReadTasksByTokenQuery } from 'app/store/task/task.api'
+import { useAuthReadListsByTokenQuery } from 'app/store/list/list.api'
+import { useAuthReadTasksByTokenQuery } from 'app/store/task/task.api'
 
 export const useAuth = () => {
-	const { userId, token, isTrialMode } = useSelector((state: RootState) => {
+	const { token, isTrialMode } = useSelector((state: RootState) => {
 		return {
 			isTrialMode: state.user.trialMode,
 			userId: state.user.activeUser.id,
@@ -17,8 +17,8 @@ export const useAuth = () => {
 	})
 
 	useAuthQuery({})
-	useReadListsByTokenQuery({})
-	useReadTasksByTokenQuery({})
+	useAuthReadListsByTokenQuery({})
+	useAuthReadTasksByTokenQuery({})
 
-	return useMemo(() => ({}), [isTrialMode, token, userId])
+	return useMemo(() => ({}), [isTrialMode, token])
 }

@@ -1,29 +1,30 @@
 import React, { useState, FC } from 'react'
 import { useDispatch } from 'react-redux'
-
+import { useCreateTaskMutation } from 'app/store/task/task.api'
 // import { TasksActions } from 'app/state/actions'
 
 import './AddTask.scss'
 
 type AddTaskProps = {
-	userId: string
 	listId: string
 }
 
-export const AddTask: FC<AddTaskProps> = ({ userId, listId }) => {
+export const AddTask: FC<AddTaskProps> = ({ listId }) => {
 	const [visibleInput, setVisibleInput] = useState(false)
 	const [inputValue, setInputValue] = useState('')
-	const dispatch = useDispatch()
+
+	const [createTaskRequest, { isLoading: isLoading }] = useCreateTaskMutation()
 
 	const toggleVisibleInput = () => {
 		setVisibleInput(!visibleInput)
 	}
 
-	// const addNewTask = () => {
-	// 	dispatch(TasksActions.addTask(userId, listId, inputValue))
-	// 	setVisibleInput(!visibleInput)
-	// 	setInputValue('')
-	// }
+	const addNewTask = () => {
+		createTaskRequest({ listId: listId, text: inputValue })
+		setVisibleInput(!visibleInput)
+		setInputValue('')
+	}
+
 	return (
 		<div className='add-task'>
 			{!visibleInput && (
@@ -72,10 +73,7 @@ export const AddTask: FC<AddTaskProps> = ({ userId, listId }) => {
 						onChange={e => setInputValue(e.target.value)}
 					/>
 					<div className='add-task__buttons '>
-						<button
-							className='btn-addtask'
-							// onClick={() => addNewTask()}
-						>
+						<button className='btn-addtask' onClick={() => addNewTask()}>
 							Add Task
 						</button>
 

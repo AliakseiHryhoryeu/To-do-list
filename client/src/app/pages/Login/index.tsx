@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useTypedSelector } from 'app/hooks/useAppSelector'
 import { useFormik } from 'formik'
 
 import { Header } from 'app/components'
@@ -14,20 +14,28 @@ import appleIcon from 'assets/img/Apple-icon.svg'
 import { loginSchema } from './validation'
 
 import './Login.scss'
+import { useReadTasksByTokenMutation } from 'app/store/task/task.api'
+import { useReadListsByTokenMutation } from 'app/store/list/list.api'
 
 export const Login: FC = () => {
 	const navigate = useNavigate()
+	const [loginRequest, { isLoading: isLoading }] = useLoginMutation()
+	const [listsRequest, { isLoading: isLoadingLists }] =
+		useReadListsByTokenMutation()
+	const [tasksRequest, { isLoading: isLoadingTasks }] =
+		useReadTasksByTokenMutation()
 
-	const { trialMode } = useSelector((state: RootState) => {
+	const { trialMode } = useTypedSelector((state: RootState) => {
 		return {
 			trialMode: state.user.trialMode,
 		}
 	})
 
 	if (!trialMode) {
+		listsRequest({})
+		tasksRequest({})
 		navigate('/', { replace: true })
 	}
-	const [loginRequest, { isLoading: isLoading }] = useLoginMutation()
 
 	const formik = useFormik({
 		initialValues: {
@@ -47,7 +55,7 @@ export const Login: FC = () => {
 			<Header />
 			<div className='login__container'>
 				<form className='login__form' onSubmit={formik.handleSubmit} noValidate>
-					<div className='login__title'>Log in</div>
+					{/* <div className='login__title'>Log in</div>
 					<div className='login__social'>
 						<img
 							className='login__social-icon'
@@ -71,7 +79,7 @@ export const Login: FC = () => {
 							alt='apple-icon'
 						/>
 						<div className='login__social-text'>Continue with Apple</div>
-					</div>
+					</div> */}
 					<div className='login__input'>
 						<label className='login__input-label' htmlFor='login__input-email'>
 							Email

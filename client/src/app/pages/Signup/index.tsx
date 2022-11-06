@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useTypedSelector } from 'app/hooks/useAppSelector'
 import { useFormik } from 'formik'
 
 import { Header } from 'app/components'
@@ -15,23 +15,26 @@ import { signupSchema } from './validation'
 
 import './Signup.scss'
 import { useAuth } from 'app/hooks/useAuth'
-import { useReadListsByTokenQuery } from 'app/store/list/list.api'
-import { useReadTasksByTokenQuery } from 'app/store/task/task.api'
+import { useReadListsByTokenMutation } from 'app/store/list/list.api'
+import { useReadTasksByTokenMutation } from 'app/store/task/task.api'
 
 export const Signup: FC = () => {
 	const navigate = useNavigate()
 
-	const { trialMode } = useSelector((state: RootState) => {
+	const { trialMode } = useTypedSelector((state: RootState) => {
 		return {
 			trialMode: state.user.trialMode,
 		}
 	})
+
+	const [listsRequest, { isLoading: isLoadingLists }] =
+		useReadListsByTokenMutation()
+	const [tasksRequest, { isLoading: isLoadingTasks }] =
+		useReadTasksByTokenMutation()
+
 	if (!trialMode) {
-		// useAuth()
-		// useReadListsByTokenQuery({})
-
-		// useReadTasksByTokenQuery({})
-
+		listsRequest({})
+		tasksRequest({})
 		navigate('/', { replace: true })
 	}
 
@@ -60,7 +63,7 @@ export const Signup: FC = () => {
 					noValidate
 				>
 					<div className='signup__title'>Sign up</div>
-					<div className='signup__social'>
+					{/* <div className='signup__social'>
 						<img
 							className='signup__social-icon'
 							src={googleIcon}
@@ -83,7 +86,7 @@ export const Signup: FC = () => {
 							alt='apple-icon'
 						/>
 						<div className='signup__social-text'>Continue with Apple</div>
-					</div>
+					</div> */}
 					<div className='signup__input'>
 						<label
 							className='signup__input-label'

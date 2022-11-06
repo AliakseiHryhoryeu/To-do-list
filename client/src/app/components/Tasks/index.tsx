@@ -1,47 +1,47 @@
 import React, { FC } from 'react'
-import { useSelector } from 'react-redux'
 
 import { RootState } from 'app/store'
 import { AddTask, Task } from 'app/components'
 import { HeaderTask } from './HeaderTask/'
 
+import { useTypedSelector } from 'app/hooks/useAppSelector'
+
 import './Tasks.scss'
 
 export const Tasks: FC = () => {
-	const { lists, user, allTasks } = useSelector((state: RootState) => {
-		return {
-			user: state.user.activeUser,
-			lists: state.list.allLists,
-			allTasks: state.task.allTasks,
-		}
-	})
-	function getTasks(allTasksId: string[]) {
-		const response = []
-		allTasksId.map(taskId => {
-			for (let i = 0; i < allTasks.length; i++) {
-				if (allTasks[i]._id == taskId) {
-					response.push(allTasks[i])
-					break
-				}
+	const { allLists, showAllLists, activeListId } = useTypedSelector(
+		(state: RootState) => {
+			return {
+				allLists: state.list.allLists,
+				showAllLists: state.list.showAllLists,
+				activeListId: state.list.activeListId,
 			}
-		})
-		return response
-	}
-	if (lists.length == 0) {
+		}
+	)
+
+	if (allLists.length == 0) {
 		return <div className='tasks__item'>Tasks not found</div>
 	}
+
+	if (!showAllLists) {
+		const activeList = allLists.find(item => item._id === activeListId)
+		return (
+			<div className='tasks__item' key={activeList._id}>
+				<HeaderTask listId={activeList._id} />
+				<Task listId={activeList._id} />
+				<AddTask listId={activeList._id} />
+			</div>
+		)
+	}
+
 	return (
 		<div className='tasks'>
-			{lists.map(list => {
+			{allLists.map(list => {
 				return (
 					<div className='tasks__item' key={list._id}>
-						<HeaderTask
-							listId={list._id}
-							title={list.title}
-							color={list.color}
-						/>
-						<Task tasks={getTasks(list.tasksId)} />
-						<AddTask userId={user.id} listId={list._id} />
+						<HeaderTask listId={list._id} />
+						<Task listId={list._id} />
+						<AddTask listId={list._id} />
 					</div>
 				)
 			})}

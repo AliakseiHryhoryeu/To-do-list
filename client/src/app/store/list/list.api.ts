@@ -41,7 +41,13 @@ export const listApi = createApi({
 				},
 			}),
 		}),
-		readListsByToken: builder.query<allListsResponse, {}>({
+		readListsByToken: builder.mutation<allListsResponse, {}>({
+			query: () => ({
+				url: `${baseUrl}/listsbyusertoken`,
+				method: 'GET',
+			}),
+		}),
+		authReadListsByToken: builder.query<allListsResponse, {}>({
 			query: () => ({
 				url: `${baseUrl}/listsbyusertoken`,
 				method: 'GET',
@@ -55,7 +61,10 @@ export const listApi = createApi({
 				params: { listId: listId },
 			}),
 		}),
-		updateList: builder.query<ListResponse, { listId: string; title: string }>({
+		updateList: builder.mutation<
+			ListResponse,
+			{ listId: string; title: string }
+		>({
 			query: ({ listId, title }) => ({
 				url: `${baseUrl}/updatelist`,
 				method: 'PUT',
@@ -74,8 +83,9 @@ export const listApi = createApi({
 
 export const {
 	useCreateListMutation,
-	useReadListsByTokenQuery,
+	useReadListsByTokenMutation,
 	useReadListMutation,
-	useUpdateListQuery,
+	useUpdateListMutation,
 	useDeleteListMutation,
+	useAuthReadListsByTokenQuery,
 } = listApi

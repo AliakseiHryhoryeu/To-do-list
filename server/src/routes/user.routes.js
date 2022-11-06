@@ -13,7 +13,6 @@ router.post(
 	'/signup',
 	[
 		check('email', 'Uncorrect email').isEmail(),
-		check('username', 'Uncorrect username').isLength({ min: 1 }),
 		check(
 			'password',
 			'Password must be longer than 3 and shorter than 12'

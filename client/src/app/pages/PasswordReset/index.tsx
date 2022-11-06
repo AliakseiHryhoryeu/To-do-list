@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useTypedSelector } from 'app/hooks/useAppSelector'
 import { useFormik } from 'formik'
 
 import { RootState } from 'app/store'
@@ -13,7 +13,7 @@ import './PasswordReset.scss'
 export const PasswordReset: FC = () => {
 	const navigate = useNavigate()
 
-	const { trialMode } = useSelector((state: RootState) => {
+	const { trialMode } = useTypedSelector((state: RootState) => {
 		return {
 			trialMode: state.user.trialMode,
 		}

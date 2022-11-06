@@ -1,13 +1,15 @@
 import React, { FC } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import classNames from 'classnames'
+
+import { useTypedSelector } from 'app/hooks/useAppSelector'
 
 import { useActions } from 'app/hooks/useActions'
 import { RootState } from 'app/store'
 
 export const HeaderList: FC = () => {
 	const dispatch = useDispatch()
-	const { showAllLists } = useSelector((state: RootState) => {
+	const { showAllLists } = useTypedSelector((state: RootState) => {
 		return {
 			showAllLists: state.list.showAllLists,
 		}

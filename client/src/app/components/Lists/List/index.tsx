@@ -1,49 +1,52 @@
-import React, { FC, useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { FC } from 'react'
+import { useDispatch } from 'react-redux'
 import classNames from 'classnames'
 
 import { Badge } from 'app/components'
 import { useActions } from 'app/hooks/useActions'
+import { useTypedSelector } from 'app/hooks/useAppSelector'
 
 import { RootState } from 'app/store'
 import {
-	listApi,
 	useDeleteListMutation,
 	useReadListMutation,
 } from 'app/store/list/list.api'
-import { IList } from 'app/store/list/list.types'
+import { useReadTasksByTokenMutation } from 'app/store/task/task.api'
 
 import removeSvg from 'assets/img/remove.svg'
 
 import './List.scss'
 
-type ListProps = {
-	lists: IList[]
-}
-
-export const List: FC<ListProps> = ({ lists }) => {
+export const List: FC = () => {
 	const dispatch = useDispatch()
 	const allActions = useActions()
-	const [deletePost, { isLoading: isDeleting }] = useDeleteListMutation()
 
-	const { activeList, showAllLists } = useSelector((state: RootState) => {
-		return {
-			activeList: state.list.activeList,
-			showAllLists: state.list.showAllLists,
+	const [deletePost, { isLoading: isDeleting }] = useDeleteListMutation()
+	const [readList, { isLoading: isLoadingReadList }] = useReadListMutation()
+	const [readTasksMutation, { isLoading: isLoadingReadTasks }] =
+		useReadTasksByTokenMutation()
+
+	const { lists, activeListId, showAllLists } = useTypedSelector(
+		(state: RootState) => {
+			return {
+				lists: state.list.allLists,
+				activeListId: state.list.activeListId,
+				showAllLists: state.list.showAllLists,
+			}
 		}
-	})
-	const [readList, { isLoading: isLoading }] = useReadListMutation()
+	)
 
 	const setActiveList = ({ listId }) => {
 		readList({ listId: listId })
-		// dispatch(allActions.setList(listId))
+		readTasksMutation({})
+		dispatch(allActions.setList({ listId: listId }))
 	}
 
 	const findActiveList = listId => {
 		if (showAllLists) {
 			return false
 		}
-		if (listId !== activeList[0]._id) {
+		if (listId !== activeListId) {
 			return false
 		}
 		return true
@@ -57,7 +60,7 @@ export const List: FC<ListProps> = ({ lists }) => {
 	}
 
 	if (lists.length <= 0) {
-		return <i></i>
+		return <></>
 	}
 
 	return (

@@ -8,7 +8,7 @@ import { IListState, ColorsList } from './list.types'
 
 const initialState: IListState = {
 	allLists: [],
-	activeList: [],
+	activeListId: '',
 	showAllLists: true,
 	colors: ColorsList,
 }
@@ -37,10 +37,7 @@ export const listSlice = createSlice({
 		},
 		// show only 1 list
 		setList: (state, action: PayloadAction<{ listId: string }>) => {
-			const activeList = state.allLists.filter(
-				item => item._id === action.payload.listId
-			)
-			state.activeList = activeList
+			state.activeListId = action.payload.listId
 			state.showAllLists = false
 		},
 
@@ -48,33 +45,7 @@ export const listSlice = createSlice({
 		showAllLists: (state, action: PayloadAction<{}>) => {
 			state.showAllLists = true
 		},
-		// save all lists to localStorage
-		// addList: (
-		// 	state,
-		// 	action: PayloadAction<{
-		// 		title: string
-		// 		color: string
-		// 		userId: string
-		// 	}>
-		// ) => {
-		// 	listSlice.actions.getLists()
 
-		// 	const newList = {
-		// 		_id: uuid(),
-		// 		title: action.payload.title,
-		// 		color: action.payload.color,
-		// 		tasksId: [''],
-		// 		userId: action.payload.userId,
-		// 	}
-		// 	// state.allListsTrial.push(newList)
-		// 	// localStorage.setItem('allListsTrial', JSON.stringify(state.allListsTrial))
-
-		// 	// useCreateListQuery({
-		// 	// 	title: action.payload.title,
-		// 	// 	color: action.payload.color,
-		// 	// 	userId: action.payload.userId,
-		// 	// })
-		// },
 		deleteList: (state, action: PayloadAction<{ listId: string }>) => {
 			// useDeleteListQuery({
 			// 	listId: action.payload.listId,
@@ -101,17 +72,23 @@ export const listSlice = createSlice({
 				}
 			),
 			builder.addMatcher(
+				listApi.endpoints.authReadListsByToken.matchFulfilled,
+				(state, { payload }) => {
+					if (payload.lists) {
+						state.allLists = payload.lists
+					}
+				}
+			),
+			builder.addMatcher(
 				listApi.endpoints.readList.matchFulfilled,
 				(state, { payload }) => {
 					if (payload.list) {
 						state.allLists
 							.filter(item => item._id === payload.list._id)
 							.map(item => {
-								item._id = payload.list._id
 								item.color = payload.list.color
 								item.tasksId = payload.list.tasksId
 								item.title = payload.list.title
-								item.userId = payload.list.userId
 							})
 					}
 				}
@@ -123,11 +100,9 @@ export const listSlice = createSlice({
 						state.allLists
 							.filter(item => item._id === payload.list._id)
 							.map(item => {
-								item._id = payload.list._id
 								item.color = payload.list.color
 								item.tasksId = payload.list.tasksId
 								item.title = payload.list.title
-								item.userId = payload.list.userId
 							})
 					}
 				}
@@ -149,3 +124,31 @@ export const listReducer = listSlice.reducer
 export const listActions = listSlice.actions
 
 export const selectCurrentList = (state: RootState) => state.user.activeUser
+
+// save all lists to localStorage
+// addList: (
+// 	state,
+// 	action: PayloadAction<{
+// 		title: string
+// 		color: string
+// 		userId: string
+// 	}>
+// ) => {
+// 	listSlice.actions.getLists()
+
+// 	const newList = {
+// 		_id: uuid(),
+// 		title: action.payload.title,
+// 		color: action.payload.color,
+// 		tasksId: [''],
+// 		userId: action.payload.userId,
+// 	}
+// 	// state.allListsTrial.push(newList)
+// 	// localStorage.setItem('allListsTrial', JSON.stringify(state.allListsTrial))
+
+// 	// useCreateListQuery({
+// 	// 	title: action.payload.title,
+// 	// 	color: action.payload.color,
+// 	// 	userId: action.payload.userId,
+// 	// })
+// },

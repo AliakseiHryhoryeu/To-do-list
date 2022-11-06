@@ -19,8 +19,6 @@ export const taskApi = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: baseUrl,
 		prepareHeaders: (headers, { getState }) => {
-			// const token = localStorage.getItem('token')
-
 			const token = (getState() as RootState).user.token
 			if (token) {
 				headers.set('authorization', `Bearer ${token}`)
@@ -31,9 +29,9 @@ export const taskApi = createApi({
 	endpoints: builder => ({
 		createTask: builder.mutation<
 			TaskResponse,
-			{ text: string; listId: string; userId: string }
+			{ text: string; listId: string }
 		>({
-			query: ({ text, listId, userId }) => ({
+			query: ({ text, listId }) => ({
 				url: `${baseUrl}/createtask`,
 				method: 'POST',
 				body: {
@@ -42,17 +40,16 @@ export const taskApi = createApi({
 				},
 			}),
 		}),
-		readTasksByToken: builder.query<TasksResponse, {}>({
+		readTasksByToken: builder.mutation<TasksResponse, {}>({
 			query: () => ({
 				url: `${baseUrl}/tasksbyusertoken`,
 				method: 'GET',
 			}),
 		}),
-		readTasksByListId: builder.mutation<TasksResponse, { listId: string }>({
-			query: ({ listId }) => ({
-				url: `${baseUrl}/tasksbylistid`,
+		authReadTasksByToken: builder.query<TasksResponse, {}>({
+			query: () => ({
+				url: `${baseUrl}/tasksbyusertoken`,
 				method: 'GET',
-				params: { listId: listId },
 			}),
 		}),
 		readTask: builder.mutation<TaskResponse, { taskId: string }>({
@@ -84,9 +81,9 @@ export const taskApi = createApi({
 
 export const {
 	useCreateTaskMutation,
-	useReadTasksByTokenQuery,
-	useReadTasksByListIdMutation,
+	useReadTasksByTokenMutation,
 	useReadTaskMutation,
 	useUpdateTaskMutation,
 	useDeleteTaskMutation,
+	useAuthReadTasksByTokenQuery,
 } = taskApi

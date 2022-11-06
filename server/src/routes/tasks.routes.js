@@ -142,12 +142,15 @@ router.get(
 				return res.status(404).json({ message: 'Task not found' })
 			}
 
-			return res.json({
-				id: task.id,
+			const response = {
+				_id: task.id,
 				text: task.text,
 				completed: task.completed,
 				listId: task.listId,
 				userId: task.userId,
+			}
+			return res.json({
+				task: response,
 			})
 		} catch (e) {
 			console.log(e)
@@ -197,12 +200,16 @@ router.post(
 			list.tasksId.push(task._id)
 			await task.save()
 			await list.save()
-			return res.json({
-				id: task.id,
+
+			const response = {
+				_id: task.id,
 				text: task.text,
 				completed: task.completed,
 				listId: task.listId,
 				userId: task.userId,
+			}
+			return res.json({
+				task: response,
 			})
 		} catch (e) {
 			console.log(e)
@@ -249,12 +256,15 @@ router.put(
 			task.text = text
 			task.completed = completed
 			await task.save()
-			return res.json({
-				id: taskId,
+			const response = {
+				_id: taskId,
 				text: task.text,
 				completed: task.completed,
 				listId: task.listId,
 				userId: task.userId,
+			}
+			return res.json({
+				task: response,
 			})
 		} catch (e) {
 			console.log(e)
@@ -304,9 +314,32 @@ router.put(
 			const temp = await Task.findOneAndDelete({
 				_id: mongoose.Types.ObjectId(taskId),
 			})
-			const response = await List.findOne({
-				_id: mongoose.Types.ObjectId(listId),
-			})
+
+			// Find all tasks
+			const userLists = user.listId
+			let response = []
+			for (let i = 0; i < userLists.length; i++) {
+				const list = await List.findOne({
+					_id: mongoose.Types.ObjectId(userLists[i]),
+				})
+				if (!list) {
+					continue
+				}
+				let listTasks = list.tasksId
+				if (!listTasks) {
+					continue
+				}
+				for (let j = 0; j < listTasks.length; j++) {
+					const task = await Task.findOne({
+						_id: mongoose.Types.ObjectId(listTasks[j]),
+					})
+					if (!task) {
+						continue
+					}
+					response.push(task)
+				}
+			}
+
 			return res.json({
 				tasks: response,
 			})

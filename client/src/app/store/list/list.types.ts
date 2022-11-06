@@ -7,7 +7,7 @@ export interface IList {
 }
 export interface IListState {
 	allLists: IList[]
-	activeList: IList[]
+	activeListId: string
 	showAllLists: boolean
 	colors: string[]
 }
