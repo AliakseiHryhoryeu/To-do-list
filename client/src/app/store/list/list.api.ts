@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IList } from './list.types'
+
 import { RootState } from 'app/store/index'
+
+import { IList } from './list.types'
 
 const serverIp = process.env.SERVER_IP
 const baseUrl = serverIp + 'api/lists'
@@ -18,9 +20,7 @@ export const listApi = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: baseUrl,
 		prepareHeaders: (headers, { getState }) => {
-			const token = localStorage.getItem('token')
-
-			// const token = (getState() as RootState).user.token
+			const token = (getState() as RootState).user.token
 			if (token) {
 				headers.set('authorization', `Bearer ${token}`)
 			}
@@ -28,11 +28,11 @@ export const listApi = createApi({
 		},
 	}),
 	endpoints: builder => ({
-		createList: builder.query<
-			ListResponse[],
-			{ title: string; color: string; userId: string }
+		createList: builder.mutation<
+			ListResponse,
+			{ title: string; color: string }
 		>({
-			query: ({ title, color, userId }) => ({
+			query: ({ title, color }) => ({
 				url: `${baseUrl}/createlist`,
 				method: 'POST',
 				body: {
@@ -48,24 +48,21 @@ export const listApi = createApi({
 			}),
 		}),
 
-		readList: builder.query<ListResponse, { listId: string }>({
+		readList: builder.mutation<ListResponse, { listId: string }>({
 			query: ({ listId }) => ({
 				url: `${baseUrl}/list`,
 				method: 'GET',
 				params: { listId: listId },
 			}),
 		}),
-		updateList: builder.query<
-			allListsResponse[],
-			{ listId: string; title: string }
-		>({
+		updateList: builder.query<ListResponse, { listId: string; title: string }>({
 			query: ({ listId, title }) => ({
 				url: `${baseUrl}/updatelist`,
 				method: 'PUT',
 				body: { listId: listId, title: title },
 			}),
 		}),
-		deleteList: builder.mutation<allListsResponse[], { listId: string }>({
+		deleteList: builder.mutation<allListsResponse, { listId: string }>({
 			query: ({ listId }) => ({
 				url: `${baseUrl}/deletelist`,
 				method: 'PUT',
@@ -76,9 +73,9 @@ export const listApi = createApi({
 })
 
 export const {
-	useCreateListQuery,
+	useCreateListMutation,
 	useReadListsByTokenQuery,
-	useReadListQuery,
+	useReadListMutation,
 	useUpdateListQuery,
 	useDeleteListMutation,
 } = listApi

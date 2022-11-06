@@ -3,38 +3,51 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 
-// import { UserActions } from 'app/state/actions'
 import { Header } from 'app/components'
-// import { RootState } from 'app/state/reducers'
-import { signupSchema } from './validation'
+import { RootState } from 'app/store'
+import { useSignUpMutation } from 'app/store/user/user.api'
 
 import googleIcon from 'assets/img/Google-icon.svg'
 import facebookIcon from 'assets/img/Facebook-icon.svg'
 import appleIcon from 'assets/img/Apple-icon.svg'
 
+import { signupSchema } from './validation'
+
 import './Signup.scss'
+import { useAuth } from 'app/hooks/useAuth'
+import { useReadListsByTokenQuery } from 'app/store/list/list.api'
+import { useReadTasksByTokenQuery } from 'app/store/task/task.api'
 
 export const Signup: FC = () => {
 	const navigate = useNavigate()
-	// const { isAuth } = useSelector((state: RootState) => {
-	// 	return {
-	// 		isAuth: state.user.isAuth,
-	// 	}
-	// })
 
-	// if (isAuth === true) {
-	// 	navigate('/main', { replace: true })
-	// }
+	const { trialMode } = useSelector((state: RootState) => {
+		return {
+			trialMode: state.user.trialMode,
+		}
+	})
+	if (!trialMode) {
+		// useAuth()
+		// useReadListsByTokenQuery({})
+
+		// useReadTasksByTokenQuery({})
+
+		navigate('/', { replace: true })
+	}
+
+	const [signupRequest, { isLoading: isLoading }] = useSignUpMutation()
 
 	const formik = useFormik({
 		initialValues: {
-			username: '',
 			email: '',
 			password: '',
 		},
 		validationSchema: signupSchema,
 		onSubmit: values => {
-			// UserActions.registration(values.username, values.email, values.password)
+			signupRequest({
+				email: values.email,
+				password: values.password,
+			})
 		},
 	})
 	return (

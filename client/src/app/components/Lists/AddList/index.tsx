@@ -2,18 +2,21 @@ import React, { FC, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Badge } from 'app/components'
-// import { ListsActions } from 'app/state/actions'
 import { RootState } from 'app/store'
-
+import { useCreateListMutation } from 'app/store/list/list.api'
 import closeSvg from 'assets/img/close.svg'
+
 import './AddList.scss'
 
 export const AddList: FC = () => {
 	const [visiblePopup, setVisiblePopup] = useState(false)
-	const [selectedColor, setSelectedColor] = useState('green')
-	const [inputValue, setInputValue] = useState('')
+	const [selectedColor, setSelectedColor] = useState('purple')
+	const [inputFolderName, setInputFolderValue] = useState('')
+
+	const [addList, { isLoading: isLoading }] = useCreateListMutation()
 
 	const dispatch = useDispatch()
+
 	const { user, colors } = useSelector((state: RootState) => {
 		return {
 			user: state.user.activeUser,
@@ -21,6 +24,12 @@ export const AddList: FC = () => {
 		}
 	})
 
+	const changeColor = (color: string) => {
+		setSelectedColor(color)
+	}
+	const createList = (title: string, color: string) => {
+		addList({ title: title, color: color })
+	}
 	return (
 		<div className='add-list'>
 			<ul
@@ -55,7 +64,7 @@ export const AddList: FC = () => {
 							/>
 						</svg>
 					</i>
-					<span>Add List</span>
+					<span>Add Folder</span>
 				</li>
 			</ul>
 
@@ -68,31 +77,27 @@ export const AddList: FC = () => {
 						className='add-list__popup-close-btn'
 					/>
 					<input
-						onChange={e => setInputValue(e.target.value)}
-						value={inputValue}
+						onChange={e => setInputFolderValue(e.target.value)}
+						value={inputFolderName}
 						className='field'
 						type='text'
 						placeholder='Folder Name'
 					/>
 					<div className='add-list__popup-colors'>
 						{colors.map((color, index) => (
-							<Badge
-								onClick={() => setSelectedColor(color)}
-								key={index}
-								color={color}
-								className={selectedColor === color && 'active'}
-							/>
+							<div onClick={() => changeColor(color)} key={index}>
+								<Badge
+									color={color}
+									className={selectedColor === color && 'active'}
+								/>
+							</div>
 						))}
 					</div>
 					<button
 						className='button'
-						// onClick={() =>
-						// 	dispatch(
-						// 		ListsActions.addList(user.userId, inputValue, selectedColor)
-						// 	)
-						// }
+						onClick={() => createList(inputFolderName, selectedColor)}
 					>
-						Add New List
+						Add New Folder
 					</button>
 				</div>
 			)}

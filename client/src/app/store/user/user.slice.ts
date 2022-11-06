@@ -1,14 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { userApi } from './user.api'
 
 import type { RootState } from 'app/store'
 
-import { IUser, IUserState } from './user.types'
-import {
-	useSignUpQuery,
-	useAuthQuery,
-	useLoginQuery,
-} from 'app/store/user/user.api'
+import { userApi } from './user.api'
+import { IUserState } from './user.types'
 
 const initialState: IUserState = {
 	activeUser: {
@@ -16,7 +11,7 @@ const initialState: IUserState = {
 		email: '',
 		username: '',
 	},
-	token: null,
+	token: localStorage.getItem('token'),
 	trialMode: true,
 	settingsVisible: false,
 	alert: false,

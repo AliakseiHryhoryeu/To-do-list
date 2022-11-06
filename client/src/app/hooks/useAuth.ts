@@ -8,21 +8,17 @@ import { useReadListsByTokenQuery } from 'app/store/list/list.api'
 import { useReadTasksByTokenQuery } from 'app/store/task/task.api'
 
 export const useAuth = () => {
-	const token = localStorage.getItem('token')
-
-	const { userId } = useSelector((state: RootState) => {
+	const { userId, token, isTrialMode } = useSelector((state: RootState) => {
 		return {
 			isTrialMode: state.user.trialMode,
 			userId: state.user.activeUser.id,
+			token: state.user.token,
 		}
 	})
-	useAuthQuery({
-		token: token,
-	})
 
+	useAuthQuery({})
 	useReadListsByTokenQuery({})
-
 	useReadTasksByTokenQuery({})
 
-	return useMemo(() => ({}), [token, userId])
+	return useMemo(() => ({}), [isTrialMode, token, userId])
 }

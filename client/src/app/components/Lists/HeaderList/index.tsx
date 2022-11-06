@@ -2,10 +2,10 @@ import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import classNames from 'classnames'
 
-import { RootState } from 'app/store'
 import { useActions } from 'app/hooks/useActions'
+import { RootState } from 'app/store'
 
-export const AllListsBtn: FC = () => {
+export const HeaderList: FC = () => {
 	const dispatch = useDispatch()
 	const { showAllLists } = useSelector((state: RootState) => {
 		return {
@@ -33,7 +33,7 @@ export const AllListsBtn: FC = () => {
 						/>
 					</svg>
 				</i>
-				<span>All Tasks</span>
+				<span>All Folders</span>
 			</li>
 		</ul>
 	)

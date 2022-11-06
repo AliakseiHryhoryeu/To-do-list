@@ -9,7 +9,7 @@ type TaskHeaderProps = {
 	color: string
 }
 
-export const TaskHeader: FC<TaskHeaderProps> = ({ listId, title, color }) => {
+export const HeaderTask: FC<TaskHeaderProps> = ({ listId, title, color }) => {
 	// const dispatch = useDispatch()
 
 	// const editTitle = () => {

@@ -3,15 +3,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import classNames from 'classnames'
 
 import { Badge } from 'app/components'
-// import { ListsActions } from 'app/state/actions'
-// import { ListModel } from 'app/models'
 import { useActions } from 'app/hooks/useActions'
+
 import { RootState } from 'app/store'
+import {
+	listApi,
+	useDeleteListMutation,
+	useReadListMutation,
+} from 'app/store/list/list.api'
+import { IList } from 'app/store/list/list.types'
+
 import removeSvg from 'assets/img/remove.svg'
 
 import './List.scss'
-import { IList } from 'app/store/list/list.types'
-import { listApi, useDeleteListMutation } from 'app/store/list/list.api'
 
 type ListProps = {
 	lists: IList[]
@@ -28,9 +32,11 @@ export const List: FC<ListProps> = ({ lists }) => {
 			showAllLists: state.list.showAllLists,
 		}
 	})
+	const [readList, { isLoading: isLoading }] = useReadListMutation()
 
-	const setActiveList = listId => {
-		dispatch(allActions.setList(listId))
+	const setActiveList = ({ listId }) => {
+		readList({ listId: listId })
+		// dispatch(allActions.setList(listId))
 	}
 
 	const findActiveList = listId => {
@@ -46,13 +52,12 @@ export const List: FC<ListProps> = ({ lists }) => {
 	const removeList = (listId: string) => {
 		if (window.confirm('Are you sure you want to delete the list?')) {
 			dispatch(allActions.settingsHide())
-
 			deletePost({ listId })
-
-			// useDeleteListMutation({
-			// 	listId: listId,
-			// })
 		}
+	}
+
+	if (lists.length <= 0) {
+		return <i></i>
 	}
 
 	return (

@@ -1,30 +1,33 @@
 import React, { FC } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 
 import { Header } from 'app/components'
-// import { UserActions } from 'app/state/actions'
-// import { RootState } from 'app/state/reducers'
-import { loginSchema } from './validation'
+import { RootState } from 'app/store'
+import { useLoginMutation } from 'app/store/user/user.api'
 
 import googleIcon from 'assets/img/Google-icon.svg'
 import facebookIcon from 'assets/img/Facebook-icon.svg'
 import appleIcon from 'assets/img/Apple-icon.svg'
 
+import { loginSchema } from './validation'
+
 import './Login.scss'
 
 export const Login: FC = () => {
-	const dispatch = useDispatch()
 	const navigate = useNavigate()
-	// const { isAuth } = useSelector((state: RootState) => {
-	// 	return {
-	// 		isAuth: state.user.isAuth,
-	// 	}
-	// })
-	// if (isAuth === true) {
-	// 	navigate('/main', { replace: true })
-	// }
+
+	const { trialMode } = useSelector((state: RootState) => {
+		return {
+			trialMode: state.user.trialMode,
+		}
+	})
+
+	if (!trialMode) {
+		navigate('/', { replace: true })
+	}
+	const [loginRequest, { isLoading: isLoading }] = useLoginMutation()
 
 	const formik = useFormik({
 		initialValues: {
@@ -33,8 +36,10 @@ export const Login: FC = () => {
 		},
 		validationSchema: loginSchema,
 		onSubmit: values => {
-			// dispatch(UserActions.login(values.username, values.password))
-			navigate('/', { replace: true })
+			loginRequest({
+				email: values.email,
+				password: values.password,
+			})
 		},
 	})
 	return (

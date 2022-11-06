@@ -5,6 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'app/store'
 import { ITask } from 'app/store/task/task.types'
 
+import {
+	useUpdateTaskMutation,
+	useDeleteTaskMutation,
+} from 'app/store/task/task.api'
+
 import editTaskSvg from 'assets/img/editTask.svg'
 import deleteTaskSvg from 'assets/img/deleteTask.svg'
 
@@ -23,27 +28,42 @@ export const Task: FC<TaskProps> = ({ tasks }) => {
 			allTasks: state.task.allTasks,
 		}
 	})
+	const [updateTaskRequest, { isLoading: isLoadingUpdate }] =
+		useUpdateTaskMutation()
+	const [deleteTaskRequest, { isLoading: isLoadingDelete }] =
+		useDeleteTaskMutation()
 
-	// const editTextTask = (taskId, text, completed) => {
-	// 	const newText = window.prompt(`New task text`, text)
-	// 	if (newText) {
-	// 		dispatch(TasksActions.editTask(taskId, newText, completed))
-	// 	}
-	// }
+	const updateText = ({ taskId, text, completed }) => {
+		const newText = window.prompt(`New task text`, text)
+		if (newText) {
+			updateTaskRequest({
+				taskId: taskId,
+				text: newText,
+				completed: completed,
+			})
+		}
+	}
 
-	// const checkTask = (taskId, text, completed) => {
-	// 	dispatch(TasksActions.editTask(taskId, text, !completed))
-	// }
+	const checkTask = ({ taskId, text, completed }) => {
+		updateTaskRequest({
+			taskId: taskId,
+			text: text,
+			completed: !completed,
+		})
+	}
 
-	// const delTask = taskId => {
-	// 	if (window.confirm('Are you sure you want delete this task?')) {
-	// 		dispatch(TasksActions.deleteTask(taskId))
-	// 	}
-	// }
+	const delTask = taskId => {
+		if (window.confirm('Are you sure you want delete this task?')) {
+			deleteTaskRequest({
+				taskId: taskId,
+			})
+		}
+	}
 
 	if (!tasks) {
 		return <></>
 	}
+
 	return (
 		<>
 			{tasks.map(task => {
@@ -51,9 +71,12 @@ export const Task: FC<TaskProps> = ({ tasks }) => {
 					<div className='tasks__items-row' key={task._id}>
 						<div className='checkbox'>
 							<input
-								onChange={
-									() => {}
-									// checkTask(task._id, task.text, task.completed)
+								onChange={() =>
+									checkTask({
+										taskId: task._id,
+										text: task.text,
+										completed: task.completed,
+									})
 								}
 								id={`task-${task._id}`}
 								type='checkbox'
@@ -80,15 +103,17 @@ export const Task: FC<TaskProps> = ({ tasks }) => {
 						<p>{task.text}</p>
 						<div className='tasks__items-row-actions'>
 							<div
-							// onClick={() =>
-							// 	editTextTask(task._id, task.text, task.completed)
-							// }
+								onClick={() =>
+									updateText({
+										taskId: task._id,
+										text: task.text,
+										completed: task.completed,
+									})
+								}
 							>
 								<img src={editTaskSvg} alt='Edit icon' />
 							</div>
-							<div
-							// onClick={() => delTask(task._id)}
-							>
+							<div onClick={() => delTask(task._id)}>
 								<img src={deleteTaskSvg} alt='Delete icon' />
 							</div>
 						</div>

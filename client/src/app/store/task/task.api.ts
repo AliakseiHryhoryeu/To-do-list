@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+
 import { ITask } from './task.types'
+import { RootState } from 'app/store'
 
 const serverIp = process.env.SERVER_IP
 const baseUrl = serverIp + 'api/tasks'
@@ -17,9 +19,9 @@ export const taskApi = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: baseUrl,
 		prepareHeaders: (headers, { getState }) => {
-			// const token = (getState() as RootState).user.token
+			// const token = localStorage.getItem('token')
 
-			const token = localStorage.getItem('token')
+			const token = (getState() as RootState).user.token
 			if (token) {
 				headers.set('authorization', `Bearer ${token}`)
 			}
@@ -27,8 +29,8 @@ export const taskApi = createApi({
 		},
 	}),
 	endpoints: builder => ({
-		createTask: builder.query<
-			TasksResponse,
+		createTask: builder.mutation<
+			TaskResponse,
 			{ text: string; listId: string; userId: string }
 		>({
 			query: ({ text, listId, userId }) => ({
@@ -46,22 +48,22 @@ export const taskApi = createApi({
 				method: 'GET',
 			}),
 		}),
-		readTasksByListId: builder.query<TasksResponse, { listId: string }>({
+		readTasksByListId: builder.mutation<TasksResponse, { listId: string }>({
 			query: ({ listId }) => ({
 				url: `${baseUrl}/tasksbylistid`,
 				method: 'GET',
 				params: { listId: listId },
 			}),
 		}),
-		readTask: builder.query<TasksResponse, { taskId: string }>({
+		readTask: builder.mutation<TaskResponse, { taskId: string }>({
 			query: ({ taskId }) => ({
 				url: `${baseUrl}/task`,
 				method: 'GET',
 				params: { taskId: taskId },
 			}),
 		}),
-		updateTask: builder.query<
-			TasksResponse,
+		updateTask: builder.mutation<
+			TaskResponse,
 			{ taskId: string; text: string; completed: boolean }
 		>({
 			query: ({ taskId, text, completed }) => ({
@@ -70,7 +72,7 @@ export const taskApi = createApi({
 				body: { taskId: taskId, text: text, completed: completed },
 			}),
 		}),
-		deleteTask: builder.query<TasksResponse, { taskId: string }>({
+		deleteTask: builder.mutation<TasksResponse, { taskId: string }>({
 			query: ({ taskId }) => ({
 				url: `${baseUrl}/deletetask`,
 				method: 'PUT',
@@ -81,10 +83,10 @@ export const taskApi = createApi({
 })
 
 export const {
-	useCreateTaskQuery,
+	useCreateTaskMutation,
 	useReadTasksByTokenQuery,
-	useReadTasksByListIdQuery,
-	useReadTaskQuery,
-	useUpdateTaskQuery,
-	useDeleteTaskQuery,
+	useReadTasksByListIdMutation,
+	useReadTaskMutation,
+	useUpdateTaskMutation,
+	useDeleteTaskMutation,
 } = taskApi

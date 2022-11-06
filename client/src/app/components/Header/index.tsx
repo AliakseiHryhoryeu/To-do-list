@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import classNames from 'classnames'
 
+import { useActions } from 'app/hooks/useActions'
 import { Settings, Lists } from 'app/components'
-// import { UserActions } from 'app/state/actions'
 import { RootState } from 'app/store'
 
 import userIcon from 'assets/img/userIcon_1.png'
@@ -17,6 +17,9 @@ import './Header.scss'
 
 export const Header: FC = () => {
 	const dispatch = useDispatch()
+
+	const allActions = useActions()
+
 	const { isAuth, username, userEmail, settingsVisible } = useSelector(
 		(state: RootState) => {
 			return {
@@ -27,8 +30,6 @@ export const Header: FC = () => {
 			}
 		}
 	)
-	// const [isAuth, setIsAuth] = useState(true)
-	// const [settingsVisible, setSettingsVisible] = useState(false)
 
 	const [isActiveHeaderBurger, setActiveHeaderBurger] = useState(false)
 	const [isActiveUsername, setActiveUsername] = useState(false)
@@ -64,10 +65,7 @@ export const Header: FC = () => {
 								})}
 							>
 								<ul className='header__nav__list'>
-									<li
-										className='header__nav__item header__login'
-										// onClick={() => setIsAuth(true)}
-									>
+									<li className='header__nav__item header__login'>
 										<Link to='/login' className='header__nav__link '>
 											Log in
 										</Link>
@@ -108,7 +106,10 @@ export const Header: FC = () => {
 											})}
 										>
 											<div className='header__nav__username__item'>
-												<div className='header__nav__settings-container-userdata'>
+												<div
+													className='header__nav__settings-container-userdata'
+													onClick={() => dispatch(allActions.settingsShow)}
+												>
 													<div className='header__nav__settings-row2'>
 														<img
 															className='header__nav__settings-usericon'
@@ -132,26 +133,27 @@ export const Header: FC = () => {
 														</div>
 													</div>
 												</div>
+
 												<div className='header__nav__settings-sep'></div>
+
 												<div className='header__nav__settings-container'>
 													<div
 														className='header__nav__settings-row'
-														// onClick={() => dispatch(UserActions.logout())}
+														onClick={() => dispatch(allActions.settingsShow)}
 													>
 														<img src={themeIcon} alt='exitIcon' />
-														<Link to='/' className='header__nav__link-white'>
-															Theme
-														</Link>
+														<div className='header__nav__link-white'>Theme</div>
 													</div>
 													<div
 														className='header__nav__settings-row'
-														// onClick={() => setIsAuth(false)}
-														// onClick={() => dispatch(UserActions.logout())}
+														onClick={() => {
+															dispatch(allActions.logout())
+														}}
 													>
 														<img src={exitIcon} alt='exitIcon' />
-														<Link to='/' className='header__nav__link-white'>
+														<div className='header__nav__link-white'>
 															Logout
-														</Link>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -169,4 +171,7 @@ export const Header: FC = () => {
 			{isAuth && settingsVisible && <Settings />}
 		</>
 	)
+}
+function userActions() {
+	throw new Error('Function not implemented.')
 }

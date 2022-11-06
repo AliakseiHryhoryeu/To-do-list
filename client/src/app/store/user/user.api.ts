@@ -1,6 +1,6 @@
-import { RootState } from 'app/store'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IUser } from './user.types'
+
+import { RootState } from 'app/store'
 
 const serverIp = process.env.SERVER_IP
 const baseUrl = serverIp + 'api/user'
@@ -17,8 +17,7 @@ export const userApi = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: baseUrl,
 		prepareHeaders: (headers, { getState }) => {
-			// const token = (getState() as RootState).user.token
-			const token = localStorage.getItem('token')
+			const token = (getState() as RootState).user.token
 			if (token) {
 				headers.set('authorization', `Bearer ${token}`)
 			}
@@ -27,7 +26,7 @@ export const userApi = createApi({
 	}),
 	endpoints: build => ({
 		// SIGN UP
-		signUp: build.query<UserResponse, { email: string; password: string }>({
+		signUp: build.mutation<UserResponse, { email: string; password: string }>({
 			query: ({ email, password }) => ({
 				url: `${baseUrl}/signup`,
 				method: 'POST',
@@ -39,7 +38,7 @@ export const userApi = createApi({
 		}),
 
 		// LOGIN
-		login: build.query<UserResponse, { email: string; password: string }>({
+		login: build.mutation<UserResponse, { email: string; password: string }>({
 			query: items => ({
 				url: `${baseUrl}/login`,
 				method: 'POST',
@@ -51,7 +50,7 @@ export const userApi = createApi({
 		}),
 
 		// AUTH
-		auth: build.query<UserResponse, { token: string }>({
+		auth: build.query<UserResponse, {}>({
 			query: () => ({
 				url: `${baseUrl}/auth`,
 				method: 'GET',
@@ -60,5 +59,5 @@ export const userApi = createApi({
 	}),
 })
 
-export const { useSignUpQuery, useLoginQuery, useAuthQuery } = userApi
+export const { useSignUpMutation, useLoginMutation, useAuthQuery } = userApi
 export const userApiActions = userApi.internalActions

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { RootState } from 'app/store'
 import { AddTask, Task } from 'app/components'
-import { TaskHeader } from './TaskHeader'
+import { HeaderTask } from './HeaderTask/'
 
 import './Tasks.scss'
 
@@ -27,15 +27,15 @@ export const Tasks: FC = () => {
 		})
 		return response
 	}
-	if (!lists) {
-		return <div className='tasks__item'>Lists not found</div>
+	if (lists.length == 0) {
+		return <div className='tasks__item'>Tasks not found</div>
 	}
 	return (
 		<div className='tasks'>
 			{lists.map(list => {
 				return (
 					<div className='tasks__item' key={list._id}>
-						<TaskHeader
+						<HeaderTask
 							listId={list._id}
 							title={list.title}
 							color={list.color}

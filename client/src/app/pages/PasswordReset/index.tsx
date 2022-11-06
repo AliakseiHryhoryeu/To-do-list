@@ -3,23 +3,25 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 
+import { RootState } from 'app/store'
 import { Header } from 'app/components'
-// import { RootState } from 'app/state/reducers'
+
 import { passwordResetSchema } from './validation'
 
 import './PasswordReset.scss'
 
 export const PasswordReset: FC = () => {
 	const navigate = useNavigate()
-	// const { isAuth } = useSelector((state: RootState) => {
-	// 	return {
-	// 		isAuth: state.user.isAuth,
-	// 	}
-	// })
 
-	// if (isAuth === true) {
-	// 	navigate('/main', { replace: true })
-	// }
+	const { trialMode } = useSelector((state: RootState) => {
+		return {
+			trialMode: state.user.trialMode,
+		}
+	})
+	if (!trialMode) {
+		navigate('/', { replace: true })
+	}
+
 	const formik = useFormik({
 		initialValues: {
 			email: '',

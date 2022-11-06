@@ -8,13 +8,8 @@
 			"type": "node",
 			"request": "launch",
 			"name": "Launch Program",
-			"skipFiles": [
-				"<node_internals>/**"
-			],
-			"program": "${workspaceFolder}\\src\\routes\\user.routes.js",
-			"outFiles": [
-				"${workspaceFolder}/**/*.js"
-			]
+			"skipFiles": ["<node_modules>/**"],
+			"program": "${workspaceFolder}\\src\\index.js"
 		}
 	]
 }
