@@ -1,24 +1,43 @@
 import React, { useState, FC } from 'react'
+
+import { RootState } from 'app/store'
 import { useCreateTaskMutation } from 'app/store/task/task.api'
+import { useTypedSelector } from 'app/hooks/useAppSelector'
+import { useActions } from 'app/hooks/useActions'
 
 import './AddTask.scss'
+import uuid from 'react-uuid'
 
 type AddTaskProps = {
 	listId: string
 }
 
 export const AddTask: FC<AddTaskProps> = ({ listId }) => {
+	const { isTrialMode } = useTypedSelector((state: RootState) => {
+		return {
+			isTrialMode: state.user.trialMode,
+		}
+	})
+
 	const [visibleInput, setVisibleInput] = useState(false)
 	const [inputValue, setInputValue] = useState('')
-
 	const [createTaskRequest, { isLoading: isLoading }] = useCreateTaskMutation()
 
+	const allActions = useActions()
 	const toggleVisibleInput = () => {
 		setVisibleInput(!visibleInput)
 	}
 
 	const addNewTask = () => {
-		createTaskRequest({ listId: listId, text: inputValue })
+		if (!isTrialMode) {
+			createTaskRequest({ listId: listId, text: inputValue })
+		} else {
+			allActions.createLocalTask({
+				taskId: uuid(),
+				listId: listId,
+				text: inputValue,
+			})
+		}
 		setVisibleInput(!visibleInput)
 		setInputValue('')
 	}

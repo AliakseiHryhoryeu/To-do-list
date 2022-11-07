@@ -1,10 +1,9 @@
 import React, { FC } from 'react'
 
-import { RootState } from 'app/store'
-import { AddTask, Task } from 'app/components'
-import { HeaderTask } from './HeaderTask/'
+import { HeaderTask, AddTask, Task } from 'app/components'
 
 import { useTypedSelector } from 'app/hooks/useAppSelector'
+import { RootState } from 'app/store'
 
 import './Tasks.scss'
 
@@ -23,7 +22,7 @@ export const Tasks: FC = () => {
 		return <div className='tasks__item'>Tasks not found</div>
 	}
 
-	if (!showAllLists) {
+	if (!showAllLists && activeListId != '') {
 		const activeList = allLists.find(item => item._id === activeListId)
 		return (
 			<div className='tasks__item' key={activeList._id}>

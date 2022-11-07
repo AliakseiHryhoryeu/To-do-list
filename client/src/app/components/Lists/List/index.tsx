@@ -24,19 +24,22 @@ export const List: FC = () => {
 	const [readTasksMutation, { isLoading: isLoadingReadTasks }] =
 		useReadTasksByTokenMutation()
 
-	const { lists, activeListId, showAllLists } = useTypedSelector(
+	const { lists, activeListId, showAllLists, isTrialMode } = useTypedSelector(
 		(state: RootState) => {
 			return {
 				lists: state.list.allLists,
 				activeListId: state.list.activeListId,
 				showAllLists: state.list.showAllLists,
+				isTrialMode: state.user.trialMode,
 			}
 		}
 	)
 
 	const setActiveList = ({ listId }) => {
-		readList({ listId: listId })
-		readTasksMutation({})
+		if (!isTrialMode) {
+			readList({ listId: listId })
+			readTasksMutation({})
+		}
 		allActions.setList({ listId: listId })
 	}
 
@@ -52,8 +55,11 @@ export const List: FC = () => {
 
 	const removeList = (listId: string) => {
 		if (window.confirm('Are you sure you want to delete the list?')) {
-			// allActions.settingsHide()
-			deletePost({ listId })
+			if (!isTrialMode) {
+				deletePost({ listId })
+			} else {
+				allActions.deleteLocalList({ listId: listId })
+			}
 		}
 	}
 
@@ -65,20 +71,24 @@ export const List: FC = () => {
 		<ul className='main__list'>
 			{lists.map(list => {
 				return (
-					<li
-						onClick={() => setActiveList({ listId: list._id })}
+					<div
 						key={list._id}
-						className={classNames(findActiveList(list._id) ? 'active' : '')}
+						className={classNames(
+							'main__list__container',
+							findActiveList(list._id) ? 'active' : ''
+						)}
 					>
-						<i>{<Badge color={list.color} />}</i>
-						<span>{list.title}</span>
+						<li onClick={() => setActiveList({ listId: list._id })}>
+							<i>{<Badge color={list.color} />}</i>
+							<span>{list.title}</span>
+						</li>
 						<img
 							onClick={() => removeList(list._id)}
 							className='main__list__remove-icon'
 							src={removeSvg}
 							alt='Remove icon'
 						/>
-					</li>
+					</div>
 				)
 			})}
 		</ul>

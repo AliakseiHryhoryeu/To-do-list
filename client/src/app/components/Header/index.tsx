@@ -6,7 +6,6 @@ import classNames from 'classnames'
 import { useActions } from 'app/hooks/useActions'
 import { Settings, Lists } from 'app/components'
 import { RootState } from 'app/store'
-import { useAuth } from 'app/hooks/useAuth'
 
 import { useTypedSelector } from 'app/hooks/useAppSelector'
 
@@ -22,8 +21,6 @@ export const Header: FC = () => {
 	const dispatch = useDispatch()
 
 	const allActions = useActions()
-
-	useAuth()
 
 	const { isAuth, username, userEmail, settingsVisible } = useTypedSelector(
 		(state: RootState) => {
@@ -152,7 +149,7 @@ export const Header: FC = () => {
 													<div
 														className='header__nav__settings-row'
 														onClick={() => {
-															dispatch(allActions.logout())
+															allActions.logout()
 														}}
 													>
 														<img src={exitIcon} alt='exitIcon' />

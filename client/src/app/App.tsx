@@ -1,8 +1,11 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Landing, Page404, Signup, Login, PasswordReset, Main } from 'app/pages'
+import { useAuthQuery } from './store/user/user.api'
 
 function App() {
+	useAuthQuery({})
+
 	return (
 		<div className='App'>
 			<Routes>

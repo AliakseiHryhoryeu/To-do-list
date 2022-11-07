@@ -1,11 +1,16 @@
 const Router = require('express')
 const { check, validationResult } = require('express-validator')
-
-const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const mongoose = require('mongoose')
+
 const config = require('../config.json')
+
 const authMiddleware = require('../middleware/auth.middleware')
+
+const User = require('../models/User')
+const List = require('../models/List')
+const Task = require('../models/Task')
 
 const router = new Router()
 
@@ -49,11 +54,16 @@ router.post(
 			const token = jwt.sign({ id: userFind.id }, config.secretKey, {
 				expiresIn: '48h',
 			})
-			return res.json({
+
+			// response
+			const response = {
 				userId: userFind.id,
 				email: userFind.email,
 				username: userFind.username,
 				token,
+			}
+			return res.json({
+				user: response,
 			})
 		} catch (e) {
 			console.log(e)
@@ -83,11 +93,55 @@ router.post(
 			const token = jwt.sign({ id: user.id }, config.secretKey, {
 				expiresIn: '48h',
 			})
-			return res.json({
+
+			const responseUser = {
 				userId: user.id,
 				email: user.email,
 				username: user.username,
 				token,
+			}
+			// find all user lists
+			const responseLists = []
+			for (let i = 0; i < user.listId.length; i++) {
+				const list = await List.findById(
+					mongoose.Types.ObjectId(user.listId[i])
+				)
+				if (!list) {
+					continue
+				}
+				if (list.userId !== user.id) {
+					break
+				} else {
+					responseLists.push(list)
+				}
+			}
+			// find all user tasks
+			let responseTasks = []
+			for (let i = 0; i < user.listId.length; i++) {
+				const list = await List.findOne({
+					_id: mongoose.Types.ObjectId(user.listId[i]),
+				})
+				if (!list) {
+					continue
+				}
+				let listTasks = list.tasksId
+				if (!listTasks) {
+					continue
+				}
+				for (let j = 0; j < listTasks.length; j++) {
+					const task = await Task.findById(
+						mongoose.Types.ObjectId(listTasks[j])
+					)
+					if (!task) {
+						continue
+					}
+					responseTasks.push(task)
+				}
+			}
+			return res.json({
+				user: responseUser,
+				lists: responseLists,
+				tasks: responseTasks,
 			})
 		} catch (e) {
 			console.log(e)
@@ -102,11 +156,50 @@ router.get('/auth', authMiddleware, async (req, res) => {
 		const token = jwt.sign({ id: user.id }, config.secretKey, {
 			expiresIn: '48h',
 		})
-		return res.json({
+		const responseUser = {
 			userId: user.id,
 			email: user.email,
 			username: user.username,
 			token,
+		}
+		// find all user lists
+		const responseLists = []
+		for (let i = 0; i < user.listId.length; i++) {
+			const list = await List.findById(mongoose.Types.ObjectId(user.listId[i]))
+			if (!list) {
+				continue
+			}
+			if (list.userId !== user.id) {
+				break
+			} else {
+				responseLists.push(list)
+			}
+		}
+		// find all user tasks
+		let responseTasks = []
+		for (let i = 0; i < user.listId.length; i++) {
+			const list = await List.findOne({
+				_id: mongoose.Types.ObjectId(user.listId[i]),
+			})
+			if (!list) {
+				continue
+			}
+			let listTasks = list.tasksId
+			if (!listTasks) {
+				continue
+			}
+			for (let j = 0; j < listTasks.length; j++) {
+				const task = await Task.findById(mongoose.Types.ObjectId(listTasks[j]))
+				if (!task) {
+					continue
+				}
+				responseTasks.push(task)
+			}
+		}
+		return res.json({
+			user: responseUser,
+			lists: responseLists,
+			tasks: responseTasks,
 		})
 	} catch (e) {
 		console.log(e)

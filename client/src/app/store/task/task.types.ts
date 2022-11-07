@@ -7,5 +7,5 @@ export interface ITask {
 }
 
 export interface ITaskState {
-	allTasks: ITask[]
+	allTasks: ITask[] | undefined
 }

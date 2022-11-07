@@ -51,33 +51,35 @@ export const userSlice = createSlice({
 		builder.addMatcher(
 			userApi.endpoints.login.matchFulfilled,
 			(state, { payload }) => {
-				state.token = payload.token
-				state.activeUser.email = payload.email
-				state.activeUser.id = payload.userId
-				state.activeUser.username = payload.username
-				localStorage.setItem('token', payload.token)
+				console.log(payload)
+
+				state.token = payload.user.token
+				state.activeUser.email = payload.user.email
+				state.activeUser.id = payload.user.userId
+				state.activeUser.username = payload.user.username
+				localStorage.setItem('token', payload.user.token)
 				state.trialMode = false
 			}
 		),
 			builder.addMatcher(
 				userApi.endpoints.auth.matchFulfilled,
 				(state, { payload }) => {
-					state.token = payload.token
-					state.activeUser.email = payload.email
-					state.activeUser.id = payload.userId
-					state.activeUser.username = payload.username
-					localStorage.setItem('token', payload.token)
+					state.token = payload.user.token
+					state.activeUser.email = payload.user.email
+					state.activeUser.id = payload.user.userId
+					state.activeUser.username = payload.user.username
+					localStorage.setItem('token', payload.user.token)
 					state.trialMode = false
 				}
 			),
 			builder.addMatcher(
 				userApi.endpoints.signUp.matchFulfilled,
 				(state, { payload }) => {
-					state.token = payload.token
-					state.activeUser.email = payload.email
-					state.activeUser.id = payload.userId
-					state.activeUser.username = payload.username
-					localStorage.setItem('token', payload.token)
+					state.token = payload.user.token
+					state.activeUser.email = payload.user.email
+					state.activeUser.id = payload.user.userId
+					state.activeUser.username = payload.user.username
+					localStorage.setItem('token', payload.user.token)
 					state.trialMode = false
 				}
 			)

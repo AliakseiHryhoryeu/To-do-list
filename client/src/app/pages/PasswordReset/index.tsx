@@ -28,7 +28,6 @@ export const PasswordReset: FC = () => {
 		},
 		validationSchema: passwordResetSchema,
 		onSubmit: values => {
-			// dispatch(UserActions.login(values.username, values.password))
 			navigate('/', { replace: true })
 		},
 	})

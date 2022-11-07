@@ -6,7 +6,7 @@ export interface IList {
 	tasksId: string[]
 }
 export interface IListState {
-	allLists: IList[]
+	allLists: IList[] | undefined
 	activeListId: string
 	showAllLists: boolean
 	colors: string[]

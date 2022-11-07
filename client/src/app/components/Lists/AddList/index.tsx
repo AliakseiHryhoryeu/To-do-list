@@ -3,6 +3,7 @@ import React, { FC, useState } from 'react'
 import { Badge } from 'app/components'
 import { RootState } from 'app/store'
 import { useTypedSelector } from 'app/hooks/useAppSelector'
+import { useActions } from 'app/hooks/useActions'
 import { useCreateListMutation } from 'app/store/list/list.api'
 
 import closeSvg from 'assets/img/close.svg'
@@ -17,20 +18,24 @@ export const AddList: FC = () => {
 	const [addListMutation, { isLoading: isLoadingCreateList }] =
 		useCreateListMutation()
 
-	const { user, colors } = useTypedSelector((state: RootState) => {
+	const { colors, isTrialMode } = useTypedSelector((state: RootState) => {
 		return {
-			user: state.user.activeUser,
 			colors: state.list.colors,
+			isTrialMode: state.user.trialMode,
 		}
 	})
-
+	const allActions = useActions()
 	const changeColor = (color: string) => {
 		setSelectedColor(color)
 	}
 	const createList = (title: string, color: string) => {
 		setVisiblePopup(false)
 		setInputFolderValue('')
-		addListMutation({ title: title, color: color })
+		if (!isTrialMode) {
+			addListMutation({ title: title, color: color })
+		} else {
+			allActions.createLocalList({ title: title, color: color })
+		}
 	}
 
 	return (

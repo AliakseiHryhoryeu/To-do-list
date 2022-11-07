@@ -2,19 +2,24 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import uuid from 'react-uuid'
 
 import type { RootState } from 'app/store'
+import { userApi } from 'app/store/user/user.api'
 import { listApi } from 'app/store/list/list.api'
+import { taskSlice } from './../task/task.slice'
+import { userSlice } from './../user/user.slice'
 
 import { IListState, ColorsList } from './list.types'
 
+const LocalStorage_allLists = JSON.parse(localStorage.getItem('allLists'))
+const emptyLists = []
+
 const initialState: IListState = {
-	allLists: [],
+	allLists: LocalStorage_allLists || emptyLists,
 	activeListId: '',
 	showAllLists: true,
 	colors: ColorsList,
 }
 
-// сделать нормальное описание листа возможно скопировать с какого нибудь приложения
-const emptyList = [
+const example = [
 	{
 		_id: 'tguhjirftg',
 		title: 'test title',
@@ -28,14 +33,6 @@ export const listSlice = createSlice({
 	name: 'listSlice',
 	initialState,
 	reducers: {
-		// get all lists from localStorage
-		getLists: (state, action: PayloadAction<null>) => {
-			const LocalStorage_allLists =
-				localStorage.getItem('allListsTrial') || emptyList
-			// @ts-ignore
-			state.allListsTrial = JSON.parse(LocalStorage_allLists)
-		},
-		// show only 1 list
 		setList: (state, action: PayloadAction<{ listId: string }>) => {
 			state.activeListId = action.payload.listId
 			state.showAllLists = false
@@ -46,15 +43,64 @@ export const listSlice = createSlice({
 			state.showAllLists = true
 		},
 
-		deleteList: (state, action: PayloadAction<{ listId: string }>) => {
-			// useDeleteListQuery({
-			// 	listId: action.payload.listId,
-			// })
+		// ================== //
+		// === Trial Mode === //
+		// ================== //
+		createLocalList: (
+			state,
+			action: PayloadAction<{ title: string; color: string }>
+		) => {
+			const newList = {
+				_id: uuid(),
+				title: action.payload.title,
+				color: action.payload.color,
+				tasksId: [],
+				userId: '',
+			}
+			state.allLists.push(newList)
+			localStorage.setItem('allLists', JSON.stringify(state.allLists))
+		},
+
+		updateLocalList: (
+			state,
+			action: PayloadAction<{ listId: string; title: string }>
+		) => {
+			state.allLists.find(list => list._id === action.payload.listId).title =
+				action.payload.title
+			localStorage.setItem('allLists', JSON.stringify(state.allLists))
+		},
+
+		updatepushTaskToList: (
+			state,
+			action: PayloadAction<{ taskId: string; listId: string }>
+		) => {
+			const list = state.allLists.find(
+				list => list._id === action.payload.listId
+			)
+			if (list) {
+				state.allLists
+					.find(list => list._id === action.payload.listId)
+					.tasksId.push(action.payload.taskId)
+				localStorage.setItem('allLists', JSON.stringify(state.allLists))
+			}
+		},
+		deleteLocalList: (state, action: PayloadAction<{ listId: string }>) => {
+			state.activeListId = ''
+			state.showAllLists = true
+
+			const newState = state.allLists.filter(
+				list => list._id !== action.payload.listId
+			)
+			state.allLists = newState
+			localStorage.setItem('allLists', JSON.stringify(state.allLists))
 		},
 	},
 
 	// Auto update our folders state
 	extraReducers: builder => {
+		// ================= //
+		// === Lists Api === //
+		// ================= //
 		builder.addMatcher(
 			listApi.endpoints.createList.matchFulfilled,
 			(state, { payload }) => {
@@ -116,6 +162,49 @@ export const listSlice = createSlice({
 						state.allLists = payload.lists
 					}
 				}
+			),
+			// ================ //
+			// === User Api === //
+			// ================ //
+			builder.addMatcher(
+				userApi.endpoints.login.matchFulfilled,
+				(state, { payload }) => {
+					state.allLists = payload.lists
+				}
+			),
+			builder.addMatcher(
+				userApi.endpoints.auth.matchFulfilled,
+				(state, { payload }) => {
+					state.allLists = payload.lists
+				}
+			),
+			builder.addMatcher(
+				userSlice.actions.logout.match,
+				(state, { payload }) => {
+					state.allLists = initialState.allLists
+				}
+			),
+			// ================== //
+			// === Trial Mode === //
+			// ================== //
+			builder.addMatcher(
+				taskSlice.actions.createLocalTask.match,
+				(state, { payload }) => {
+					state.allLists
+						.find(list => list._id === payload.listId)
+						.tasksId.push(payload.taskId)
+				}
+			),
+			builder.addMatcher(
+				taskSlice.actions.deleteLocalTask.match,
+				(state, { payload }) => {
+					const newAllLists = state.allLists.filter(
+						list =>
+							list.tasksId.find(taskId => taskId === payload.taskId) !==
+							payload.taskId
+					)
+					state.allLists = newAllLists
+				}
 			)
 	},
 })
@@ -126,31 +215,3 @@ export const listReducer = listSlice.reducer
 export const listActions = listSlice.actions
 
 export const selectCurrentList = (state: RootState) => state.user.activeUser
-
-// save all lists to localStorage
-// addList: (
-// 	state,
-// 	action: PayloadAction<{
-// 		title: string
-// 		color: string
-// 		userId: string
-// 	}>
-// ) => {
-// 	listSlice.actions.getLists()
-
-// 	const newList = {
-// 		_id: uuid(),
-// 		title: action.payload.title,
-// 		color: action.payload.color,
-// 		tasksId: [''],
-// 		userId: action.payload.userId,
-// 	}
-// 	// state.allListsTrial.push(newList)
-// 	// localStorage.setItem('allListsTrial', JSON.stringify(state.allListsTrial))
-
-// 	// useCreateListQuery({
-// 	// 	title: action.payload.title,
-// 	// 	color: action.payload.color,
-// 	// 	userId: action.payload.userId,
-// 	// })
-// },

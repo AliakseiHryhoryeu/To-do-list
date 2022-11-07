@@ -1,9 +1,13 @@
 # To-do-list
 
+## Short Description
+
+This is client-server application for task management, data can be saved in local storage if user not authenticated or in database if user authenticated
+
 ## Frontend
 
 - React
-- Redux
+- Redux, Redux Toolkit
 - TypeScript
 - SCSS
 - Webpack
@@ -17,7 +21,7 @@
 
 ## Figma
 
-https://www.figma.com/file/n5p6P6gIghvaMJvw2hVIZz/Untitled?node-id=0%3A1
+https://www.figma.com/file/n5p6P6gIghvaMJvw2hVIZz/To-do-list?node-id=606%3A2
 
 ## Client
 

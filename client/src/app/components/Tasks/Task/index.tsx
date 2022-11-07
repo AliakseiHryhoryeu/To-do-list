@@ -8,6 +8,7 @@ import {
 } from 'app/store/task/task.api'
 
 import { useTypedSelector } from 'app/hooks/useAppSelector'
+import { useActions } from 'app/hooks/useActions'
 
 import editTaskSvg from 'assets/img/editTask.svg'
 import deleteTaskSvg from 'assets/img/deleteTask.svg'
@@ -19,9 +20,10 @@ type TaskProps = {
 }
 
 export const Task: FC<TaskProps> = ({ listId }) => {
-	const { tasks } = useTypedSelector((state: RootState) => {
+	const { tasks, isTrialMode } = useTypedSelector((state: RootState) => {
 		return {
 			tasks: state.task.allTasks.filter(item => item.listId === listId),
+			isTrialMode: state.user.trialMode,
 		}
 	})
 	const [updateTaskRequest, { isLoading: isLoadingUpdate }] =
@@ -29,30 +31,52 @@ export const Task: FC<TaskProps> = ({ listId }) => {
 	const [deleteTaskRequest, { isLoading: isLoadingDelete }] =
 		useDeleteTaskMutation()
 
+	const allTasks = useActions()
+
 	const updateText = ({ taskId, text, completed }) => {
 		const newText = window.prompt(`New task text`, text)
 		if (newText) {
-			updateTaskRequest({
-				taskId: taskId,
-				text: newText,
-				completed: completed,
-			})
+			if (!isTrialMode) {
+				updateTaskRequest({
+					taskId: taskId,
+					text: newText,
+					completed: completed,
+				})
+			} else {
+				allTasks.updateLocalTask({
+					taskId: taskId,
+					text: newText,
+					completed: completed,
+				})
+			}
 		}
 	}
 
 	const checkTask = ({ taskId, text, completed }) => {
-		updateTaskRequest({
-			taskId: taskId,
-			text: text,
-			completed: !completed,
-		})
+		if (!isTrialMode) {
+			updateTaskRequest({
+				taskId: taskId,
+				text: text,
+				completed: !completed,
+			})
+		} else {
+			allTasks.updateLocalTask({
+				taskId: taskId,
+				text: text,
+				completed: !completed,
+			})
+		}
 	}
 
 	const delTask = taskId => {
 		if (window.confirm('Are you sure you want delete this task?')) {
-			deleteTaskRequest({
-				taskId: taskId,
-			})
+			if (!isTrialMode) {
+				deleteTaskRequest({
+					taskId: taskId,
+				})
+			} else {
+				allTasks.deleteLocalTask({ taskId: taskId })
+			}
 		}
 	}
 

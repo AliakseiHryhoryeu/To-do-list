@@ -1,45 +1,70 @@
+import { listSlice } from './../list/list.slice'
+import { userSlice } from './../user/user.slice'
+import uuid from 'react-uuid'
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 // import uuid from 'react-uuid'
 
 import { taskApi } from './task.api'
 
 import { ITaskState, ITask } from './task.types'
+import { userApi } from '../user/user.api'
+
+const LocalStorageFolder = 'allTasks'
+const LocalStorage_allTasks = JSON.parse(
+	localStorage.getItem(LocalStorageFolder)
+)
 
 const initialState: ITaskState = {
-	allTasks: [
-		{
-			_id: '',
-			text: '',
-			completed: false,
-			listId: '',
-			userId: '',
-		},
-	],
+	allTasks: LocalStorage_allTasks || [],
 }
-
-const emptyTask = [
-	{
-		_id: 'sagsag',
-		text: 'sagasg',
-		completed: false,
-		listId: 'sagasg',
-		userId: 'asgsag',
-	},
-]
 
 export const taskSlice = createSlice({
 	name: 'task',
 	initialState,
 	reducers: {
-		// get all lists from localStorage
-		getTasks: (state, action: PayloadAction<null>) => {
-			const LocalStorage_allLists =
-				localStorage.getItem('allListsTrial') || emptyTask
-			// @ts-ignore
-			state.allListsTrial = JSON.parse(LocalStorage_allLists)
+		createLocalTask: (
+			state,
+			action: PayloadAction<{ taskId: string; listId: string; text: string }>
+		) => {
+			const newList = {
+				_id: action.payload.taskId,
+				text: action.payload.text,
+				completed: false,
+				listId: action.payload.listId,
+				userId: '',
+			}
+			state.allTasks.push(newList)
+			localStorage.setItem(LocalStorageFolder, JSON.stringify(state.allTasks))
+		},
+		updateLocalTask: (
+			state,
+			action: PayloadAction<{
+				taskId: string
+				text: string
+				completed: boolean
+			}>
+		) => {
+			state.allTasks.find(task => task._id === action.payload.taskId).text =
+				action.payload.text
+
+			state.allTasks.find(
+				task => task._id === action.payload.taskId
+			).completed = action.payload.completed
+
+			localStorage.setItem(LocalStorageFolder, JSON.stringify(state.allTasks))
+		},
+		deleteLocalTask: (state, action: PayloadAction<{ taskId: string }>) => {
+			const newState = state.allTasks.filter(
+				task => task._id !== action.payload.taskId
+			)
+			state.allTasks = newState
+			localStorage.setItem(LocalStorageFolder, JSON.stringify(state.allTasks))
 		},
 	},
 	extraReducers: builder => {
+		// ================= //
+		// === Tasks Api === //
+		// ================= //
 		builder.addMatcher(
 			taskApi.endpoints.readTasksByToken.matchFulfilled,
 			(state, { payload }) => {
@@ -108,43 +133,42 @@ export const taskSlice = createSlice({
 						state.allTasks = payload.tasks
 					}
 				}
+			),
+			// ================ //
+			// === User Api === //
+			// ================ //
+			builder.addMatcher(
+				userApi.endpoints.login.matchFulfilled,
+				(state, { payload }) => {
+					state.allTasks = payload.tasks
+				}
+			),
+			builder.addMatcher(
+				userApi.endpoints.auth.matchFulfilled,
+				(state, { payload }) => {
+					state.allTasks = payload.tasks
+				}
+			),
+			builder.addMatcher(
+				userSlice.actions.logout.match,
+				(state, { payload }) => {
+					state = initialState
+				}
+			),
+			// ================== //
+			// === Trial Mode === //
+			// ================== //
+			builder.addMatcher(
+				listSlice.actions.deleteLocalList.match,
+				(state, { payload }) => {
+					const newAllTasks = state.allTasks.filter(
+						task => task.listId !== payload.listId
+					)
+					state.allTasks = newAllTasks
+				}
 			)
 	},
 })
 
 export const taskReducer = taskSlice.reducer
 export const taskActions = taskSlice.actions
-
-// save all lists to localStorage
-// addTask: (
-// 	state,
-// 	action: PayloadAction<{
-// 		text: string
-// 		listId: string
-// 		userId: string
-// 	}>
-// ) => {
-// 	taskSlice.actions.getTasks()
-
-// 	const newTask = {
-// 		_id: uuid(),
-// 		text: 'sagasg',
-// 		completed: false,
-// 		listId: action.payload.listId,
-// 		userId: action.payload.userId,
-// 	}
-// 	// state.allTasksTrial.push(newTask)
-// 	// localStorage.setItem('allListsTrial', JSON.stringify(state.allTasksTrial))
-
-// 	// useCreateTaskQuery({
-// 	// 	text: action.payload.text,
-// 	// 	listId: action.payload.listId,
-// 	// 	userId: action.payload.userId,
-// 	// })
-// },
-// deleteTask: (state, action: PayloadAction<ITask>) => {
-// 	state.allTasks.push(action.payload)
-// },
-// readTask: (state, action: PayloadAction<ITask>) => {
-// 	state.allTasks.push(action.payload)
-// },

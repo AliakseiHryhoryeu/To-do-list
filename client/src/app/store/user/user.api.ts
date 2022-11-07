@@ -1,15 +1,34 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+import { IList } from '../list/list.types'
+import { ITask } from '../task/task.types'
+
 import { RootState } from 'app/store'
 
 const serverIp = process.env.SERVER_IP
 const baseUrl = serverIp + 'api/user'
 
-export interface UserResponse {
+export interface IUserResponse {
 	userId: string
 	email: string
 	username: string
 	token: string
+}
+
+export interface IAuthResponse {
+	user: IUserResponse
+	lists: IList[]
+	tasks: ITask[]
+}
+
+export interface ILoginResponse {
+	user: IUserResponse
+	lists: IList[]
+	tasks: ITask[]
+}
+
+export interface ISignUpResponse {
+	user: IUserResponse
 }
 
 export const userApi = createApi({
@@ -25,20 +44,15 @@ export const userApi = createApi({
 		},
 	}),
 	endpoints: build => ({
-		// SIGN UP
-		signUp: build.mutation<UserResponse, { email: string; password: string }>({
-			query: ({ email, password }) => ({
-				url: `${baseUrl}/signup`,
-				method: 'POST',
-				body: {
-					email: email,
-					password: password,
-				},
+		// AUTH
+		auth: build.query<IAuthResponse, {}>({
+			query: () => ({
+				url: `${baseUrl}/auth`,
+				method: 'GET',
 			}),
 		}),
-
 		// LOGIN
-		login: build.mutation<UserResponse, { email: string; password: string }>({
+		login: build.mutation<ILoginResponse, { email: string; password: string }>({
 			query: items => ({
 				url: `${baseUrl}/login`,
 				method: 'POST',
@@ -48,12 +62,18 @@ export const userApi = createApi({
 				},
 			}),
 		}),
-
-		// AUTH
-		auth: build.query<UserResponse, {}>({
-			query: () => ({
-				url: `${baseUrl}/auth`,
-				method: 'GET',
+		// SIGN UP
+		signUp: build.mutation<
+			ISignUpResponse,
+			{ email: string; password: string }
+		>({
+			query: ({ email, password }) => ({
+				url: `${baseUrl}/signup`,
+				method: 'POST',
+				body: {
+					email: email,
+					password: password,
+				},
 			}),
 		}),
 	}),

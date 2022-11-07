@@ -1,8 +1,6 @@
 import React, { FC } from 'react'
 
-import { List, AddList } from 'app/components'
-
-import { HeaderList } from './HeaderList/'
+import { HeaderList, List, AddList } from 'app/components'
 
 import './Lists.scss'
 

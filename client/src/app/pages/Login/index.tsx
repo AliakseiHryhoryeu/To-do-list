@@ -14,16 +14,10 @@ import appleIcon from 'assets/img/Apple-icon.svg'
 import { loginSchema } from './validation'
 
 import './Login.scss'
-import { useReadTasksByTokenMutation } from 'app/store/task/task.api'
-import { useReadListsByTokenMutation } from 'app/store/list/list.api'
 
 export const Login: FC = () => {
 	const navigate = useNavigate()
 	const [loginRequest, { isLoading: isLoading }] = useLoginMutation()
-	const [listsRequest, { isLoading: isLoadingLists }] =
-		useReadListsByTokenMutation()
-	const [tasksRequest, { isLoading: isLoadingTasks }] =
-		useReadTasksByTokenMutation()
 
 	const { trialMode } = useTypedSelector((state: RootState) => {
 		return {
@@ -32,9 +26,7 @@ export const Login: FC = () => {
 	})
 
 	if (!trialMode) {
-		listsRequest({})
-		tasksRequest({})
-		navigate('/', { replace: true })
+		navigate('/', { replace: false })
 	}
 
 	const formik = useFormik({

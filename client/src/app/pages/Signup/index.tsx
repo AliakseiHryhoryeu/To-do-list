@@ -14,9 +14,6 @@ import appleIcon from 'assets/img/Apple-icon.svg'
 import { signupSchema } from './validation'
 
 import './Signup.scss'
-import { useAuth } from 'app/hooks/useAuth'
-import { useReadListsByTokenMutation } from 'app/store/list/list.api'
-import { useReadTasksByTokenMutation } from 'app/store/task/task.api'
 
 export const Signup: FC = () => {
 	const navigate = useNavigate()
@@ -27,14 +24,7 @@ export const Signup: FC = () => {
 		}
 	})
 
-	const [listsRequest, { isLoading: isLoadingLists }] =
-		useReadListsByTokenMutation()
-	const [tasksRequest, { isLoading: isLoadingTasks }] =
-		useReadTasksByTokenMutation()
-
 	if (!trialMode) {
-		listsRequest({})
-		tasksRequest({})
 		navigate('/', { replace: true })
 	}
 
