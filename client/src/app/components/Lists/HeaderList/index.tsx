@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import { useDispatch } from 'react-redux'
 import classNames from 'classnames'
 
 import { useTypedSelector } from 'app/hooks/useAppSelector'
@@ -8,7 +7,6 @@ import { useActions } from 'app/hooks/useActions'
 import { RootState } from 'app/store'
 
 export const HeaderList: FC = () => {
-	const dispatch = useDispatch()
 	const { showAllLists } = useTypedSelector((state: RootState) => {
 		return {
 			showAllLists: state.list.showAllLists,
@@ -19,7 +17,7 @@ export const HeaderList: FC = () => {
 		<ul className='main__list main__list-title'>
 			<li
 				className={classNames(showAllLists ? 'active' : '')}
-				onClick={() => dispatch(allLists.showAllLists({}))}
+				onClick={() => allLists.showAllLists({})}
 			>
 				<i>
 					<svg

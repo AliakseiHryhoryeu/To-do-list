@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import { useDispatch } from 'react-redux'
 import { useTypedSelector } from 'app/hooks/useAppSelector'
 import { RootState } from 'app/store'
 import editListSvg from 'assets/img/editList.svg'

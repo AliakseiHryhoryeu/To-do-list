@@ -1,7 +1,5 @@
 import React, { useState, FC } from 'react'
-import { useDispatch } from 'react-redux'
 import { useCreateTaskMutation } from 'app/store/task/task.api'
-// import { TasksActions } from 'app/state/actions'
 
 import './AddTask.scss'
 

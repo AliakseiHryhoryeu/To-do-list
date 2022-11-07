@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
-import { useDispatch } from 'react-redux'
 
-// import { UserActions } from 'app/state/actions'
+import { useActions } from 'app/hooks/useActions'
 
 import closebtn from 'assets/img/remove.svg'
 
@@ -12,24 +11,23 @@ type AlertProps = {
 }
 
 export const Alert: FC<AlertProps> = ({ text }) => {
-	const dispatch = useDispatch()
-
+	const allActions = useActions()
 	return (
 		<div className='alert'>
 			<div
 				className='alert__wrapper'
-				// onClick={() => {
-				// 	dispatch(UserActions.hideAlert())
-				// }}
+				onClick={() => {
+					allActions.alertHide()
+				}}
 			>
 				<div className='alert__message'>{text}</div>
 				<img
 					src={closebtn}
 					alt='Remove icon'
 					className='alert__close'
-					// onClick={() => {
-					// 	dispatch(UserActions.hideAlert())
-					// }}
+					onClick={() => {
+						allActions.alertHide()
+					}}
 				/>
 			</div>
 		</div>

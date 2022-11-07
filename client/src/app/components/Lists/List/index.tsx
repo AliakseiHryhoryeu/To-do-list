@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import { useDispatch } from 'react-redux'
 import classNames from 'classnames'
 
 import { Badge } from 'app/components'
@@ -18,7 +17,6 @@ import removeSvg from 'assets/img/remove.svg'
 import './List.scss'
 
 export const List: FC = () => {
-	const dispatch = useDispatch()
 	const allActions = useActions()
 
 	const [deletePost, { isLoading: isDeleting }] = useDeleteListMutation()
@@ -39,7 +37,7 @@ export const List: FC = () => {
 	const setActiveList = ({ listId }) => {
 		readList({ listId: listId })
 		readTasksMutation({})
-		dispatch(allActions.setList({ listId: listId }))
+		allActions.setList({ listId: listId })
 	}
 
 	const findActiveList = listId => {
@@ -54,7 +52,7 @@ export const List: FC = () => {
 
 	const removeList = (listId: string) => {
 		if (window.confirm('Are you sure you want to delete the list?')) {
-			dispatch(allActions.settingsHide())
+			// allActions.settingsHide()
 			deletePost({ listId })
 		}
 	}

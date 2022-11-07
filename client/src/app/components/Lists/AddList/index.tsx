@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react'
-import { useDispatch } from 'react-redux'
 
 import { Badge } from 'app/components'
 import { RootState } from 'app/store'
@@ -18,8 +17,6 @@ export const AddList: FC = () => {
 	const [addListMutation, { isLoading: isLoadingCreateList }] =
 		useCreateListMutation()
 
-	const dispatch = useDispatch()
-
 	const { user, colors } = useTypedSelector((state: RootState) => {
 		return {
 			user: state.user.activeUser,
@@ -31,6 +28,8 @@ export const AddList: FC = () => {
 		setSelectedColor(color)
 	}
 	const createList = (title: string, color: string) => {
+		setVisiblePopup(false)
+		setInputFolderValue('')
 		addListMutation({ title: title, color: color })
 	}
 

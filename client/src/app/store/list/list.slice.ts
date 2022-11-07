@@ -111,6 +111,8 @@ export const listSlice = createSlice({
 				listApi.endpoints.deleteList.matchFulfilled,
 				(state, { payload }) => {
 					if (payload.lists) {
+						state.activeListId = ''
+						state.showAllLists = true
 						state.allLists = payload.lists
 					}
 				}
