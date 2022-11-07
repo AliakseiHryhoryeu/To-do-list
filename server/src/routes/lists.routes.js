@@ -26,15 +26,25 @@ router.get('/listsbyusertoken', async function (req, res) {
 		req.user = decoded
 		const userId = req.user.id
 
-		const user = await User.findOne({ userId })
+		const user = await User.findById(userId)
 		if (!user) {
 			return res.status(404).json({ message: 'User not found' })
 		}
 
 		const userLists = user.listId
-		const lists = await List.find({ userLists })
+		const response = []
 
-		const response = lists
+		for (let i = 0; i < userLists.length; i++) {
+			const list = await List.findById(mongoose.Types.ObjectId(userLists[i]))
+			if (!list) {
+				continue
+			}
+			if (list.userId !== userId) {
+				break
+			} else {
+				response.push(list)
+			}
+		}
 		return res.json({
 			lists: response,
 		})
@@ -63,13 +73,13 @@ router.get(
 			req.user = decoded
 			const userId = req.user.id
 
-			const user = await User.findOne({ userId })
+			const user = await User.findById(userId)
 			if (!user) {
 				return res.status(404).json({ message: 'User not found' })
 			}
 
 			const { listId } = req.query
-			const list = await List.findOne({ _id: listId })
+			const list = await List.findById(listId)
 			if (!list) {
 				return res.status(404).json({ message: 'List not found' })
 			}
@@ -105,7 +115,7 @@ router.post(
 			req.user = decoded
 			const userId = req.user.id
 
-			const user = await User.findOne({ userId })
+			const user = await User.findById(userId)
 			if (!user) {
 				return res.status(404).json({ message: 'User not found' })
 			}
@@ -155,16 +165,14 @@ router.put(
 			req.user = decoded
 			const userId = req.user.id
 
-			const user = await User.findOne({ userId })
+			const user = await User.findById(userId)
 			if (!user) {
 				return res.status(404).json({ message: 'User not found' })
 			}
 
 			const { listId, title } = req.body
 
-			const list = await List.findOne({
-				_id: mongoose.Types.ObjectId(listId),
-			})
+			const list = await List.findById(mongoose.Types.ObjectId(listId))
 			if (!list) {
 				return res.status(400).json({ message: 'List not found', errors })
 			}
@@ -208,14 +216,14 @@ router.put(
 			req.user = decoded
 			const userId = req.user.id
 
-			const user = await User.findOne({ userId })
+			const user = await User.findById(userId)
 			if (!user) {
 				return res.status(404).json({ message: 'User not found' })
 			}
 
 			const { listId } = req.body
 
-			const list = await List.findOne({ _id: mongoose.Types.ObjectId(listId) })
+			const list = await List.findById(mongoose.Types.ObjectId(listId))
 			if (!list) {
 				return res.status(400).json({ message: 'List not found', errors })
 			}
@@ -225,9 +233,9 @@ router.put(
 				try {
 					for (let i = 0; i < tasks.length; i++) {
 						let task = tasks[i]
-						const temp = await Task.findOneAndDelete({
-							_id: mongoose.Types.ObjectId(task),
-						})
+						const temp = await Task.findByIdAndDelete(
+							mongoose.Types.ObjectId(task)
+						)
 					}
 				} catch {}
 			}
@@ -235,7 +243,7 @@ router.put(
 			if (userId != list.userId) {
 				return res.status(404).json({ message: 'Server error, invalid token' })
 			}
-			const userList = await User.findOneAndUpdate(
+			const userList = await User.findByIdAndUpdate(
 				{ _id: userId },
 				{ $pull: { listId: listId } }
 			)
@@ -244,10 +252,23 @@ router.put(
 			})
 			await userList.save()
 
-			const userLists = userList.listId
-			const lists = await List.find({ userLists })
+			const userLists = user.listId
+			const response = []
+
+			for (let i = 0; i < userLists.length; i++) {
+				const list = await List.findById(mongoose.Types.ObjectId(userLists[i]))
+				if (!list) {
+					continue
+				}
+				if (list.userId !== userId) {
+					break
+				} else {
+					response.push(list)
+				}
+			}
+
 			return res.json({
-				lists,
+				lists: response,
 			})
 		} catch (e) {
 			console.log(e)
