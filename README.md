@@ -16,8 +16,8 @@ This is client-server application for task management, data can be saved in loca
 ## Backend
 
 - Express
-- JavaScript
 - MongoDB
+- JavaScript
 
 ## Figma
 
@@ -29,6 +29,6 @@ https://to-do-list-client.vercel.app/
 
 ## Server
 
-https://todo-8877.herokuapp.com/
+https://todolist-server11.herokuapp.com/
 
 ![To-do-list-preview](preview.jpg)
