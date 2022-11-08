@@ -1,7 +1,6 @@
 const Router = require('express')
 const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
-const config = require('../config.json')
 
 const mongoose = require('mongoose')
 const User = require('../models/User')
@@ -9,6 +8,8 @@ const List = require('../models/List')
 const Task = require('../models/Task')
 
 const router = new Router()
+
+const jwtSecretKey = process.env.JWT_SECRET_KEY
 
 //Get lists By UserId
 router.get('/listsbyusertoken', async function (req, res) {
@@ -22,7 +23,7 @@ router.get('/listsbyusertoken', async function (req, res) {
 		if (!token) {
 			return res.status(401).json({ message: 'Auth error' })
 		}
-		const decoded = jwt.verify(token, config.secretKey)
+		const decoded = jwt.verify(token, jwtSecretKey)
 		req.user = decoded
 		const userId = req.user.id
 
@@ -69,7 +70,7 @@ router.get(
 			if (!token) {
 				return res.status(401).json({ message: 'Auth error' })
 			}
-			const decoded = jwt.verify(token, config.secretKey)
+			const decoded = jwt.verify(token, jwtSecretKey)
 			req.user = decoded
 			const userId = req.user.id
 
@@ -111,7 +112,7 @@ router.post(
 			if (!token) {
 				return res.status(401).json({ message: 'Auth error' })
 			}
-			const decoded = jwt.verify(token, config.secretKey)
+			const decoded = jwt.verify(token, jwtSecretKey)
 			req.user = decoded
 			const userId = req.user.id
 
@@ -161,7 +162,7 @@ router.put(
 			if (!token) {
 				return res.status(401).json({ message: 'Auth error' })
 			}
-			const decoded = jwt.verify(token, config.secretKey)
+			const decoded = jwt.verify(token, jwtSecretKey)
 			req.user = decoded
 			const userId = req.user.id
 
@@ -212,7 +213,7 @@ router.put(
 			if (!token) {
 				return res.status(401).json({ message: 'Auth error' })
 			}
-			const decoded = jwt.verify(token, config.secretKey)
+			const decoded = jwt.verify(token, jwtSecretKey)
 			req.user = decoded
 			const userId = req.user.id
 

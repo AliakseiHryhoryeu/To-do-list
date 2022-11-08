@@ -9,5 +9,5 @@ export type IUserState = {
 	token: string
 	trialMode: boolean
 	settingsVisible: boolean
-	alert: boolean | string
+	alertVisible: boolean
 }

@@ -14,12 +14,7 @@ export const Alert: FC<AlertProps> = ({ text }) => {
 	const allActions = useActions()
 	return (
 		<div className='alert'>
-			<div
-				className='alert__wrapper'
-				onClick={() => {
-					allActions.alertHide()
-				}}
-			>
+			<div className='alert__wrapper'>
 				<div className='alert__message'>{text}</div>
 				<img
 					src={closebtn}

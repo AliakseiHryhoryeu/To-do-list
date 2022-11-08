@@ -122,3 +122,27 @@
 		}
 	}
 }
+@media (max-width: 500px) {
+	.signup {
+		&__container {
+			max-width: none;
+		}
+		&__form {
+			width: 100vw;
+		}
+		&__input {
+			max-width: none;
+			min-width: auto;
+			width: 90%;
+		}
+		&__button {
+			max-width: none;
+			width: 90%;
+		}
+		&__text {
+			max-width: none;
+			min-width: auto;
+			width: 90%;
+		}
+	}
+}

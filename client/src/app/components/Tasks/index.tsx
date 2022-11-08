@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-import { HeaderTask, AddTask, Task } from 'app/components'
+import { HeaderTask, AddTask, Task, AddList } from 'app/components'
 
 import { useTypedSelector } from 'app/hooks/useAppSelector'
 import { RootState } from 'app/store'
@@ -19,7 +19,12 @@ export const Tasks: FC = () => {
 	)
 
 	if (allLists.length == 0) {
-		return <div className='tasks__item'>Tasks not found</div>
+		return (
+			<>
+				<div className='tasks__item'>Folders not found</div>
+				<AddList />
+			</>
+		)
 	}
 
 	if (!showAllLists && activeListId != '') {

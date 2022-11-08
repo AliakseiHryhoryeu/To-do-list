@@ -4,8 +4,6 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 
-const config = require('../config.json')
-
 const authMiddleware = require('../middleware/auth.middleware')
 
 const User = require('../models/User')
@@ -13,6 +11,8 @@ const List = require('../models/List')
 const Task = require('../models/Task')
 
 const router = new Router()
+
+const jwtSecretKey = process.env.JWT_SECRET_KEY
 
 router.post(
 	'/signup',
@@ -51,7 +51,7 @@ router.post(
 
 			// find user
 			const userFind = await User.findOne({ email })
-			const token = jwt.sign({ id: userFind.id }, config.secretKey, {
+			const token = jwt.sign({ id: userFind.id }, jwtSecretKey, {
 				expiresIn: '48h',
 			})
 
@@ -90,7 +90,7 @@ router.post(
 			if (!isPassValid) {
 				return res.status(400).json({ message: 'Invalid password' })
 			}
-			const token = jwt.sign({ id: user.id }, config.secretKey, {
+			const token = jwt.sign({ id: user.id }, jwtSecretKey, {
 				expiresIn: '48h',
 			})
 
@@ -153,7 +153,7 @@ router.post(
 router.get('/auth', authMiddleware, async (req, res) => {
 	try {
 		const user = await User.findOne({ _id: req.user.id })
-		const token = jwt.sign({ id: user.id }, config.secretKey, {
+		const token = jwt.sign({ id: user.id }, jwtSecretKey, {
 			expiresIn: '48h',
 		})
 		const responseUser = {

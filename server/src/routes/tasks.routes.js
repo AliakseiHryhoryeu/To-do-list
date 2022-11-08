@@ -3,13 +3,14 @@ const { check, validationResult } = require('express-validator')
 const mongoose = require('mongoose')
 
 const jwt = require('jsonwebtoken')
-const config = require('../config.json')
 
 const User = require('../models/User')
 const List = require('../models/List')
 const Task = require('../models/Task')
 
 const router = new Router()
+
+const jwtSecretKey = process.env.JWT_SECRET_KEY
 
 router.get('/tasksbyusertoken', async function (req, res) {
 	try {
@@ -22,7 +23,7 @@ router.get('/tasksbyusertoken', async function (req, res) {
 		if (!token) {
 			return res.status(401).json({ message: 'Auth error' })
 		}
-		const decoded = jwt.verify(token, config.secretKey)
+		const decoded = jwt.verify(token, jwtSecretKey)
 		req.user = decoded
 		const userId = req.user.id
 
@@ -75,7 +76,7 @@ router.get(
 			if (!token) {
 				return res.status(401).json({ message: 'Auth error' })
 			}
-			const decoded = jwt.verify(token, config.secretKey)
+			const decoded = jwt.verify(token, jwtSecretKey)
 			req.user = decoded
 			const userId = req.user.id
 
@@ -125,7 +126,7 @@ router.get(
 			if (!token) {
 				return res.status(401).json({ message: 'Auth error' })
 			}
-			const decoded = jwt.verify(token, config.secretKey)
+			const decoded = jwt.verify(token, jwtSecretKey)
 			req.user = decoded
 			const userId = req.user.id
 
@@ -174,7 +175,7 @@ router.post(
 			if (!token) {
 				return res.status(401).json({ message: 'Auth error' })
 			}
-			const decoded = jwt.verify(token, config.secretKey)
+			const decoded = jwt.verify(token, jwtSecretKey)
 			req.user = decoded
 			const userId = req.user.id
 
@@ -235,7 +236,7 @@ router.put(
 			if (!token) {
 				return res.status(401).json({ message: 'Auth error' })
 			}
-			const decoded = jwt.verify(token, config.secretKey)
+			const decoded = jwt.verify(token, jwtSecretKey)
 			req.user = decoded
 			const userId = req.user.id
 
@@ -286,7 +287,7 @@ router.put(
 			if (!token) {
 				return res.status(401).json({ message: 'Auth error' })
 			}
-			const decoded = jwt.verify(token, config.secretKey)
+			const decoded = jwt.verify(token, jwtSecretKey)
 			req.user = decoded
 			const userId = req.user.id
 

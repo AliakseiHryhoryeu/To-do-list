@@ -1,10 +1,19 @@
 import React, { FC } from 'react'
 
-import { Header, Lists, Tasks } from 'app/components'
+import { Alert, Header, Lists, Tasks } from 'app/components'
+import { useTypedSelector } from 'app/hooks/useAppSelector'
+import { RootState } from 'app/store'
 
 import './Main.scss'
 
 export const Main: FC = () => {
+	const { isTrialMode, showAlert } = useTypedSelector((state: RootState) => {
+		return {
+			isTrialMode: state.user.trialMode,
+			showAlert: state.user.alertVisible,
+		}
+	})
+	const alertMessage = 'To save data, you must login or signup'
 	return (
 		<div className='main'>
 			<Header />
@@ -20,6 +29,7 @@ export const Main: FC = () => {
 					</div>
 				</div>
 			</div>
+			{isTrialMode && showAlert && <Alert text={alertMessage} />}
 		</div>
 	)
 }

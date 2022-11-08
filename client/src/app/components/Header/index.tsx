@@ -77,6 +77,7 @@ export const Header: FC = () => {
 											Sign Up
 										</Link>
 									</li>
+									<Lists />
 								</ul>
 							</nav>
 						)}
@@ -173,7 +174,4 @@ export const Header: FC = () => {
 			{isAuth && settingsVisible && <Settings />}
 		</>
 	)
-}
-function userActions() {
-	throw new Error('Function not implemented.')
 }

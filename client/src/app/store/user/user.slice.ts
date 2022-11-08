@@ -14,7 +14,7 @@ const initialState: IUserState = {
 	token: localStorage.getItem('token'),
 	trialMode: true,
 	settingsVisible: false,
-	alert: false,
+	alertVisible: true,
 }
 
 export const userSlice = createSlice({
@@ -40,19 +40,17 @@ export const userSlice = createSlice({
 		},
 
 		// Alerts
-		alertShow: (state, action: PayloadAction<{ message: string }>) => {
-			state.alert = action.payload.message
+		alertShow: (state, action: PayloadAction<{}>) => {
+			state.alertVisible = true
 		},
 		alertHide: (state, action: PayloadAction<null>) => {
-			state.alert = false
+			state.alertVisible = false
 		},
 	},
 	extraReducers: builder => {
 		builder.addMatcher(
 			userApi.endpoints.login.matchFulfilled,
 			(state, { payload }) => {
-				console.log(payload)
-
 				state.token = payload.user.token
 				state.activeUser.email = payload.user.email
 				state.activeUser.id = payload.user.userId
