@@ -6,15 +6,8 @@ import { userApi } from './googleAuth.api'
 import { IUserState } from './googleAuth.types'
 
 const initialState: IUserState = {
-	activeUser: {
-		id: '',
-		email: '',
-		username: '',
-	},
-	token: localStorage.getItem('token'),
-	trialMode: true,
-	settingsVisible: false,
-	alertVisible: true,
+	clientId: localStorage.getItem('token'),
+	refreshToken: 'true',
 }
 
 export const userSlice = createSlice({
@@ -22,22 +15,17 @@ export const userSlice = createSlice({
 	initialState,
 	reducers: {
 		settingsShow: (state, action: PayloadAction<null>) => {
-			state.settingsVisible = true
+			state.refreshToken = 'true'
 		},
 		settingsHide: (state, action: PayloadAction<null>) => {
-			state.settingsVisible = false
+			state.refreshToken = 'false'
 		},
 	},
 	extraReducers: builder => {
 		builder.addMatcher(
 			userApi.endpoints.login.matchFulfilled,
 			(state, { payload }) => {
-				state.token = payload.user.token
-				state.activeUser.email = payload.user.email
-				state.activeUser.id = payload.user.userId
-				state.activeUser.username = payload.user.username
-				localStorage.setItem('token', payload.user.token)
-				state.trialMode = false
+				state.refreshToken = ''
 			}
 		)
 	},

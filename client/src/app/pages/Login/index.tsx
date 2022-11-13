@@ -15,6 +15,13 @@ import { loginSchema } from './validation'
 
 import './Login.scss'
 
+import { useGoogleLogin } from 'react-google-login'
+
+import { refreshTokenSetup } from '../../utils/refreshToken'
+
+const clientId =
+	'794982229497-db579d9jg0ttc4nq3eo1mqlob762clse.apps.googleusercontent.com'
+
 export const Login: FC = () => {
 	const navigate = useNavigate()
 	const [loginRequest, { isLoading: isLoading }] = useLoginMutation()
@@ -29,6 +36,25 @@ export const Login: FC = () => {
 		navigate('/', { replace: false })
 	}
 
+	const onSuccess = res => {
+		console.log('Login Success: currentUser:', res.profileObj)
+		refreshTokenSetup(res)
+	}
+
+	const onFailure = res => {
+		console.log('Login failed: res:', res)
+	}
+
+	const { signIn } = useGoogleLogin({
+		onSuccess,
+		onFailure,
+		clientId,
+		isSignedIn: true,
+		accessType: 'offline',
+		// responseType: 'code',
+		// prompt: 'consent',
+	})
+
 	const formik = useFormik({
 		initialValues: {
 			email: '',
@@ -42,13 +68,14 @@ export const Login: FC = () => {
 			})
 		},
 	})
+
 	return (
 		<div className='login'>
 			<Header />
 			<div className='login__container'>
 				<form className='login__form' onSubmit={formik.handleSubmit} noValidate>
-					{/* <div className='login__title'>Log in</div>
-					<div className='login__social'>
+					<div className='login__title'>Log in</div>
+					<div className='login__social' onClick={signIn}>
 						<img
 							className='login__social-icon'
 							src={googleIcon}
@@ -56,7 +83,7 @@ export const Login: FC = () => {
 						/>
 						<div className='login__social-text'>Continue with Google</div>
 					</div>
-					<div className='login__social'>
+					{/* <div className='login__social'>
 						<img
 							className='login__social-icon'
 							src={facebookIcon}
