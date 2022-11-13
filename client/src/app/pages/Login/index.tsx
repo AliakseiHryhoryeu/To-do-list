@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTypedSelector } from 'app/hooks/useAppSelector'
 import { useFormik } from 'formik'
@@ -10,17 +10,10 @@ import { useLoginMutation } from 'app/store/user/user.api'
 import googleIcon from 'assets/img/Google-icon.svg'
 import facebookIcon from 'assets/img/Facebook-icon.svg'
 import appleIcon from 'assets/img/Apple-icon.svg'
-
+import jwt_decode from 'jwt-decode'
 import { loginSchema } from './validation'
 
 import './Login.scss'
-
-import { useGoogleLogin } from 'react-google-login'
-
-import { refreshTokenSetup } from '../../utils/refreshToken'
-
-const clientId =
-	'794982229497-db579d9jg0ttc4nq3eo1mqlob762clse.apps.googleusercontent.com'
 
 export const Login: FC = () => {
 	const navigate = useNavigate()
@@ -35,25 +28,6 @@ export const Login: FC = () => {
 	if (!trialMode) {
 		navigate('/', { replace: false })
 	}
-
-	const onSuccess = res => {
-		console.log('Login Success: currentUser:', res.profileObj)
-		refreshTokenSetup(res)
-	}
-
-	const onFailure = res => {
-		console.log('Login failed: res:', res)
-	}
-
-	const { signIn } = useGoogleLogin({
-		onSuccess,
-		onFailure,
-		clientId,
-		isSignedIn: true,
-		accessType: 'offline',
-		// responseType: 'code',
-		// prompt: 'consent',
-	})
 
 	const formik = useFormik({
 		initialValues: {
@@ -75,7 +49,7 @@ export const Login: FC = () => {
 			<div className='login__container'>
 				<form className='login__form' onSubmit={formik.handleSubmit} noValidate>
 					<div className='login__title'>Log in</div>
-					<div className='login__social' onClick={signIn}>
+					<div className='login__social'>
 						<img
 							className='login__social-icon'
 							src={googleIcon}
@@ -113,7 +87,6 @@ export const Login: FC = () => {
 							value={formik.values.email}
 						/>
 					</div>
-
 					<div className='login__input'>
 						<label htmlFor='login__input-password'>Password</label>
 						<input
@@ -126,24 +99,20 @@ export const Login: FC = () => {
 							value={formik.values.password}
 						/>
 					</div>
-
 					<button type='submit' className='login__button btn-login submit'>
 						Log in
 					</button>
-
 					<div className='login__text'>
 						<Link to='/password-reset' className=''>
 							Forgot your password?
 						</Link>
 					</div>
-
 					<div className='login__text'>
 						By continuing with Google, Apple, or Email, you agree to Todolist’s
 						<span className='login__text-underline'>Terms of Service</span>
 						and
 						<span className='login__text-underline'>Privacy Policy</span>.
 					</div>
-
 					<div className='login__text'>
 						Don’t have an account?
 						<Link to='/signup' className='login__text-ml5'>
