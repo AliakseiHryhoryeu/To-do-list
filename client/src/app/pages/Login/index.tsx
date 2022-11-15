@@ -10,7 +10,6 @@ import { useLoginMutation } from 'app/store/user/user.api'
 import googleIcon from 'assets/img/Google-icon.svg'
 import facebookIcon from 'assets/img/Facebook-icon.svg'
 import appleIcon from 'assets/img/Apple-icon.svg'
-import jwt_decode from 'jwt-decode'
 import { loginSchema } from './validation'
 
 import './Login.scss'
@@ -49,14 +48,14 @@ export const Login: FC = () => {
 			<div className='login__container'>
 				<form className='login__form' onSubmit={formik.handleSubmit} noValidate>
 					<div className='login__title'>Log in</div>
-					<div className='login__social'>
+					{/* <div className='login__social'>
 						<img
 							className='login__social-icon'
 							src={googleIcon}
 							alt='google-icon'
 						/>
 						<div className='login__social-text'>Continue with Google</div>
-					</div>
+					</div> */}
 					{/* <div className='login__social'>
 						<img
 							className='login__social-icon'
