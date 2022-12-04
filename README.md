@@ -1,9 +1,6 @@
 # To-do-list
 
-## Short Description
-
 This is client-server application for task management, data can be saved in local storage if user not authenticated or in database if user authenticated
-
 ## Frontend
 
 - React
@@ -29,6 +26,6 @@ https://to-do-list-client.vercel.app/
 
 ## Server
 
-https://todolist-server11.herokuapp.com/
+https://todolist-server11.herokuapp.com/ - not working, i fix it later
 
 ![To-do-list-preview](preview.jpg)
